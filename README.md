@@ -1,5 +1,7 @@
 # Algomon
 
+## Code link
+https://pl.kotl.in/vnW1ueB1w
 
 
 ## Getting started
