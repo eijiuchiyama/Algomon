@@ -1,4 +1,5 @@
 import kotlin.math.*
+import java.util.Scanner
 abstract class Random
 
 open class Character(var name: String, var HP: Int, var Stamina: Int, var Skill: List<Int>, 
@@ -29,8 +30,8 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
         var self_array = Data[random_movement].slice(0..5)
         var enemy_array = Data[random_movement].slice(6..11)
         
-        if(stamina > self_array[1]){ //If stamina is enough
-            println("$name ataca $enemy.name")
+        if(Stamina > self_array[1]){ //If stamina is enough
+            println("$name ataca $enemy->name.name")
             Change_Status(self_array)
             enemy.Change_Status(enemy_array)
        } else{
@@ -45,7 +46,7 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
         for (action in Skill){
         	//Println(action) Print the available actions
         }
-        	var choose = readLine()
+        	var choose = Scanner(System.`in`).nextInt()
     		//Access bank of data of ID choosed -> Data[12]
             var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Attacks
             var Data2 = arrayOf(0, -30, 0, 0, 0, 0, -60, 0, 0, 0, 0, 0)
@@ -53,7 +54,7 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
             var Data = arrayOf(Data1, Data2, Data3)
             var self_array = Data[choose].slice(0..5)
             var enemy_array = Data[choose].slice(6..11)
-            if(stamina > self_array[1]){ //If stamina is enough
+            if(Stamina > self_array[1]){ //If stamina is enough
                 println("$name ataca $enemy.name")
             	Change_Status(self_array)
             	enemy.Change_Status(enemy_array)
@@ -65,20 +66,33 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
            
 fun game(player:Player, enemy:Enemy){
     var turn = 1;
+    println("Battle Start!!!")
+    player.Show_Status()
+    enemy.Show_Status()
     while(true){
         println("Turn $turn")
-        player.Show_Status()
-        enemy.Show_Status()
         if(player.Speed > enemy.Speed){
             player.ChooseMovement(enemy)
+            player.Show_Status()
+            enemy.Show_Status()
+            println()
             if(player.HP==0 || enemy.HP==0) break;
             enemy.RandomMovement(player)
+            player.Show_Status()
+            enemy.Show_Status()
+            println()
             if(player.HP==0 || enemy.HP==0) break;
         }
         else{
             enemy.RandomMovement(player)
+            player.Show_Status()
+            enemy.Show_Status()
+            println()
             if(player.HP==0 || enemy.HP==0) break;
             player.ChooseMovement(enemy)
+            player.Show_Status()
+            enemy.Show_Status()
+            println()
             if(player.HP==0 || enemy.HP==0) break;
         }
         println()
