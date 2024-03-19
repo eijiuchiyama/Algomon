@@ -16,6 +16,7 @@ open class Character(var name: String, var HP: Int, var Stamina: Int, var Skill:
         Dodge   = max(0,Dodge  + change[4])
         Speed   = max(0,Speed  + change[5])
     }
+    
 }
 
 class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int)
@@ -29,9 +30,9 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
         var Data = arrayOf(Data1, Data2, Data3)
         var self_array = Data[random_movement].slice(0..5)
         var enemy_array = Data[random_movement].slice(6..11)
-        
+        var enemy_name = enemy.name
         if(Stamina > self_array[1]){ //If stamina is enough
-            println("$name ataca $enemy->name.name")
+            println("$name ataca $enemy_name")
             Change_Status(self_array)
             enemy.Change_Status(enemy_array)
        } else{
@@ -46,7 +47,9 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
         for (action in Skill){
         	//Println(action) Print the available actions
         }
+            print("Escolha seu movimento: ")
         	var choose = Scanner(System.`in`).nextInt()
+            println()
     		//Access bank of data of ID choosed -> Data[12]
             var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Attacks
             var Data2 = arrayOf(0, -30, 0, 0, 0, 0, -60, 0, 0, 0, 0, 0)
@@ -54,8 +57,9 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
             var Data = arrayOf(Data1, Data2, Data3)
             var self_array = Data[choose].slice(0..5)
             var enemy_array = Data[choose].slice(6..11)
+            var enemy_name = enemy.name
             if(Stamina > self_array[1]){ //If stamina is enough
-                println("$name ataca $enemy.name")
+                println("$name ataca $enemy_name")
             	Change_Status(self_array)
             	enemy.Change_Status(enemy_array)
             } else{
@@ -66,11 +70,19 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
            
 fun game(player:Player, enemy:Enemy){
     var turn = 1;
+
+    println()
     println("Battle Start!!!")
+    println()
+
     player.Show_Status()
     enemy.Show_Status()
     while(true){
+
+        println()
         println("Turn $turn")
+        println()
+    
         if(player.Speed > enemy.Speed){
             player.ChooseMovement(enemy)
             player.Show_Status()
@@ -95,7 +107,6 @@ fun game(player:Player, enemy:Enemy){
             println()
             if(player.HP==0 || enemy.HP==0) break;
         }
-        println()
         turn++
     }
     if(player.HP==0) println("Game Over")
