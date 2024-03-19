@@ -4,10 +4,12 @@ abstract class Random
 
 open class Character(var name: String, var HP: Int, var Stamina: Int, var Skill: List<Int>, 
                      var Atk: Int, var Def: Int, var Dodge: Int, var Speed: Int){
+
     fun Show_Status(){
         println(name)
         println("HP = $HP, Stamina = $Stamina, Skill = $Skill, Atk = $Atk, Def = $Def, Dodge = $Dodge, Speed = $Speed")
     }
+
     fun Change_Status(change: List<Int>){
         HP      = max(0,HP     + change[0])
         Stamina = max(0,Stamina+ change[1])
@@ -23,8 +25,8 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
 		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed){
     fun RandomMovement(enemy: Character){
         var random_movement = kotlin.random.Random.nextInt(0, Skill.size)
-        //access bank of data of ID choosed -> Data[12]
-        var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Ataques
+        //Access bank of data of ID choosed -> Data[12]
+        var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Attacks
         var Data2 = arrayOf(0, -30, 0, 0, 0, 0, -60, 0, 0, 0, 0, 0)
         var Data3 = arrayOf(0, -40, 0, 0, 0, 0, -70, 0, 0, 0, 0, 0)
         var Data = arrayOf(Data1, Data2, Data3)
