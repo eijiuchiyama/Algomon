@@ -22,11 +22,20 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
     fun RandomMovement(enemy: Character){
         var random_movement = kotlin.random.Random.nextInt(0, Skill.size)
         //access bank of data of ID choosed -> Data[12]
-        var Data = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-        var self_array = Data.slice(0..5)
-        var enemy_array = Data.slice(6..11)
-        Change_Status(self_array)
-        enemy.Change_Status(enemy_array)
+        var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Ataques
+        var Data2 = arrayOf(0, -30, 0, 0, 0, 0, -60, 0, 0, 0, 0, 0)
+        var Data3 = arrayOf(0, -40, 0, 0, 0, 0, -70, 0, 0, 0, 0, 0)
+        var Data = arrayOf(Data1, Data2, Data3)
+        var self_array = Data[random_movement].slice(0..5)
+        var enemy_array = Data[random_movement].slice(6..11)
+        
+        if(stamina > self_array[1]){ //If stamina is enough
+            println("$name ataca $enemy.name")
+            Change_Status(self_array)
+            enemy.Change_Status(enemy_array)
+       } else{
+            println("A stamina de $name não é suficiente para atacar")
+       }
     }
 }
 
@@ -34,15 +43,23 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
 		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed){
     fun ChooseMovement(enemy:Character){
         for (action in Skill){
-        	//println(action)
+        	//Println(action) Print the available actions
         }
         	var choose = readLine()
-    		//access bank of data of ID choosed -> Data[12]
-            var Data = arrayOf(-10, 2, 3, 4, 5, 6, -20, 8, 9, 10, 11, 12)
-            var self_array = Data.slice(0..5)
-            var enemy_array = Data.slice(6..11)
-            Change_Status(self_array)
-            enemy.Change_Status(enemy_array)
+    		//Access bank of data of ID choosed -> Data[12]
+            var Data1 = arrayOf(0, -20, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0) //Attacks
+            var Data2 = arrayOf(0, -30, 0, 0, 0, 0, -60, 0, 0, 0, 0, 0)
+            var Data3 = arrayOf(0, -40, 0, 0, 0, 0, -70, 0, 0, 0, 0, 0)
+            var Data = arrayOf(Data1, Data2, Data3)
+            var self_array = Data[choose].slice(0..5)
+            var enemy_array = Data[choose].slice(6..11)
+            if(stamina > self_array[1]){ //If stamina is enough
+                println("$name ataca $enemy.name")
+            	Change_Status(self_array)
+            	enemy.Change_Status(enemy_array)
+            } else{
+                println("A stamina de $name não é suficiente")
+            }
     }
 }
            
@@ -101,7 +118,7 @@ fun main() {
      * Diminuir Ataque adversária = 
      * Diminuir o Dodge adversária = Path-finding
      */
-    var Jogador = Player("Test", 100,100,listOf(1,2,3),10,10,10,10)
-    var ABC = Enemy("ABC", 500,500,listOf(1,2,3,4,5),50,50,50,50)
+    var Jogador = Player("Test", 500,500,listOf(1,2,3),10,10,10,10)
+    var ABC = Enemy("ABC", 500,500,listOf(1,2,3),50,50,50,50)
     game(Jogador,ABC)
 }
