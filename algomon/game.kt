@@ -1,6 +1,6 @@
 package algomon
 
-fun game(player:Player, enemy:Enemy){
+fun game(player: Player, enemy: Enemy){
     var turn = 1;
 
     println()
