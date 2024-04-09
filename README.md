@@ -19,4 +19,4 @@ Lucas Eiji: Programador e Designer do Projeto
 Paulo Roberto Miranda Meirelles: Orientador do Projeto
 
 ## License
-For open source projects, say how it is licensed.
+A licença pode ser verificada no arquivo LICENSE.
