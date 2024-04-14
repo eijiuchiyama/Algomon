@@ -13,11 +13,10 @@ fun interval(player: Player): Int{
             break
         } else if(choice == "t" || choice == "T") {
             //Escolhe o oponente aleatoriamente
-            /*if(battle(player, enemy) == 0){
-                return 0;
-            }*/
+            /*if(battle(player, enemy) == 0)
+                return 0;*/
         } else{
-
+            //Aprende movimento aleatório disponível
         }
     }
     return 1

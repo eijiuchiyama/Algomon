@@ -9,7 +9,7 @@ fun game(player: Player, enemy: Enemy){
     while(battle <= 7) { //Realiza um certo número de batalhas principais
         //Escolhe o oponenete aleatoriamente
         win = battle(player, enemy)
-        if(win == 0) break
+        if(win == 0 || win == 2) break
 
         battle++
 
@@ -17,7 +17,7 @@ fun game(player: Player, enemy: Enemy){
         if(win == 0) break
     }
 
-    if(win == 0) println("Você perdeu o torneio. Mais sorte no próximo ano.")
+    if(win == 0 || win == 2) println("Você perdeu o torneio. Mais sorte no próximo ano.")
     else println("Você venceu o torneio. Parabéns.")
 
 }

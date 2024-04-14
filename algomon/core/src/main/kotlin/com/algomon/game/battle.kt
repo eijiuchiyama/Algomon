@@ -15,8 +15,11 @@ fun battle(player: Player, enemy: Enemy): Int{
         println("Turn $turn")
         println()
 
+        //Se fugir, retorna 2. Se perder retorna 0 e se vencer retorna 1
         if (player.Speed > enemy.Speed) {
-            player.ChooseMovement(enemy)
+            if(player.ChooseMovement(enemy) == 0){
+                return 2
+            }
             player.Show_Status()
             enemy.Show_Status()
             println()
