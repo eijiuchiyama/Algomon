@@ -1,0 +1,5 @@
+package algomon
+
+fun interval(){
+
+}

@@ -3,54 +3,85 @@ package algomon
 fun game(player: Player, enemy: Enemy){
     start()
 
-    var turn = 1;
-
-    println()
-    println("Battle Start!!!")
-    println()
-
-    player.Show_Status()
-    enemy.Show_Status()
-    while(true){
+    var win = 1
+    var battle = 0
+    while(battle <= 7) {
+        var turn = 1;
 
         println()
-        println("Turn $turn")
+        println("Battle Start!!!")
         println()
 
-        if(player.Speed > enemy.Speed){
-            player.ChooseMovement(enemy)
-            player.Show_Status()
-            enemy.Show_Status()
+        player.Show_Status()
+        enemy.Show_Status()
+        while (true) {
+
             println()
-            if(player.HP==0 || enemy.HP==0) break;
-            enemy.RandomMovement(player)
-            player.Show_Status()
-            enemy.Show_Status()
+            println("Turn $turn")
             println()
-            if(player.HP==0 || enemy.HP==0) break;
+
+            if (player.Speed > enemy.Speed) {
+                player.ChooseMovement(enemy)
+                player.Show_Status()
+                enemy.Show_Status()
+                println()
+                if (player.HP == 0 || enemy.HP == 0) break;
+                enemy.RandomMovement(player)
+                player.Show_Status()
+                enemy.Show_Status()
+                println()
+                if (player.HP == 0 || enemy.HP == 0) break;
+            } else {
+                enemy.RandomMovement(player)
+                player.Show_Status()
+                enemy.Show_Status()
+                println()
+                if (player.HP == 0 || enemy.HP == 0) break;
+                player.ChooseMovement(enemy)
+                player.Show_Status()
+                enemy.Show_Status()
+                println()
+                if (player.HP == 0 || enemy.HP == 0) break;
+            }
+            turn++
+        }
+
+        if (player.HP == 0){
+            println("Game Over")
+            win = 0
+            break
+        }
+        else if (enemy.HP == 0){
+            println("You Win")
         }
         else{
-            enemy.RandomMovement(player)
-            player.Show_Status()
-            enemy.Show_Status()
-            println()
-            if(player.HP==0 || enemy.HP==0) break;
-            player.ChooseMovement(enemy)
-            player.Show_Status()
-            enemy.Show_Status()
-            println()
-            if(player.HP==0 || enemy.HP==0) break;
+            println("Draw")
         }
-        turn++
+
+        battle++
+
+        interval()
     }
-    if(player.HP==0) println("Game Over")
-    else if(enemy.HP==0) println("You Win")
-    else println("Draw")
+
+    if(win == 0){
+        println("Você perdeu o torneio. Mais sorte no próximo ano.")
+    } else{
+        println("Você venceu o torneio. Parabéns.")
+    }
 }
 
 
 fun main() {
 	/**
+     *Personagem
+        1 - Nome
+        2 - HP base
+        3 - Stamina base
+        4 - Atk base
+        5 - Def base
+        6 - Dodge base
+        7 - Speed base
+
 	 *Movimento
      	1 - ID
         2 - HP-P
