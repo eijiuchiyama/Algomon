@@ -1,6 +1,8 @@
 package algomon
 
 fun game(player: Player, enemy: Enemy){
+    start()
+
     var turn = 1;
 
     println()
@@ -14,7 +16,7 @@ fun game(player: Player, enemy: Enemy){
         println()
         println("Turn $turn")
         println()
-    
+
         if(player.Speed > enemy.Speed){
             player.ChooseMovement(enemy)
             player.Show_Status()
@@ -50,7 +52,7 @@ fun game(player: Player, enemy: Enemy){
 fun main() {
 	/**
 	 *Movimento
-     	1 - ID 
+     	1 - ID
         2 - HP-P
     	3 - Stamina-P
     	4 - Atk-P
@@ -64,7 +66,7 @@ fun main() {
     	12 - Dodge-A
     	13 - Speed-A
 	*/
-    
+
     /**
      * Ataque = Hacking
      * Regenerar HP e Stamina = take a nap
@@ -73,7 +75,7 @@ fun main() {
      * Aumentar próprio Speed = Compactar
      * Resetar os atributos próprios = Refactoring
      * Diminuir Defesa adversária = descriptografar
-     * Diminuir Ataque adversário = 
+     * Diminuir Ataque adversário =
      * Diminuir o Dodge adversári = Path-finding
      */
     var Jogador = Player("Test", 500,500,listOf(1,2,3),10,10,10,10)
