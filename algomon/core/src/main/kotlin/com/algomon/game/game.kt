@@ -1,73 +1,25 @@
 package algomon
 
 fun game(player: Player, enemy: Enemy){
-    start()
+    start() //Inicia o jogo, apresentando o contexto
 
-    var win = 1
-    var battle = 0
-    while(battle <= 7) {
-        var turn = 1;
+    var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
+    var battle = 0 //Conta as batalhas
 
-        println()
-        println("Battle Start!!!")
-        println()
-
-        player.Show_Status()
-        enemy.Show_Status()
-        while (true) {
-
-            println()
-            println("Turn $turn")
-            println()
-
-            if (player.Speed > enemy.Speed) {
-                player.ChooseMovement(enemy)
-                player.Show_Status()
-                enemy.Show_Status()
-                println()
-                if (player.HP == 0 || enemy.HP == 0) break;
-                enemy.RandomMovement(player)
-                player.Show_Status()
-                enemy.Show_Status()
-                println()
-                if (player.HP == 0 || enemy.HP == 0) break;
-            } else {
-                enemy.RandomMovement(player)
-                player.Show_Status()
-                enemy.Show_Status()
-                println()
-                if (player.HP == 0 || enemy.HP == 0) break;
-                player.ChooseMovement(enemy)
-                player.Show_Status()
-                enemy.Show_Status()
-                println()
-                if (player.HP == 0 || enemy.HP == 0) break;
-            }
-            turn++
-        }
-
-        if (player.HP == 0){
-            println("Game Over")
-            win = 0
-            break
-        }
-        else if (enemy.HP == 0){
-            println("You Win")
-        }
-        else{
-            println("Draw")
-        }
+    while(battle <= 7) { //Realiza um certo número de batalhas principais
+        //Escolhe o oponenete aleatoriamente
+        win = battle(player, enemy)
+        if(win == 0) break
 
         battle++
 
-        interval()
+        win = interval(player)
+        if(win == 0) break
     }
 
-    if(win == 0){
-        println("Você perdeu o torneio. Mais sorte no próximo ano.")
-    } else{
-        println("Você venceu o torneio. Parabéns.")
-    }
+    if(win == 0) println("Você perdeu o torneio. Mais sorte no próximo ano.")
+    else println("Você venceu o torneio. Parabéns.")
+
 }
 
 
