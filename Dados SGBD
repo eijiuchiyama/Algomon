@@ -1,0 +1,4 @@
+Jogador - ID, HP base, stamina base, atk base, def base, dodge base, speed base
+Inimigos - ID, nome, HP base, stamina base, atk base, def base, dodge base, speed base
+Movimentos - ID, nome, HP próprio, stamina própria, atk próprio, def própria, dodge próprio, speed próprio, 
+            HP inimigo, stamina inimiga, atk inimigo, def inimigo, dodge inimigo, speed inimigo, acurácia
