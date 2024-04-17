@@ -1,7 +1,7 @@
 Fórmulas utilizadas para calcular as mudanças de status
 
-HP retirado = move HP + own atk - enemy def
-Acuracia = move accuracy - enemy dodge
+HP retirado por movimento = move HP + own atk - enemy def
+Acuracia de movimento = move accuracy - enemy dodge
 Level = floor((HP atual - HP base)/30) 
 
 
