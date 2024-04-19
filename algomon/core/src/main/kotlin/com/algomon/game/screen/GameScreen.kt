@@ -1,6 +1,7 @@
 package com.algomon.game.screen
 
 import com.algomon.game.component.AnimationComponent
+import com.algomon.game.component.AnimationModel
 import com.algomon.game.component.AnimationType
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
@@ -23,6 +24,7 @@ class GameScreen : KtxScreen {
 
     private val world: World = World{
         inject(stage)
+        inject(textureAtlas)
 
         componentListener<ImageComponentListener>()
 
@@ -34,21 +36,24 @@ class GameScreen : KtxScreen {
 
         world.entity {
             add<ImageComponent> {
-                image = Image(TextureRegion(textureAtlas.findRegion("player"),0,0,48,48)).apply {
+                image = Image().apply {
                     setSize(4f,4f)
                 }
             }
             add<AnimationComponent> {
-                nextAnimation("player", AnimationType.idleFront)
+                nextAnimation(AnimationModel.player, AnimationType.idleFront)
             }
         }
         world.entity {
             add<ImageComponent> {
-                image = Image(TextureRegion(textureAtlas.findRegion("slime"),0,0,32,32)).apply {
+                image = Image().apply {
                     setSize(6f,6f)
                     setPosition(10f,6f)
                     rotation = 90f
                 }
+            }
+            add<AnimationComponent>{
+                nextAnimation(AnimationModel.player, AnimationType.runSide)
             }
         }
     }

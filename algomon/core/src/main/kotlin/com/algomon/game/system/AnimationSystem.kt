@@ -3,25 +3,54 @@ package com.algomon.game.system
 import com.algomon.game.component.AnimationComponent
 import com.algomon.game.component.AnimationComponent.Companion.NO_ANIMATION
 import com.algomon.game.component.ImageComponent
+import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
+import ktx.app.gdxError
+import ktx.collections.map
+import ktx.log.logger
 
 @AllOf([AnimationComponent::class, ImageComponent::class])
 class AnimationSystem(
+    private val textureAtlas: TextureAtlas,
     private val animationCmps: ComponentMapper<AnimationComponent>,
     private val imageCmps: ComponentMapper<ImageComponent>
 ): IteratingSystem() {
+
+    private val cacheAnimations = mutableMapOf<String, Animation<TextureRegionDrawable>>()
+
     override fun onTickEntity(entity: Entity) {
         val aniCmp = animationCmps[entity]
 
-        imageCmps[entity].image.drawable = if(aniCmp.nextAnimation = NO_ANIMATION) {
+        if(aniCmp.nextAnimation == NO_ANIMATION) {
             aniCmp.stateTime += deltaTime
-            aniCmp.animation.playMode = aniCmp.playMode
-            val frame = aniCmp.animation.getKeyFrame(aniCmp.stateTime)
         }else {
-
+            aniCmp.animation = animation(aniCmp.nextAnimation)
+            aniCmp.stateTime = 0f
+            aniCmp.nextAnimation = NO_ANIMATION
         }
+
+        aniCmp.animation.playMode = aniCmp.playMode
+        imageCmps[entity].image.drawable = aniCmp.animation.getKeyFrame(aniCmp.stateTime)
+    }
+
+    private fun animation(aniKeyPath:String): Animation<TextureRegionDrawable>{
+        return cacheAnimations.getOrPut(aniKeyPath){
+            log.debug { "New Animation is created for '$aniKeyPath'" }
+            val regions = textureAtlas.findRegions(aniKeyPath)
+            if (regions.isEmpty){
+                gdxError("There are no texture regions for $aniKeyPath")
+            }
+            Animation(DEFAULT_FRAME_DURATION, regions.map { TextureRegionDrawable(it) })
+        }
+    }
+
+    companion object{
+        private val log = logger<AnimationSystem>()
+        private const val DEFAULT_FRAME_DURATION = 1/8f
     }
 }
