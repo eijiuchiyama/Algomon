@@ -1,7 +1,10 @@
 package algomon
 
 fun game(player: Player, enemy: Enemy){
-    start() //Inicia o jogo, apresentando o contexto
+    //getConnection() //Realiza a conexão entre o jogo e o banco de dados
+    if(start() == 0) //Inicia o jogo, apresentando o contexto
+        return
+
 
     var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
     var battle = 0 //Conta as batalhas
@@ -54,12 +57,12 @@ fun main() {
      * Ataque = Hacking
      * Regenerar HP e Stamina = take a nap
      * Aumentar própria Defesa = criptografar
-     * Aumentar próprio Ataque = Correção de Bug/
+     * Aumentar próprio Ataque = Correção de Bug
      * Aumentar próprio Speed = Compactar
      * Resetar os atributos próprios = Refactoring
      * Diminuir Defesa adversária = descriptografar
      * Diminuir Ataque adversário =
-     * Diminuir o Dodge adversári = Path-finding
+     * Diminuir o Dodge adversário = Path-finding
      */
     var Jogador = Player("Test", 500,500,listOf(1,2,3),10,10,10,10)
     var ABC = Enemy("ABC", 500,500,listOf(1,2,3),50,50,50,50)
