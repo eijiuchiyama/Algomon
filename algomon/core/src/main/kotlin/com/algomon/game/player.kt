@@ -2,8 +2,8 @@ package algomon
 
 import java.util.Scanner
 
-class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int)
-		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed){
+class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int)
+		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed, level){
     fun ChooseMovement(enemy: Character): Int{
         for (action in Skill){
         	//Println(action) Print the available actions

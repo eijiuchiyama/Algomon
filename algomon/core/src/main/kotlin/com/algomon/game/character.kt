@@ -5,11 +5,11 @@ import kotlin.math.*
 abstract class Random
 
 open class Character(var name: String, var HP: Int, var Stamina: Int, var Skill: List<Int>,
-                     var Atk: Int, var Def: Int, var Dodge: Int, var Speed: Int){
+                     var Atk: Int, var Def: Int, var Dodge: Int, var Speed: Int, var level: Int){
 
     fun Show_Status(){
         println(name)
-        println("HP = $HP, Stamina = $Stamina, Skill = $Skill, Atk = $Atk, Def = $Def, Dodge = $Dodge, Speed = $Speed")
+        println("Level = $level, HP = $HP, Stamina = $Stamina, Skill = $Skill, Atk = $Atk, Def = $Def, Dodge = $Dodge, Speed = $Speed")
     }
 
     fun Change_Status(change: List<Int>){

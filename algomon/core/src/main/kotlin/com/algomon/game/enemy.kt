@@ -1,7 +1,7 @@
 package algomon
 
-class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int)
-		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed){
+class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int)
+		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed, level){
     fun RandomMovement(enemy: Character){
         var random_movement = kotlin.random.Random.nextInt(0, Skill.size)
         //Access bank of data of ID choosed -> Data[12]
