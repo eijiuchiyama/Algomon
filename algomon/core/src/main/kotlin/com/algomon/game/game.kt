@@ -36,15 +36,15 @@ fun game(){
     var countBattle = 0 //Conta as batalhas
 
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
-        //Escolhe o oponente aleatoriamente
 
+        //Escolhe o oponente de specialenemies aleatoriamente
         var enemiesId: List<Int> = emptyList()
-        sql = "SELECT * FROM commonenemies WHERE level = ${player.level};"
+        sql = "SELECT * FROM specialenemies WHERE level = ${player.level};"
         rs = db.query(sql)
         while(rs!!.next()){
             enemiesId = enemiesId + rs.getInt("id")
         }
-        sql = "SELECT * FROM commonenemies WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
+        sql = "SELECT * FROM specialenemies WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
         rs = db.query(sql)
 
         var enemyname: String = ""
@@ -73,10 +73,14 @@ fun game(){
 
         var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, player.level)
         win = battle(player, enemy, db)
-        if(win == 0 || win == 2) break
+        if(win == 0 || win == 2){
+            println("Você perdeu uma batalha do torneio. Você foi eliminado")
+            break
+        }
 
         countBattle++
 
+        //Começa o intervalo
         win = interval(player)
         if(win == 0) break
     }

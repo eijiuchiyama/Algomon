@@ -19,9 +19,10 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
         var choose = Scanner(System.`in`).nextInt()
         println()
         if(choose == -1){ //Se fugir retorna 0. Senão retorna 1
-            if(kotlin.random.Random.nextInt(0, 2) == 0)
+            if(kotlin.random.Random.nextInt(0, 2) == 0) {
+                println("Você deixou a batalha")
                 return 0
-            else {
+            } else {
                 println("Não foi possível fugir")
                 return 1
             }
@@ -57,7 +58,7 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
         var enemy_array = movementData.slice(6..11)
         if(Stamina > self_array[1]){ //If stamina is enough
             var randomNum = kotlin.random.Random.nextInt(1, 101)
-            if(randomNum >= baseAccuracy) {
+            if(randomNum < baseAccuracy) {
                 println("Vez de $name")
                 println("Ataca com $movementName")
                 Change_Status(self_array)

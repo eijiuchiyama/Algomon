@@ -32,7 +32,7 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
         var enemy_array = movementData.slice(6..11)
         if(Stamina > self_array[1]){ //If stamina is enough
             var randomNum = kotlin.random.Random.nextInt(1, 101)
-            if(randomNum >= baseAccuracy) {
+            if(randomNum < baseAccuracy) {
                 println("Vez de $name")
                 println("Ataca com $movementName")
                 Change_Status(self_array)
