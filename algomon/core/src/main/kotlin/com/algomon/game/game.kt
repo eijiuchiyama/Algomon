@@ -37,15 +37,10 @@ fun game(){
 
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
 
-        //Escolhe o oponente de specialenemies aleatoriamente
+        //Escolhe o oponente de specialenemies relativo à batalha atual do torneio
         var enemiesId: List<Int> = emptyList()
-        sql = "SELECT * FROM specialenemies WHERE level = ${player.level};"
-        rs = db.query(sql)
-        while(rs!!.next()){
-            enemiesId = enemiesId + rs.getInt("id")
-        }
-        sql = "SELECT * FROM specialenemies WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
-        rs = db.query(sql)
+        sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
+        var rs = db.query(sql)
 
         var enemyname: String = ""
         var enemyhp: Int = 0
@@ -54,6 +49,7 @@ fun game(){
         var enemydef: Int = 0
         var enemydodge: Int = 0
         var enemyspeed: Int = 0
+        var enemylevel: Int = 0
         var enemymovements: List<Int> = emptyList()
         while(rs!!.next()){
             enemyname = rs.getString("name")
@@ -65,24 +61,25 @@ fun game(){
             enemyspeed = rs.getInt("basespeed")
         }
 
-        sql = "SELECT id FROM movements WHERE minlevel <= ${player.level};"
+        sql = "SELECT id FROM movements WHERE minlevel <= ${enemylevel};"
         rs = db.query(sql)
         while(rs!!.next()){
             enemymovements = enemymovements + rs.getInt("id")
         }
 
-        var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, player.level)
+        var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, enemylevel)
         win = battle(player, enemy, db)
         if(win == 0 || win == 2){
             println("Você perdeu uma batalha do torneio. Você foi eliminado")
             break
+        } else{
+            println("Você venceu uma batalha do torneio! Você passou para a próxima fase!")
         }
 
         countBattle++
 
         //Começa o intervalo
-        win = interval(player)
-        if(win == 0) break
+        interval(player, db)
     }
 
     if(win == 0 || win == 2) println("Você perdeu o torneio. Mais sorte no próximo ano.")
