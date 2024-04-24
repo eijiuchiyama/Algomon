@@ -1,7 +1,7 @@
 package algomon
 
 fun game(player: Player, enemy: Enemy){
-    //getConnection() //Realiza a conexão entre o jogo e o banco de dados
+    var c = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados
     if(start() == 0) //Inicia o jogo, apresentando o contexto
         return
 
@@ -23,6 +23,7 @@ fun game(player: Player, enemy: Enemy){
     if(win == 0 || win == 2) println("Você perdeu o torneio. Mais sorte no próximo ano.")
     else println("Você venceu o torneio. Parabéns.")
 
+    databaseDisconnect(c)
 }
 
 
