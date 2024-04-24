@@ -26,6 +26,7 @@ class Connect(bd: String, local: String, porta: String, banco: String, user: Str
     fun connect() {
         try {
             c = DriverManager.getConnection(str_conexao, user, senha)
+            statement = c!!.createStatement()
             println("Conexão realizada com sucesso")
         } catch (e: Exception) {
             e.printStackTrace()
