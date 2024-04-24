@@ -41,7 +41,7 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
                 println("Movimento não foi bem sucedido")
             }
        } else{
-            println("A stamina não é suficiente")
+            println("A stamina não é suficiente para realizar o movimento")
        }
     }
 }

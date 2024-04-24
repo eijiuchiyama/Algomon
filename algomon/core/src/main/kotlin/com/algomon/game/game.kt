@@ -30,7 +30,7 @@ fun game(){
     }
 
     var player = Player("Player", playerhp, playerstamina,
-        playermovements, playeratk, playerdef, playerdodge, playerspeed, 0)
+        playermovements, playeratk, playerdef, playerdodge, playerspeed, 0, 0)
 
     var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
     var countBattle = 0 //Conta as batalhas

@@ -2,7 +2,8 @@ package algomon
 
 import java.util.Scanner
 
-class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int)
+class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int,
+             var carteira: Int)
 		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed, level){
     fun ChooseMovement(enemy: Character, db: Connect): Int{
 
@@ -67,7 +68,7 @@ class Player(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, De
                 println("Movimento não foi bem sucedido")
             }
         } else{
-            println("A stamina não é suficiente")
+            println("A stamina não é suficiente para realizar o movimento")
         }
         return 1;
     }

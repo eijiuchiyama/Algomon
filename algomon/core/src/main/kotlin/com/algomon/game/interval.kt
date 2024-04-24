@@ -65,12 +65,25 @@ fun interval(player: Player, db:Connect){
                if(rs.getInt("id") in player.Skill){
                    continue
                }
-                println("Id: ${rs.getInt("id")} Nome: ${rs.getString("name")}")
+                println("Id: ${rs.getInt("id")} Nome: ${rs.getString("name")} Preço: ${rs.getInt("preco")}")
 
             }
             println("Escolha seu movimento:")
             var choose = Scanner(System.`in`).nextInt()
-            player.Skill = player.Skill + choose
+            var preco: Int = 0
+            sql = "SELECT * FROM movements WHERE id = $choose;"
+            rs = db.query(sql)
+            while(rs!!.next()){
+                preco = rs.getInt("preco")
+            }
+            if(preco <= player.carteira){
+                player.Skill = player.Skill + choose
+                player.carteira = player.carteira - preco
+                println("Movimento adicionado à sua lista de movimentos")
+            } else{
+                println("Você não tem dinheiro para adquirir o movimento.")
+            }
+
         }
     }
     return
