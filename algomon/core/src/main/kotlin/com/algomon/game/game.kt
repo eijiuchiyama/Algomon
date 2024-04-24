@@ -36,15 +36,15 @@ fun game(){
     var countBattle = 0 //Conta as batalhas
 
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
-        //Escolhe o oponenete aleatoriamente
+        //Escolhe o oponente aleatoriamente
 
         var enemiesId: List<Int> = emptyList()
-        sql = "SELECT * FROM players WHERE level = ${player.level};"
+        sql = "SELECT * FROM commonenemies WHERE level = ${player.level};"
         rs = db.query(sql)
         while(rs!!.next()){
             enemiesId = enemiesId + rs.getInt("id")
         }
-        sql = "SELECT * FROM players WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
+        sql = "SELECT * FROM commonenemies WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
         rs = db.query(sql)
 
         var enemyname: String = ""
@@ -63,11 +63,16 @@ fun game(){
             enemydef = rs.getInt("basedef")
             enemydodge = rs.getInt("basedodge")
             enemyspeed = rs.getInt("basespeed")
-            enemymovements = rs.get
         }
 
-        var enemy = Enemy(enemyname, enemyhp,enemystamina,,enemyatk,enemydef,enemydodge,enemyspeed, player.level)
-        win = battle(player, enemy)
+        sql = "SELECT id FROM movements WHERE minlevel <= ${player.level};"
+        rs = db.query(sql)
+        while(rs!!.next()){
+            enemymovements = enemymovements + rs.getInt("id")
+        }
+
+        var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, player.level)
+        win = battle(player, enemy, db)
         if(win == 0 || win == 2) break
 
         countBattle++

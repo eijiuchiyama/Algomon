@@ -2,7 +2,7 @@ package algomon
 
 import java.sql.*
 
-class Connect(bd: String, local: String, porta: String, banco: String, user: String, senha: String) {
+class Connect(db: String, local: String, porta: String, banco: String, user: String, senha: String) {
     // GETs AND SETs
     var local: String? = null
     var user: String? = null
@@ -13,7 +13,7 @@ class Connect(bd: String, local: String, porta: String, banco: String, user: Str
     var driverjdbc: String? = null
 
     init {
-        if (bd == "PostgreSql") {
+        if (db == "PostgreSql") {
             str_conexao = "jdbc:postgresql://$local:$porta/$banco"
             this.local = local
             this.senha = senha
