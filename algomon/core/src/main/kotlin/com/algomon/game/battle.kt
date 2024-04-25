@@ -49,6 +49,7 @@ fun battle(player: Player, enemy: Enemy, db: Connect): Int{
         return 0
     }
     else if (enemy.HP == 0){
+        player.carteira = player.carteira + enemy.HP/20
         println("You Win")
         return 1
     }

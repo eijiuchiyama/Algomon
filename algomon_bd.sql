@@ -274,16 +274,19 @@ INSERT INTO public.movements VALUES (16, 0, -10, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 
 INSERT INTO public.movements VALUES (13, 0, -32, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 'Criptografia segura           ', 3, 85, 30);
 INSERT INTO public.movements VALUES (20, 0, -27, 0, 0, 0, 0, 0, 0, -18, 0, 0, 0, 'Destruir projeto 2.0          ', 3, 85, 30);
 INSERT INTO public.movements VALUES (27, 0, -25, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 'Path-finding simples          ', 4, 90, 35);
+INSERT INTO public.movements VALUES (7, 90, -70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deep sleep                    ', 10, 100, 75);
 INSERT INTO public.movements VALUES (9, 0, -30, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Correção eficiente de bugs    ', 4, 90, 35);
+INSERT INTO public.movements VALUES (6, 65, -50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Take a long nap               ', 6, 100, 47);
 INSERT INTO public.movements VALUES (24, 0, -37, 0, 0, 0, 0, 0, 0, 0, -22, 0, 0, 'Descriptografar 2.0           ', 4, 85, 35);
+INSERT INTO public.movements VALUES (30, -20, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Small recovery                ', 0, 100, 0);
+INSERT INTO public.movements VALUES (31, -35, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Recovery                      ', 3, 100, 30);
 INSERT INTO public.movements VALUES (2, 0, -35, 0, 0, 0, 0, -55, 0, 0, 0, 0, 0, 'Hacking 3.0                   ', 5, 100, 40);
-INSERT INTO public.movements VALUES (6, 65, -50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Take a long nap               ', 7, 100, 55);
-INSERT INTO public.movements VALUES (7, -60, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Recovery                      ', 7, 100, 55);
 INSERT INTO public.movements VALUES (21, 0, -42, 0, 0, 0, 0, 0, 0, -26, 0, 0, 0, 'Destruir projeto 3.0          ', 7, 85, 55);
 INSERT INTO public.movements VALUES (17, 0, -30, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 'Compactação média             ', 8, 80, 62);
 INSERT INTO public.movements VALUES (14, 0, -57, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 'Criptografia avançada         ', 8, 85, 62);
 INSERT INTO public.movements VALUES (25, 0, -52, 0, 0, 0, 0, 0, 0, 0, -32, 0, 0, 'Descriptografar 3.0           ', 8, 85, 62);
 INSERT INTO public.movements VALUES (3, 0, -50, 0, 0, 0, 0, -67, 0, 0, 0, 0, 0, 'Hacking 4.0                   ', 8, 100, 62);
+INSERT INTO public.movements VALUES (32, -65, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Super recovery                ', 6, 100, 47);
 INSERT INTO public.movements VALUES (0, 0, -10, 0, 0, 0, 0, -20, 0, 0, 0, 0, 0, 'Hacking 1.0                   ', 0, 100, 0);
 INSERT INTO public.movements VALUES (8, 0, -10, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Correção simples de bug       ', 0, 90, 0);
 INSERT INTO public.movements VALUES (12, 0, -15, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 'Criptografia básica           ', 0, 80, 0);
@@ -293,13 +296,13 @@ INSERT INTO public.movements VALUES (5, 25, -15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '
 INSERT INTO public.movements VALUES (28, 0, -50, 0, 0, 0, 0, 0, 0, 0, 0, -30, 0, 'Path-finding avançado         ', 9, 80, 70);
 INSERT INTO public.movements VALUES (10, 0, -50, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Correção extensa de bugs      ', 9, 85, 70);
 INSERT INTO public.movements VALUES (22, 0, -70, 0, 0, 0, 0, 0, 0, -45, 0, 0, 0, 'Destruir projeto 4.0          ', 10, 85, 75);
-INSERT INTO public.movements VALUES (30, -90, 65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Super recovery                ', 10, 95, 75);
 INSERT INTO public.movements VALUES (11, 0, -75, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Correção completa de bugs     ', 11, 80, 80);
 INSERT INTO public.movements VALUES (15, 0, -75, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 'Criptografia inquebrável      ', 11, 80, 80);
 INSERT INTO public.movements VALUES (4, 0, -70, 0, 0, 0, 0, -85, 0, 0, 0, 0, 0, 'Hacking 5.0                   ', 11, 100, 80);
 INSERT INTO public.movements VALUES (18, 0, -50, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 'Compactação avançada          ', 12, 70, 87);
 INSERT INTO public.movements VALUES (26, 0, -80, 0, 0, 0, 0, 0, 0, 0, -50, 0, 0, 'Descriptografar 4.0           ', 12, 90, 87);
 INSERT INTO public.movements VALUES (29, 0, -90, 0, 0, 0, 0, -115, 0, 0, 0, 0, 0, 'Super hacking                 ', 13, 95, 95);
+INSERT INTO public.movements VALUES (33, -85, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hyper recovery                ', 9, 100, 70);
 
 
 --

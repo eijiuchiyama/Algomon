@@ -1,5 +1,7 @@
 package algomon
 
+import kotlin.math.*
+
 class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int)
 		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed, level){
     fun RandomMovement(enemy: Character, db: Connect){
@@ -18,7 +20,7 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
             movementData = movementData + rs.getInt("defown")
             movementData = movementData + rs.getInt("dodgeown")
             movementData = movementData + rs.getInt("speedown")
-            movementData = movementData + rs.getInt("hpenemy")
+            movementData = movementData + min(rs.getInt("hpenemy") - (this.Atk - enemy.Def), 0)
             movementData = movementData + rs.getInt("staminaenemy")
             movementData = movementData + rs.getInt("atkenemy")
             movementData = movementData + rs.getInt("defenemy")
@@ -30,15 +32,26 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
 
         var self_array = movementData.slice(0..5)
         var enemy_array = movementData.slice(6..11)
+        val zero_array = listOf(0,0,0,0,0,0)
         if(Stamina > self_array[1]){ //If stamina is enough
-            var randomNum = kotlin.random.Random.nextInt(1, 101)
-            if(randomNum < baseAccuracy) {
-                println("Vez de $name")
-                println("Ataca com $movementName")
-                Change_Status(self_array)
-                enemy.Change_Status(enemy_array)
-            } else{
-                println("Movimento não foi bem sucedido")
+            if(enemy_array == zero_array) { //If movement doesn't change enemy stats
+                var randomNum = kotlin.random.Random.nextInt(1, 101)
+                if (randomNum < baseAccuracy) {
+                    println("Vez de $name")
+                    println("Utiliza $movementName")
+                    Change_Status(self_array)
+                } else {
+                    println("Movimento não foi bem sucedido")
+                }
+            } else{  //If movement does change enemy stats
+                var randomNum = kotlin.random.Random.nextInt(1, 101)
+                if (randomNum < baseAccuracy - enemy.Dodge) {
+                    println("Vez de $name")
+                    println("Utiliza $movementName")
+                    Change_Status(self_array)
+                } else {
+                    println("Movimento não foi bem sucedido")
+                }
             }
        } else{
             println("A stamina não é suficiente para realizar o movimento")

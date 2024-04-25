@@ -1,6 +1,7 @@
 package algomon
 
 import java.util.Scanner
+import kotlin.math.*
 
 fun interval(player: Player, db:Connect){
     while(true) {
@@ -50,26 +51,33 @@ fun interval(player: Player, db:Connect){
 
             var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, player.level)
             if(battle(player, enemy, db) == 0) {
+                player.carteira = max(player.carteira - enemy.HP/20, 0)
                 println("Você perdeu a batalha. Mais cuidado na próxima")
                 return
             } else{
                 println("Parabéns. Você venceu a batalha!")
             }
 
-        } else{
+        } else{ //Caso escolhe obter movimento
 
             println("Qual movimento você deseja obter?")
+            var movimentosDisponiveis: List<Int> = emptyList()
             var sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
             var rs = db.query(sql)
             while(rs!!.next()){
                if(rs.getInt("id") in player.Skill){
                    continue
                }
+                movimentosDisponiveis = movimentosDisponiveis + rs.getInt("id")
                 println("Id: ${rs.getInt("id")} Nome: ${rs.getString("name")} Preço: ${rs.getInt("preco")}")
 
             }
             println("Escolha seu movimento:")
             var choose = Scanner(System.`in`).nextInt()
+            if(choose !in movimentosDisponiveis){
+                println("Movimento não disponível.")
+                continue
+            }
             var preco: Int = 0
             sql = "SELECT * FROM movements WHERE id = $choose;"
             rs = db.query(sql)
