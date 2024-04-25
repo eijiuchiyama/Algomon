@@ -2,17 +2,18 @@ package algomon
 
 import kotlin.math.*
 
-class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def: Int, Dodge: Int, Speed: Int, level: Int)
-		   : Character(name, HP, Stamina, Skill, Atk, Def, Dodge, Speed, level){
+class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atkbase: Int, defbase: Int,
+            dodgebase: Int, speedbase: Int, level: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
+            dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
     fun RandomMovement(enemy: Character, db: Connect){
-        var random_movement = kotlin.random.Random.nextInt(0, Skill.size)
+        val random_movement = kotlin.random.Random.nextInt(0, skills.size)
 
         //Access bank of data of ID choosed -> Data[12]
         var movementData: List<Int> = emptyList()
-        var movementName: String = ""
-        var baseAccuracy: Int = 0
-        var sql = "SELECT * FROM movements WHERE id = ${Skill[random_movement]};"
-        var rs = db.query(sql)
+        var movementName = ""
+        var baseAccuracy = 0
+        val sql = "SELECT * FROM movements WHERE id = ${skills[random_movement]};"
+        val rs = db.query(sql)
         while(rs!!.next()){
             movementData = movementData + rs.getInt("hpown")
             movementData = movementData + rs.getInt("staminaown")
@@ -20,7 +21,7 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
             movementData = movementData + rs.getInt("defown")
             movementData = movementData + rs.getInt("dodgeown")
             movementData = movementData + rs.getInt("speedown")
-            movementData = movementData + min(rs.getInt("hpenemy") - (this.Atk - enemy.Def), 0)
+            movementData = movementData + min(rs.getInt("hpenemy") - (this.atk - enemy.def), 0)
             movementData = movementData + rs.getInt("staminaenemy")
             movementData = movementData + rs.getInt("atkenemy")
             movementData = movementData + rs.getInt("defenemy")
@@ -30,25 +31,26 @@ class Enemy(name: String, HP: Int, Stamina: Int, Skill: List<Int>, Atk: Int, Def
             movementName = rs.getString("name")
         }
 
-        var self_array = movementData.slice(0..5)
-        var enemy_array = movementData.slice(6..11)
-        val zero_array = listOf(0,0,0,0,0,0)
-        if(Stamina > self_array[1]){ //If stamina is enough
-            if(enemy_array == zero_array) { //If movement doesn't change enemy stats
-                var randomNum = kotlin.random.Random.nextInt(1, 101)
+        val selfArray = movementData.slice(0..5)
+        val enemyArray = movementData.slice(6..11)
+        val zeroArray = listOf(0,0,0,0,0,0)
+        if(stamina > selfArray[1]){ //If stamina is enough
+            if(enemyArray == zeroArray) { //If movement doesn't change enemy stats
+                val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy) {
                     println("Vez de $name")
                     println("Utiliza $movementName")
-                    Change_Status(self_array)
+                    Change_Status(selfArray)
                 } else {
                     println("Movimento não foi bem sucedido")
                 }
             } else{  //If movement does change enemy stats
-                var randomNum = kotlin.random.Random.nextInt(1, 101)
-                if (randomNum < baseAccuracy - enemy.Dodge) {
+                val randomNum = kotlin.random.Random.nextInt(1, 101)
+                if (randomNum < baseAccuracy - enemy.dodge) {
                     println("Vez de $name")
                     println("Utiliza $movementName")
-                    Change_Status(self_array)
+                    Change_Status(selfArray)
+                    enemy.Change_Status(enemyArray)
                 } else {
                     println("Movimento não foi bem sucedido")
                 }

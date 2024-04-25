@@ -9,12 +9,12 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
     var senha: String? = null
     var c: Connection? = null
     var statement: Statement? = null
-    var str_conexao: String? = null
+    var strconexao: String? = null
     var driverjdbc: String? = null
 
     init {
         if (db == "PostgreSql") {
-            str_conexao = "jdbc:postgresql://$local:$porta/$banco"
+            strconexao = "jdbc:postgresql://$local:$porta/$banco"
             this.local = local
             this.senha = senha
             this.user = user
@@ -25,7 +25,7 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
     //Conexão com o Banco de Dados
     fun connect() {
         try {
-            c = DriverManager.getConnection(str_conexao, user, senha)
+            c = DriverManager.getConnection(strconexao, user, senha)
             statement = c!!.createStatement()
             println("Conexão realizada com sucesso")
         } catch (e: Exception) {

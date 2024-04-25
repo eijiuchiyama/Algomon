@@ -2,23 +2,23 @@ package algomon
 
 import kotlin.math.*
 
-abstract class Random
-
-open class Character(var name: String, var HP: Int, var Stamina: Int, var Skill: List<Int>,
-                     var Atk: Int, var Def: Int, var Dodge: Int, var Speed: Int, var level: Int){
+open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Int>,
+                     var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,
+                     var hp: Int, var stamina: Int, var atk: Int, var def: Int, var dodge: Int, var speed: Int){
 
     fun Show_Status(){
         println(name)
-        println("Level = $level, HP = $HP, Stamina = $Stamina, Skill = $Skill, Atk = $Atk, Def = $Def, Dodge = $Dodge, Speed = $Speed")
+        println("Level = $level, HP = $hp, Stamina = $stamina, Skill = $skills, Atk = $atk, Def = $def, " +
+            "Dodge = $dodge, Speed = $speed")
     }
 
     fun Change_Status(change: List<Int>){
-        HP      = max(0,HP     + change[0])
-        Stamina = max(0,Stamina+ change[1])
-        Atk     = max(0,Atk    + change[2])
-        Def     = max(0,Def    + change[3])
-        Dodge   = max(0,Dodge  + change[4])
-        Speed   = max(0,Speed  + change[5])
+        hp      = max(0,hp     + change[0])
+        stamina = max(0,stamina+ change[1])
+        atk     = max(0,atk    + change[2])
+        def     = max(0,def    + change[3])
+        dodge   = max(0,dodge  + change[4])
+        speed   = max(0,speed  + change[5])
     }
 
 }

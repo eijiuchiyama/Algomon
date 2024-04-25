@@ -1,18 +1,18 @@
 package algomon
 
 fun game(){
-    var db = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados
+    val db = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados
     if(start() == 0) //Inicia o jogo, apresentando o contexto
         return
 
     var sql = "SELECT * FROM players WHERE id = 0;"
     var rs = db.query(sql)
-    var playerhp: Int = 0
-    var playerstamina: Int = 0
-    var playeratk: Int = 0
-    var playerdef: Int = 0
-    var playerdodge: Int = 0
-    var playerspeed: Int = 0
+    var playerhp = 0
+    var playerstamina = 0
+    var playeratk = 0
+    var playerdef = 0
+    var playerdodge = 0
+    var playerspeed = 0
     while(rs!!.next()){
         playerhp = rs.getInt("basehp")
         playerstamina = rs.getInt("basestamina")
@@ -29,7 +29,7 @@ fun game(){
         playermovements = playermovements + rs.getInt("id")
     }
 
-    var player = Player("Player", playerhp, playerstamina,
+    val player = Player("Player", playerhp, playerstamina,
         playermovements, playeratk, playerdef, playerdodge, playerspeed, 0, 0)
 
     var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
@@ -38,18 +38,17 @@ fun game(){
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
 
         //Escolhe o oponente de specialenemies relativo à batalha atual do torneio
-        var enemiesId: List<Int> = emptyList()
         sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
-        var rs = db.query(sql)
+        rs = db.query(sql)
 
-        var enemyname: String = ""
-        var enemyhp: Int = 0
-        var enemystamina: Int = 0
-        var enemyatk: Int = 0
-        var enemydef: Int = 0
-        var enemydodge: Int = 0
-        var enemyspeed: Int = 0
-        var enemylevel: Int = 0
+        var enemyname = ""
+        var enemyhp = 0
+        var enemystamina = 0
+        var enemyatk = 0
+        var enemydef = 0
+        var enemydodge = 0
+        var enemyspeed = 0
+        val enemylevel = 0
         var enemymovements: List<Int> = emptyList()
         while(rs!!.next()){
             enemyname = rs.getString("name")
@@ -67,7 +66,7 @@ fun game(){
             enemymovements = enemymovements + rs.getInt("id")
         }
 
-        var enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, enemylevel)
+        val enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, enemylevel)
         win = battle(player, enemy, db)
         if(win == 0 || win == 2){
             println("Você perdeu uma batalha do torneio. Você foi eliminado")
@@ -118,13 +117,14 @@ fun main() {
 
     /**
      * Ataque = Hacking
-     * Regenerar HP e Stamina = take a nap
-     * Aumentar própria Defesa = criptografar
+     * Regenerar HP = Take a nap
+     * Regenerar Stamina = Recovery
+     * Aumentar própria Defesa = Criptografar
      * Aumentar próprio Ataque = Correção de Bug
      * Aumentar próprio Speed = Compactar
      * Resetar os atributos próprios = Refactoring
-     * Diminuir Defesa adversária = descriptografar
-     * Diminuir Ataque adversário =
+     * Diminuir Defesa adversária = Descriptografar
+     * Diminuir Ataque adversário = Destruir projeto
      * Diminuir o Dodge adversário = Path-finding
      */
 

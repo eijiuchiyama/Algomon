@@ -16,7 +16,7 @@ fun start(): Int{
     println("Acho que é tudo. Boa sorte.")
 
     var startGame = "n"
-    var quitGame = "n"
+    var quitGame: String
     while(startGame == "n" || startGame == "N") {
         println("Começar primeira batalha? (s/n)")
         startGame = Scanner(System.`in`).nextLine()
