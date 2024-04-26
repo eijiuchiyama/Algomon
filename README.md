@@ -13,7 +13,7 @@ Entre o intervalo de cada competição, o jogodor terá um tempo livre que é ut
 ## Linguagens de Programação utilizada
 o projeto será desenvolvido em linguagem Kotlin baseado no framework libGDX.
 
-##SGBD utilizado
+## SGBD utilizado
 Nosso projeto se utiliza do SGBD PostgreSQL para organizar os dados a serem utilizados no programa.
 
 ## Autores e Contribuidores
@@ -22,4 +22,4 @@ Lucas Eiji: Programador e Designer do Projeto
 Paulo Roberto Miranda Meirelles: Orientador do Projeto
 
 ## License
-A licença pode ser verificada no arquivo LICENSE.
+A licença (GNU General Public License v3.0) pode ser verificada no arquivo LICENSE.
