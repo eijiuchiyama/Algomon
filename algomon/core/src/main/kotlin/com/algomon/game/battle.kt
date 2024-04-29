@@ -57,8 +57,8 @@ fun battle(player: Player, enemy: Enemy, db: Connect): Int{
         player.hpbase += 3
         player.staminabase += 3
         player.atkbase += 1
-        player.defbase += 1
-        player.speedbase += 1
+        player.def += 1
+        player.speed += 1
 
         player.carteira += enemy.hp/20
         return 1
