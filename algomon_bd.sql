@@ -250,19 +250,19 @@ COMMENT ON TABLE public.specialenemies IS 'Inimigos especiais';
 -- Data for Name: commonenemies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.commonenemies VALUES (0, 'Inimigo fraco                 ', 80, 100, 25, 15, 5, 30, 0);
-INSERT INTO public.commonenemies VALUES (1, 'Inimigo fraco                 ', 70, 105, 17, 22, 10, 15, 0);
-INSERT INTO public.commonenemies VALUES (2, 'Inimigo muito fraco           ', 40, 70, 15, 18, 0, 20, 0);
-INSERT INTO public.commonenemies VALUES (3, 'Inimigo muito fraco           ', 50, 60, 10, 25, 0, 10, 0);
-INSERT INTO public.commonenemies VALUES (4, 'Inimigo fraco e rápido        ', 80, 100, 22, 15, 5, 50, 0);
-INSERT INTO public.commonenemies VALUES (6, 'Inimigo paia                  ', 20, 70, 0, 25, 15, 15, 0);
-INSERT INTO public.commonenemies VALUES (5, 'Inimigo estranho              ', 140, 150, 8, 7, 0, 17, 0);
-INSERT INTO public.commonenemies VALUES (7, 'Inimigo meio fraco            ', 120, 110, 26, 28, 10, 25, 1);
-INSERT INTO public.commonenemies VALUES (8, 'Inimigo meio fraco            ', 110, 120, 28, 30, 10, 20, 1);
-INSERT INTO public.commonenemies VALUES (9, 'Inimigo maromba               ', 110, 120, 35, 15, 10, 5, 1);
-INSERT INTO public.commonenemies VALUES (10, 'Inimigo blindado              ', 125, 115, 15, 32, 7, 20, 1);
-INSERT INTO public.commonenemies VALUES (11, 'Inimigo iniciante             ', 120, 120, 25, 25, 15, 20, 1);
-INSERT INTO public.commonenemies VALUES (12, 'Inimigo desajeitado           ', 140, 150, 20, 20, 0, 40, 1);
+INSERT INTO public.commonenemies VALUES (4, 'Inimigo fraco e rápido        ', 80, 57, 22, 15, 5, 50, 0);
+INSERT INTO public.commonenemies VALUES (5, 'Inimigo estranho              ', 140, 120, 8, 7, 0, 17, 0);
+INSERT INTO public.commonenemies VALUES (0, 'Inimigo fraco                 ', 80, 65, 25, 15, 5, 30, 0);
+INSERT INTO public.commonenemies VALUES (1, 'Inimigo fraco                 ', 70, 75, 17, 22, 10, 15, 0);
+INSERT INTO public.commonenemies VALUES (2, 'Inimigo muito fraco           ', 40, 30, 15, 18, 0, 20, 0);
+INSERT INTO public.commonenemies VALUES (3, 'Inimigo muito fraco           ', 50, 45, 10, 25, 0, 10, 0);
+INSERT INTO public.commonenemies VALUES (7, 'Inimigo meio fraco            ', 120, 80, 26, 28, 10, 25, 1);
+INSERT INTO public.commonenemies VALUES (8, 'Inimigo meio fraco            ', 110, 100, 28, 30, 10, 20, 1);
+INSERT INTO public.commonenemies VALUES (6, 'Inimigo paia                  ', 20, 25, 0, 25, 15, 15, 0);
+INSERT INTO public.commonenemies VALUES (9, 'Inimigo maromba               ', 110, 90, 35, 15, 10, 5, 1);
+INSERT INTO public.commonenemies VALUES (10, 'Inimigo blindado              ', 125, 100, 15, 32, 7, 20, 1);
+INSERT INTO public.commonenemies VALUES (11, 'Inimigo iniciante             ', 120, 24, 25, 25, 15, 20, 1);
+INSERT INTO public.commonenemies VALUES (12, 'Inimigo desajeitado           ', 140, 70, 20, 20, 0, 40, 1);
 
 
 --
@@ -309,14 +309,14 @@ INSERT INTO public.movements VALUES (33, -85, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 -- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.players VALUES (0, 100, 120, 20, 20, 7, 20);
+INSERT INTO public.players VALUES (0, 100, 70, 20, 20, 7, 20);
 
 
 --
 -- Data for Name: specialenemies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.specialenemies VALUES (0, 'Barrera                       ', 100, 120, 16, 16, 10, 25, 0);
+INSERT INTO public.specialenemies VALUES (0, 'Barrera                       ', 100, 80, 16, 16, 10, 25, 0);
 
 
 --
