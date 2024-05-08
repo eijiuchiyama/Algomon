@@ -1,4 +1,4 @@
-package algomon
+package com.algomon.game
 
 import kotlin.math.*
 

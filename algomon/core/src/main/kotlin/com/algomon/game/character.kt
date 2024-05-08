@@ -1,6 +1,6 @@
-package algomon
+package com.algomon.game
 
-import kotlin.math.*
+import kotlin.math.max
 
 open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Int>,
                      var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,

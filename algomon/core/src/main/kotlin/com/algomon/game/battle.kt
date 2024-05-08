@@ -1,4 +1,4 @@
-package algomon
+package com.algomon.game
 
 fun battle(player: Player, enemy: Enemy, db: Connect): Int{
     var turn = 1

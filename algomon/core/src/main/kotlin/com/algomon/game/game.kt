@@ -1,4 +1,4 @@
-package algomon
+package com.algomon.game
 
 fun game(){
     val db = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados

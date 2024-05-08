@@ -1,9 +1,7 @@
+package com.algomon.game
+
 import org.junit.Assert.assertEquals
 import org.junit.Test
-
-fun sum(a:Int, b:Int):Int{
-    return a + b
-}
 
 internal class Test {
 
@@ -12,4 +10,6 @@ internal class Test {
         val expected = 42
         assertEquals(expected, sum(40, 2))
     }
+
+
 }

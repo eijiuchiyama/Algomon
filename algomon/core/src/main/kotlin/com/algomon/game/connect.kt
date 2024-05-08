@@ -1,6 +1,10 @@
-package algomon
+package com.algomon.game
 
-import java.sql.*
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.ResultSet
+import java.sql.SQLException
+import java.sql.Statement
 
 class Connect(db: String, local: String, porta: String, banco: String, user: String, senha: String) {
     // GETs AND SETs
