@@ -11,7 +11,7 @@ A mecânica do jogo será semelhante ao mecâncica do famoso jogo Pokemon, poré
 Entre o intervalo de cada competição, o jogodor terá um tempo livre que é utilizado para aperfeiçoar as habilidades da personagem principal, tais como aprender os algoritmos e teorias através da internet, passear no ambiente da competição conhecendo os outros competidores, ou treinar suas técnicas próprias de programação.,
 
 ## Linguagens de Programação utilizada
-o projeto será desenvolvido em linguagem Kotlin baseado no framework libGDX. Como IDE foi utilizado o Android Studio, que é focado em desenvolvimento para Android e já possui recursos para esse sistema. d
+o projeto será desenvolvido em linguagem Kotlin baseado no framework libGDX. Como IDE foi utilizado o Android Studio, que é focado em desenvolvimento para Android e já possui recursos para esse sistema.
 
 ## SGBD utilizado
 Nosso projeto se utiliza do SGBD PostgreSQL para organizar os dados a serem utilizados no programa.
