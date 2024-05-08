@@ -1,4 +1,8 @@
 buildscript {
+  ext {
+    agp_version = '8.3.2'
+    agp_version1 = '8.3.2'
+  }
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
@@ -10,7 +14,6 @@ buildscript {
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
   }
 }
 
@@ -30,7 +33,7 @@ allprojects {
 configure(subprojects) {
   apply plugin: 'java-library'
   apply plugin: 'kotlin'
-  sourceCompatibility = 11
+  sourceCompatibility = 17
   compileJava {
     options.incremental = true
   }
@@ -52,7 +55,7 @@ configure(subprojects) {
     }
   }
   compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-  
+
 }
 
 subprojects {

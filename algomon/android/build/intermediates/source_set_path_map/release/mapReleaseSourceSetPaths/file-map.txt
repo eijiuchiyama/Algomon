@@ -1,0 +1,7 @@
+com.algomon.game.android-pngs-0 /home/lucaseiji/Documentos/Algomon/android/build/generated/res/pngs/release
+com.algomon.game.android-resValues-1 /home/lucaseiji/Documentos/Algomon/android/build/generated/res/resValues/release
+com.algomon.game.android-packageReleaseResources-2 /home/lucaseiji/Documentos/Algomon/android/build/intermediates/incremental/release/packageReleaseResources/merged.dir
+com.algomon.game.android-packageReleaseResources-3 /home/lucaseiji/Documentos/Algomon/android/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
+com.algomon.game.android-release-4 /home/lucaseiji/Documentos/Algomon/android/build/intermediates/merged_res/release/mergeReleaseResources
+com.algomon.game.android-android-5 /home/lucaseiji/Documentos/Algomon/android/res
+com.algomon.game.android-release-6 /home/lucaseiji/Documentos/Algomon/android/src/release/res

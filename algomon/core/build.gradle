@@ -19,4 +19,6 @@ dependencies {
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   api "io.github.quillraven.fleks:Fleks:$fleksVersion"
     implementation files('libs/postgresql-42.7.3.jar')
+  testImplementation('junit:junit:4.12')
+  testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }
