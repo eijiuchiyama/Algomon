@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/algomon.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/algomon.core.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/algomon.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/algomon.core.test.iml" />
     </modules>
   </component>

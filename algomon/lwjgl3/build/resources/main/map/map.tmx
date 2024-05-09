@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="21" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="ground.tsx"/>
+ <tileset firstgid="392" source="map.tsx"/>
+ <layer id="1" name="ground" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg64CYWTKm+UTNpbya5eNTMUTOpbSa1AQDBrKs7
+  </data>
+ </layer>
+ <layer id="3" name="bgd_2" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQwkIM1NfnzKZZpKi7wcjdvFfOMSJARxMDAycQHybEZXmYiLfzFEwCkgBAMeDBFw=
+  </data>
+ </layer>
+ <layer id="4" name="wall" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyTZWBgUGbExPwM+IEgDn3yQHE9IDZhxMSKBMxUxKHPAGomLj2EzMQGhpqZsPB1QGJrYQl/ZIwsj6wPZqY1IwQzILGtsYQ/MkZWh6wPn9/JBaNmjppJTTPtGSD5gFrYEYgBvYcWAA==
+  </data>
+ </layer>
+ <layer id="2" name="bgd_1" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh6gJuJuvo4geLSTBCaFECuPkoBO5p9GUB+JhMmG5d6bEAcTU0FkF/JhMnGpX6ggA8zKj+GGbu6gQQvmfHT5ICfzPhpcgAx7lwHjPf1TAiaGu7cBzRnPxOCpgY4BzTnPBOCphUAAK04HU0=
+  </data>
+ </layer>
+</map>

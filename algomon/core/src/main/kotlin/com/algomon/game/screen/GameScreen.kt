@@ -5,11 +5,15 @@ import com.algomon.game.component.AnimationModel
 import com.algomon.game.component.AnimationType
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
+import com.algomon.game.event.MapChangeEvent
+import com.algomon.game.event.fire
 import com.algomon.game.system.AnimationSystem
 import com.algomon.game.system.RenderSystem
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -19,7 +23,7 @@ import ktx.assets.disposeSafely
 import ktx.log.logger
 
 class GameScreen : KtxScreen {
-    private val stage: Stage = Stage(ExtendViewport(16f,9f))
+    private val stage: Stage = Stage(ExtendViewport(21f,16f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
 
     private val world: World = World{
@@ -33,6 +37,14 @@ class GameScreen : KtxScreen {
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
+
+        world.systems.forEach { system ->
+            if (system is EventListener){
+                stage.addListener(system)
+            }
+        }
+        val tiledMap = TmxMapLoader().load("assets/map/map.tmx")
+        stage.fire(MapChangeEvent(tiledMap))
 
         world.entity {
             add<ImageComponent> {
