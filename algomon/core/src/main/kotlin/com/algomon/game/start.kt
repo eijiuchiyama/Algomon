@@ -2,7 +2,7 @@ package com.algomon.game
 
 import java.util.Scanner
 
-fun start(): Int{
+fun printOpening(){
     println("Parabens! Você acaba de se inscrever no nosso torneio!")
     println("Se você quer se tornar um programador experiente, está no caminho certo.")
     println("Você terá que competir com outros utilizando código.")
@@ -14,6 +14,11 @@ fun start(): Int{
     println("Tome cuidado para não perder seu HP e ser eliminado. O próximo torneio é só ano que vem!")
     println("")
     println("Acho que é tudo. Boa sorte.")
+}
+
+fun start(): Int{ //Retorna 1 se começa a primeira batalha e 0 se desiste
+
+    printOpening()
 
     var startGame = "n"
     var quitGame: String

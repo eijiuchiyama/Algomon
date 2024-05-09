@@ -1,36 +1,80 @@
 package com.algomon.game
 
+fun getPlayerData(db: Connect): List<Int>{
+    var playerData: List<Int> = emptyList()
+    val sql = "SELECT * FROM players WHERE id = 0;"
+    val rs = db.query(sql)
+
+    while(rs!!.next()){
+        playerData = playerData + rs.getInt("basehp")
+        playerData = playerData + rs.getInt("basestamina")
+        playerData = playerData + rs.getInt("baseatk")
+        playerData = playerData + rs.getInt("basedef")
+        playerData = playerData + rs.getInt("basedodge")
+        playerData = playerData + rs.getInt("basespeed")
+    }
+    return playerData
+}
+
+fun getPlayerMovements(db: Connect): List<Int>{
+    var playermovements: List<Int> = emptyList()
+    val sql = "SELECT id FROM movements WHERE minlevel = 0;"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        playermovements = playermovements + rs.getInt("id")
+    }
+    return playermovements
+}
+
+fun getSpecialEnemyData(db: Connect, countBattle: Int): List<Int>{
+    var enemyData: List<Int> = emptyList()
+    val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
+    val rs = db.query(sql)
+
+    while(rs!!.next()){
+        enemyData = enemyData + rs.getInt("basehp")
+        enemyData = enemyData + rs.getInt("basestamina")
+        enemyData = enemyData + rs.getInt("baseatk")
+        enemyData = enemyData + rs.getInt("basedef")
+        enemyData = enemyData + rs.getInt("basedodge")
+        enemyData = enemyData + rs.getInt("basespeed")
+        enemyData = enemyData + rs.getInt("level")
+    }
+    return enemyData
+}
+
+fun getSpecialEnemyName(db: Connect, countBattle: Int): String{
+    var enemyName = ""
+    val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
+    val rs = db.query(sql)
+
+    while(rs!!.next()){
+        enemyName = rs.getString("name")
+    }
+    return enemyName
+}
+
+fun getSpecialEnemyMovements(db: Connect, enemyLevel: Int): List<Int>{
+    var enemymovements: List<Int> = emptyList()
+    val sql = "SELECT id FROM movements WHERE minlevel <= ${enemyLevel};"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        enemymovements = enemymovements + rs.getInt("id")
+    }
+    return enemymovements
+}
+
 fun game(){
     val db = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados
     if(start() == 0) //Inicia o jogo, apresentando o contexto
         return
 
-    var sql = "SELECT * FROM players WHERE id = 0;"
-    var rs = db.query(sql)
-    var playerhp = 0
-    var playerstamina = 0
-    var playeratk = 0
-    var playerdef = 0
-    var playerdodge = 0
-    var playerspeed = 0
-    while(rs!!.next()){
-        playerhp = rs.getInt("basehp")
-        playerstamina = rs.getInt("basestamina")
-        playeratk = rs.getInt("baseatk")
-        playerdef = rs.getInt("basedef")
-        playerdodge = rs.getInt("basedodge")
-        playerspeed = rs.getInt("basespeed")
-    }
+    var playerData = getPlayerData(db)
 
-    var playermovements: List<Int> = emptyList()
-    sql = "SELECT id FROM movements WHERE minlevel = 0;"
-    rs = db.query(sql)
-    while(rs!!.next()){
-        playermovements = playermovements + rs.getInt("id")
-    }
+    var playermovements = getPlayerMovements(db)
 
-    val player = Player("Player", playerhp, playerstamina,
-        playermovements, playeratk, playerdef, playerdodge, playerspeed, 0, 0)
+    val player = Player("Player", playerData[0], playerData[1], //Cria o player
+        playermovements, playerData[2], playerData[3], playerData[4], playerData[5], 0, 0)
 
     var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
     var countBattle = 0 //Conta as batalhas
@@ -38,40 +82,20 @@ fun game(){
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
 
         //Escolhe o oponente de specialenemies relativo à batalha atual do torneio
-        sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
-        rs = db.query(sql)
+        val enemyData = getSpecialEnemyData(db, countBattle)
+        val enemyName = getSpecialEnemyName(db, countBattle)
+        val enemymovements = getSpecialEnemyMovements(db, enemyData[6])
 
-        var enemyname = ""
-        var enemyhp = 0
-        var enemystamina = 0
-        var enemyatk = 0
-        var enemydef = 0
-        var enemydodge = 0
-        var enemyspeed = 0
-        val enemylevel = 0
-        var enemymovements: List<Int> = emptyList()
-        while(rs!!.next()){
-            enemyname = rs.getString("name")
-            enemyhp = rs.getInt("basehp")
-            enemystamina = rs.getInt("basestamina")
-            enemyatk = rs.getInt("baseatk")
-            enemydef = rs.getInt("basedef")
-            enemydodge = rs.getInt("basedodge")
-            enemyspeed = rs.getInt("basespeed")
-        }
 
-        sql = "SELECT id FROM movements WHERE minlevel <= ${enemylevel};"
-        rs = db.query(sql)
-        while(rs!!.next()){
-            enemymovements = enemymovements + rs.getInt("id")
-        }
+        val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4],
+            enemyData[5], enemyData[6])
 
-        val enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, enemylevel)
         win = battle(player, enemy, db)
-        if(win == 0 || win == 2){
+
+        if(win == 0 || win == 2){ //Se o player desistiu ou perdeu, ele perde o torneio
             println("Você perdeu uma batalha do torneio. Você foi eliminado")
             break
-        } else{
+        } else{ //Se ele venceu, ele passa para a próxima fase
             println("Você venceu uma batalha do torneio! Você passou para a próxima fase!")
         }
 
@@ -85,10 +109,12 @@ fun game(){
     else println("Você venceu o torneio. Parabéns.")
 
     databaseDisconnect(db)
+
 }
 
 
 fun main() {
+
 	/**
      *Personagem
         1 - Nome
@@ -128,5 +154,5 @@ fun main() {
      * Diminuir o Dodge adversário = Path-finding
      */
 
-    game()
+    game() //Inicia um jogo
 }

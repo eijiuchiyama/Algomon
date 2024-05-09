@@ -27,7 +27,7 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
     }
 
     //Conexão com o Banco de Dados
-    fun connect() {
+    fun connect(): Int {
         try {
             c = DriverManager.getConnection(strconexao, user, senha)
             statement = c!!.createStatement()
@@ -35,10 +35,12 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
         } catch (e: Exception) {
             e.printStackTrace()
             println("Não foi possível se conectar ao banco de dados")
+            return 0
         }
+        return 1
     }
 
-    fun disconnect() {
+    fun disconnect(): Int {
         try {
             c!!.close()
             println("Desconexão realizada com sucesso")
@@ -46,7 +48,9 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
             System.err.println(ex)
             ex.printStackTrace()
             println("Não foi possível se desconectar do banco de dados")
+            return 0
         }
+        return 1
     }
 
     fun query(query: String?): ResultSet? {

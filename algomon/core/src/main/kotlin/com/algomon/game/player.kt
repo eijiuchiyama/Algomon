@@ -1,43 +1,28 @@
 package com.algomon.game
 
 import java.util.Scanner
-import kotlin.math.*
+import kotlin.math.min
 
 class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atkbase: Int, defbase: Int, dodgebase: Int,
                 speedbase: Int, level: Int, var carteira: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
                 dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
 
-    fun ChooseMovement(enemy: Character, db: Connect): Int{
 
+    fun getMovements(db: Connect): List<String>{
         skills = skills.sorted()
-        println("Movimentos disponíveis:")
+        var movements: List<String> = emptyList()
         for (action in skills){
             val sql = "SELECT * FROM movements WHERE id = $action;"
             val rs = db.query(sql)
             while (rs!!.next()) {
-                println("Id: ${rs.getInt("id")} Nome: ${rs.getString("name")}")
+                movements = movements + rs.getString("name")
             }
         }
-        print("Escolha seu movimento (ou -1 para fugir): ")
-        val choose = Scanner(System.`in`).nextInt()
-        println()
-        if(choose == -1){ //Se fugir retorna 0. Senão retorna 1
-            if(kotlin.random.Random.nextInt(0, 2) == 0) {
-                println("Você deixou a batalha")
-                return 0
-            } else {
-                println("Não foi possível fugir")
-                return 1
-            }
-        } else if(choose >= skills.size){
-            println("Não foi possível atacar")
-            return 1
-        }
+        return movements
+    }
 
-        //Access bank of data of chosen ID-> Data[12]
+    fun getMovementData(db: Connect, enemy: Character, choose: Int): List<Int>{
         var movementData: List<Int> = emptyList()
-        var movementName = ""
-        var baseAccuracy = 0
         val sql = "SELECT * FROM movements WHERE id = $choose;"
         val rs = db.query(sql)
         while(rs!!.next()){
@@ -53,10 +38,32 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atk
             movementData = movementData + rs.getInt("defenemy")
             movementData = movementData + rs.getInt("dodgeenemy")
             movementData = movementData + rs.getInt("speedenemy")
-            baseAccuracy = rs.getInt("baseaccuracy")
+        }
+        return movementData
+    }
+
+    fun getMovementName(db: Connect, choose: Int): String{
+        val sql = "SELECT * FROM movements WHERE id = $choose;"
+        val rs = db.query(sql)
+        var movementName = ""
+        while(rs!!.next()){
             movementName = rs.getString("name")
         }
+        return movementName
+    }
 
+    fun getBaseAccuracy(db: Connect, choose: Int): Int{
+        val sql = "SELECT * FROM movements WHERE id = $choose;"
+        val rs = db.query(sql)
+        var baseAccuracy = 0
+        while(rs!!.next()){
+            baseAccuracy = rs.getInt("baseaccuracy")
+        }
+        return baseAccuracy
+    }
+
+    fun useMovement(movementData: List<Int>, baseAccuracy: Int, enemy: Character): Int{ //Retorna 1 se o movimento foi bem-sucedido
+                                                                                        //0 se errou e -1 se stamina é insuficiente
         val selfArray = movementData.slice(0..5)
         val enemyArray = movementData.slice(6..11)
         val zeroArray = listOf(0,0,0,0,0,0)
@@ -64,26 +71,57 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atk
             if(enemyArray == zeroArray){ //If movement doesn't change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy) {
-                    println("Sua vez")
-                    println("Utiliza $movementName")
                     Change_Status(selfArray)
+                    return 1
                 } else {
-                    println("Movimento não foi bem sucedido")
+                    return 0
                 }
             } else { //If movement does change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy - enemy.dodge) {
-                    println("Sua vez")
-                    println("Utiliza $movementName")
                     Change_Status(selfArray)
                     enemy.Change_Status(enemyArray)
+                    return 1
                 } else {
-                    println("Movimento não foi bem sucedido")
+                    return 0
                 }
             }
         } else{
-            println("A stamina não é suficiente para realizar o movimento")
+            return -1
         }
+    }
+
+    fun ChooseMovement(enemy: Character, db: Connect): Int{
+
+        //Get a list of movements the player can use and show it
+        val movements: List<String> = getMovements(db)
+        println("Movimentos disponíveis:")
+        var cont: Int = 0
+        for(i in skills.sorted()){
+            println("Id: $i Nome: ${movements[cont]}")
+        }
+
+        println("Deseja atacar (1 se sim, 0 para fugir)")
+        val run = Scanner(System.`in`).nextInt()
+        if(run == 0)
+            return 0
+        println("Escolha seu movimento")
+        val choose = Scanner(System.`in`).nextInt()
+
+        //Access bank of data of chosen ID and get its data, name and base accuracy
+        val movementData = getMovementData(db, enemy, choose)
+        val movementName = getMovementName(db, choose)
+        val baseAccuracy = getBaseAccuracy(db, choose)
+
+        val success = useMovement(movementData, baseAccuracy, enemy)
+        if(success == 1){
+            println("Você usou $movementName")
+        } else if(success == 0){
+            println("Você errou o movimento")
+        } else if(success == -1){
+            println("Você não tem stamina suficiente para atacar")
+        }
+
         return 1
     }
 

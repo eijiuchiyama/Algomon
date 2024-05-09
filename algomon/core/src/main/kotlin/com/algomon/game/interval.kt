@@ -2,8 +2,164 @@ package com.algomon.game
 
 import java.util.Scanner
 
+fun getPossibleEnemies(db: Connect, player: Player): List<Int>{
+    var enemiesId: List<Int> = emptyList()
+    val sql = "SELECT * FROM specialenemies WHERE level = ${player.level};"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        enemiesId = enemiesId + rs.getInt("id")
+    }
+    return enemiesId
+}
+
+fun getRandom(possibleEnemiesId: List<Int>): Int{
+    return possibleEnemiesId[kotlin.random.Random.nextInt(0, possibleEnemiesId.size)]
+}
+
+fun getCommonEnemyData(db: Connect, random: Int): List<Int>{
+    var enemyData: List<Int> = emptyList()
+    val sql = "SELECT * FROM commonenemies WHERE id = $random"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        enemyData = enemyData + rs.getInt("basehp")
+        enemyData = enemyData + rs.getInt("basestamina")
+        enemyData = enemyData + rs.getInt("baseatk")
+        enemyData = enemyData + rs.getInt("basedef")
+        enemyData = enemyData + rs.getInt("basedodge")
+        enemyData = enemyData + rs.getInt("basespeed")
+    }
+    return enemyData
+}
+
+fun getCommonEnemyName(db: Connect, random: Int): String{
+    var enemyName = ""
+    val sql = "SELECT * FROM commonenemies WHERE id = $random"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        enemyName = rs.getString("name")
+    }
+    return enemyName
+}
+
+fun getCommonEnemyMovements(db: Connect, player: Player): List<Int>{
+    var enemyMovements: List<Int> = emptyList()
+    val sql = "SELECT id FROM movements WHERE minlevel <= ${player.level}"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        enemyMovements = enemyMovements + rs.getInt("id")
+    }
+    return enemyMovements
+}
+
+fun training(db: Connect, player: Player){
+
+    //Escolhe o oponente de commonenemies aleatoriamente
+    val possibleEnemiesId = getPossibleEnemies(db, player)
+    val random = getRandom(possibleEnemiesId)
+
+    val enemyData = getCommonEnemyData(db, random)
+    val enemyName = getCommonEnemyName(db, random)
+    val enemymovements = getCommonEnemyMovements(db, player)
+
+    val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4], enemyData[5], player.level)
+    val res = battle(player, enemy, db)
+    if(res == 0) {
+        println("Você perdeu a batalha. Mais cuidado na próxima")
+    } else if(res == 1){
+        println("Bom jogo. Você venceu a batalha!")
+    } else{
+        println("Você desistiu da batalha. Mas não se preocupe. Este é somente um treino")
+    }
+}
+
+fun getPossibleMovementsId(db: Connect, player: Player): List<Int>{
+    var movimentosDisponiveis: List<Int> = emptyList()
+    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        if(rs.getInt("id") in player.skills){
+            continue
+        }
+        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("id")
+    }
+    return movimentosDisponiveis
+}
+
+fun getPossibleMovementsName(db: Connect, player: Player): List<String>{
+    var movimentosDisponiveis: List<String> = emptyList()
+    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        if(rs.getInt("id") in player.skills){
+            continue
+        }
+        movimentosDisponiveis = movimentosDisponiveis + rs.getString("name")
+    }
+    return movimentosDisponiveis
+}
+
+fun getPossibleMovementsPrice(db: Connect, player: Player): List<Int>{
+    var movimentosDisponiveis: List<Int> = emptyList()
+    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        if(rs.getInt("id") in player.skills){
+            continue
+        }
+        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("preco")
+    }
+    return movimentosDisponiveis
+}
+
+fun getPrice(db: Connect, choose: Int): Int{
+    var preco = 0
+    val sql = "SELECT * FROM movements WHERE id = $choose;"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        preco = rs.getInt("preco")
+    }
+    return preco
+}
+
+fun buyMovement(player: Player, preco: Int, choose: Int): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
+    if(preco <= player.carteira){
+        player.skills += choose
+        player.carteira -= preco
+        return 1
+    } else{
+        return 0
+    }
+}
+
+fun getNewMovement(db: Connect, player: Player){
+    println("Qual movimento você deseja obter?")
+    var movimentosDisponiveisId = getPossibleMovementsId(db, player)
+    var movimentosDisponiveisName = getPossibleMovementsName(db, player)
+    var movimentosDisponiveisPrice = getPossibleMovementsPrice(db, player)
+
+    var cont: Int = 0
+    for(i in movimentosDisponiveisId){
+        println("Id: $i Price: ${movimentosDisponiveisPrice[cont]} Name: ${movimentosDisponiveisName[cont]}")
+    }
+
+    println("Escolha seu movimento:")
+    val choose = Scanner(System.`in`).nextInt()
+    if(choose !in movimentosDisponiveisId){
+        println("Movimento não disponível.")
+        return
+    }
+    var preco = getPrice(db, choose)
+
+    if(buyMovement(player, preco, choose) == 1){
+        println("Movimento adicionado à sua lista de movimentos")
+    } else{
+        println("Você não tem dinheiro para adquirir o movimento")
+    }
+}
+
 fun interval(player: Player, db:Connect){
     while(true) {
+
         println("Quer descansar, treinar ou aprender novo movimento? (d/t/n)")
         val choice = Scanner(System.`in`).nextLine()
 
@@ -14,81 +170,11 @@ fun interval(player: Player, db:Connect){
 
         } else if(choice == "t" || choice == "T") { //Caso escolhe treinar
 
-            //Escolhe o oponente de commonenemies aleatoriamente
-            var enemiesId: List<Int> = emptyList()
-            var sql = "SELECT * FROM specialenemies WHERE level = ${player.level};"
-            var rs = db.query(sql)
-            while(rs!!.next()){
-                enemiesId = enemiesId + rs.getInt("id")
-            }
-            sql = "SELECT * FROM specialenemies WHERE id = ${enemiesId[kotlin.random.Random.nextInt(0, enemiesId.size)]}"
-            rs = db.query(sql)
-
-            var enemyname = ""
-            var enemyhp = 0
-            var enemystamina = 0
-            var enemyatk= 0
-            var enemydef = 0
-            var enemydodge = 0
-            var enemyspeed = 0
-            var enemymovements: List<Int> = emptyList()
-            while(rs!!.next()){
-                enemyname = rs.getString("name")
-                enemyhp = rs.getInt("basehp")
-                enemystamina = rs.getInt("basestamina")
-                enemyatk = rs.getInt("baseatk")
-                enemydef = rs.getInt("basedef")
-                enemydodge = rs.getInt("basedodge")
-                enemyspeed = rs.getInt("basespeed")
-            }
-
-            sql = "SELECT id FROM movements WHERE minlevel <= ${player.level};"
-            rs = db.query(sql)
-            while(rs!!.next()){
-                enemymovements = enemymovements + rs.getInt("id")
-            }
-
-            val enemy = Enemy(enemyname, enemyhp, enemystamina, enemymovements, enemyatk, enemydef, enemydodge, enemyspeed, player.level)
-            if(battle(player, enemy, db) == 0) {
-                println("Você perdeu a batalha. Mais cuidado na próxima")
-                return
-            } else{
-                println("Bom jogo. Você venceu a batalha!")
-            }
+            training(db, player)
 
         } else{ //Caso escolhe obter movimento
 
-            println("Qual movimento você deseja obter?")
-            var movimentosDisponiveis: List<Int> = emptyList()
-            var sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
-            var rs = db.query(sql)
-            while(rs!!.next()){
-               if(rs.getInt("id") in player.skills){
-                   continue
-               }
-                movimentosDisponiveis = movimentosDisponiveis + rs.getInt("id")
-                println("Id: ${rs.getInt("id")} Nome: ${rs.getString("name")} Preço: ${rs.getInt("preco")}")
-
-            }
-            println("Escolha seu movimento:")
-            val choose = Scanner(System.`in`).nextInt()
-            if(choose !in movimentosDisponiveis){
-                println("Movimento não disponível.")
-                continue
-            }
-            var preco = 0
-            sql = "SELECT * FROM movements WHERE id = $choose;"
-            rs = db.query(sql)
-            while(rs!!.next()){
-                preco = rs.getInt("preco")
-            }
-            if(preco <= player.carteira){
-                player.skills += choose
-                player.carteira -= preco
-                println("Movimento adicionado à sua lista de movimentos")
-            } else{
-                println("Você não tem dinheiro para adquirir o movimento.")
-            }
+            getNewMovement(db, player)
 
         }
     }
