@@ -2,13 +2,13 @@ package com.algomon.game
 
 import kotlin.math.max
 
-open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Int>,
+open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Movement>,
                      var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,
                      var hp: Int, var stamina: Int, var atk: Int, var def: Int, var dodge: Int, var speed: Int){
 
     fun Show_Status(){
         println(name)
-        println("Level = $level, HP = $hp, Stamina = $stamina, Skill = $skills, Atk = $atk, Def = $def, " +
+        println("Level = $level, HP = $hp, Stamina = $stamina, Atk = $atk, Def = $def, " +
             "Dodge = $dodge, Speed = $speed")
     }
 

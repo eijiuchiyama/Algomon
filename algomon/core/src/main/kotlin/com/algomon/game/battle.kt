@@ -1,26 +1,26 @@
 package com.algomon.game
 
-fun turn(db: Connect, player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1 se a batalha continuar após o turno e 0 se ela acabar
+fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1 se a batalha continuar após o turno e 0 se ela acabar
     if (player.speed > enemy.speed) {
-        if(player.ChooseMovement(enemy, db) == 0){
+        if(player.ChooseMovement(enemy) == 0){
             return 2
         }
         player.Show_Status()
         enemy.Show_Status()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
-        enemy.RandomMovement(player, db)
+        enemy.RandomMovement(player)
         player.Show_Status()
         enemy.Show_Status()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
     } else {
-        enemy.RandomMovement(player, db)
+        enemy.RandomMovement(player)
         player.Show_Status()
         enemy.Show_Status()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
-        player.ChooseMovement(enemy, db)
+        player.ChooseMovement(enemy)
         player.Show_Status()
         enemy.Show_Status()
         println()
@@ -38,7 +38,7 @@ fun updatePlayerData(player: Player, enemy: Enemy){
     player.carteira += enemy.hp/20
 }
 
-fun battle(player: Player, enemy: Enemy, db: Connect): Int{ //Retorna 2 se o jogador desistiu, 1 se ele venceu e 0 se ele perdeu a batalha
+fun battle(player: Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistiu, 1 se ele venceu e 0 se ele perdeu a batalha
     var turn = 1
 
     println()
@@ -56,7 +56,7 @@ fun battle(player: Player, enemy: Enemy, db: Connect): Int{ //Retorna 2 se o jog
         println("Turno $turn")
         println()
 
-        val res = turn(db, player, enemy)
+        val res = turn(player, enemy)
         if(res == 0) break;
         if(res == 2) return 2;
         turn++

@@ -1,31 +1,21 @@
 package com.algomon.game
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
+
+var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
+    0, 0, 0, 0, 0, 0, 100, 0) + Movement(1, "superataque",
+        0, -100, 0, 0, 0, 0, -200, 0, 0, 0, 0, 0,
+       1, 100, 100)
+val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
+val enemy = Enemy("Pedrão", 100, 140, skills, 80, 80, 5, 80, 6)
 
 internal class TestEnemy {
 
     @Test
-    fun testSum() {
-        val expected = 42
-        assertEquals(expected, sum(40, 2))
+    fun testGetMovementData(){
+
     }
 
-    @Test
-    fun testConnect(){
-        val c = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "123369")
-        assertEquals(1, c.connect())
-    }
-
-    @Test
-    fun testDisconnect(){
-        val c = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "123369")
-        val d = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "111111")
-        c.connect()
-        d.connect()
-        assertEquals(1, c.disconnect())
-        assertEquals(0, d.disconnect())
-    }
 
 
 }

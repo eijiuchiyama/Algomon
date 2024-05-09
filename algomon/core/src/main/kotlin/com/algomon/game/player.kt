@@ -3,63 +3,53 @@ package com.algomon.game
 import java.util.Scanner
 import kotlin.math.min
 
-class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atkbase: Int, defbase: Int, dodgebase: Int,
+class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>, atkbase: Int, defbase: Int, dodgebase: Int,
                 speedbase: Int, level: Int, var carteira: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
                 dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
 
 
-    fun getMovements(db: Connect): List<String>{
-        skills = skills.sorted()
-        var movements: List<String> = emptyList()
+    fun printMovements(){
         for (action in skills){
-            val sql = "SELECT * FROM movements WHERE id = $action;"
-            val rs = db.query(sql)
-            while (rs!!.next()) {
-                movements = movements + rs.getString("name")
+            println("${action.id} ${action.name}")
+        }
+    }
+
+    fun getMovementData(enemy: Character, choose: Int): List<Int>{
+        var movementData: List<Int> = emptyList()
+        for(action in skills){
+            if(action.id == choose){
+                movementData = movementData + action.hpown
+                movementData = movementData + action.staminaown
+                movementData = movementData + action.atkown
+                movementData = movementData + action.defown
+                movementData = movementData + action.dodgeown
+                movementData = movementData + action.speedown
+                movementData = movementData + min(action.hpenemy - (this.atk - enemy.def), 0)
+                movementData = movementData + action.staminaenemy
+                movementData = movementData + action.atkenemy
+                movementData = movementData + action.defenemy
+                movementData = movementData + action.dodgeenemy
+                movementData = movementData + action.speedenemy
+                return movementData
             }
         }
-        return movements
+        return emptyList()
     }
 
-    fun getMovementData(db: Connect, enemy: Character, choose: Int): List<Int>{
-        var movementData: List<Int> = emptyList()
-        val sql = "SELECT * FROM movements WHERE id = $choose;"
-        val rs = db.query(sql)
-        while(rs!!.next()){
-            movementData = movementData + rs.getInt("hpown")
-            movementData = movementData + rs.getInt("staminaown")
-            movementData = movementData + rs.getInt("atkown")
-            movementData = movementData + rs.getInt("defown")
-            movementData = movementData + rs.getInt("dodgeown")
-            movementData = movementData + rs.getInt("speedown")
-            movementData = movementData + min(rs.getInt("hpenemy") - (this.atk - enemy.def), 0)
-            movementData = movementData + rs.getInt("staminaenemy")
-            movementData = movementData + rs.getInt("atkenemy")
-            movementData = movementData + rs.getInt("defenemy")
-            movementData = movementData + rs.getInt("dodgeenemy")
-            movementData = movementData + rs.getInt("speedenemy")
+    fun getMovementName(choose: Int): String{
+        for(action in skills){
+            if(action.id == choose)
+                return action.name
         }
-        return movementData
+        return ""
     }
 
-    fun getMovementName(db: Connect, choose: Int): String{
-        val sql = "SELECT * FROM movements WHERE id = $choose;"
-        val rs = db.query(sql)
-        var movementName = ""
-        while(rs!!.next()){
-            movementName = rs.getString("name")
+    fun getBaseAccuracy(choose: Int): Int{
+        for(action in skills){
+            if(action.id == choose)
+                return action.baseaccuracy
         }
-        return movementName
-    }
-
-    fun getBaseAccuracy(db: Connect, choose: Int): Int{
-        val sql = "SELECT * FROM movements WHERE id = $choose;"
-        val rs = db.query(sql)
-        var baseAccuracy = 0
-        while(rs!!.next()){
-            baseAccuracy = rs.getInt("baseaccuracy")
-        }
-        return baseAccuracy
+        return 0
     }
 
     fun useMovement(movementData: List<Int>, baseAccuracy: Int, enemy: Character): Int{ //Retorna 1 se o movimento foi bem-sucedido
@@ -67,7 +57,7 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atk
         val selfArray = movementData.slice(0..5)
         val enemyArray = movementData.slice(6..11)
         val zeroArray = listOf(0,0,0,0,0,0)
-        if(stamina > selfArray[1]){ //If stamina is enough
+        if(stamina > - selfArray[1]){ //If stamina is enough
             if(enemyArray == zeroArray){ //If movement doesn't change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy) {
@@ -91,15 +81,11 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atk
         }
     }
 
-    fun ChooseMovement(enemy: Character, db: Connect): Int{
+    fun ChooseMovement(enemy: Character): Int{
 
         //Get a list of movements the player can use and show it
-        val movements: List<String> = getMovements(db)
         println("Movimentos disponíveis:")
-        var cont: Int = 0
-        for(i in skills.sorted()){
-            println("Id: $i Nome: ${movements[cont]}")
-        }
+        printMovements()
 
         println("Deseja atacar (1 se sim, 0 para fugir)")
         val run = Scanner(System.`in`).nextInt()
@@ -109,9 +95,9 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Int>, atk
         val choose = Scanner(System.`in`).nextInt()
 
         //Access bank of data of chosen ID and get its data, name and base accuracy
-        val movementData = getMovementData(db, enemy, choose)
-        val movementName = getMovementName(db, choose)
-        val baseAccuracy = getBaseAccuracy(db, choose)
+        val movementData = getMovementData(enemy, choose)
+        val movementName = getMovementName(choose)
+        val baseAccuracy = getBaseAccuracy(choose)
 
         val success = useMovement(movementData, baseAccuracy, enemy)
         if(success == 1){

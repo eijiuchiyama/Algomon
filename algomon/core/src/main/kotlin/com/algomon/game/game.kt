@@ -16,12 +16,15 @@ fun getPlayerData(db: Connect): List<Int>{
     return playerData
 }
 
-fun getPlayerMovements(db: Connect): List<Int>{
-    var playermovements: List<Int> = emptyList()
+fun getPlayerMovements(db: Connect): List<Movement>{
+    var playermovements: List<Movement> = emptyList()
     val sql = "SELECT id FROM movements WHERE minlevel = 0;"
     val rs = db.query(sql)
     while(rs!!.next()){
-        playermovements = playermovements + rs.getInt("id")
+        playermovements = playermovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
+            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
+            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
+            rs.getInt("baseaccuracy"), rs.getInt("price"))
     }
     return playermovements
 }
@@ -54,12 +57,15 @@ fun getSpecialEnemyName(db: Connect, countBattle: Int): String{
     return enemyName
 }
 
-fun getSpecialEnemyMovements(db: Connect, enemyLevel: Int): List<Int>{
-    var enemymovements: List<Int> = emptyList()
+fun getSpecialEnemyMovements(db: Connect, enemyLevel: Int): List<Movement>{
+    var enemymovements: List<Movement> = emptyList()
     val sql = "SELECT id FROM movements WHERE minlevel <= ${enemyLevel};"
     val rs = db.query(sql)
     while(rs!!.next()){
-        enemymovements = enemymovements + rs.getInt("id")
+        enemymovements = enemymovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
+            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
+            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
+            rs.getInt("baseaccuracy"), rs.getInt("price"))
     }
     return enemymovements
 }
@@ -90,7 +96,7 @@ fun game(){
         val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4],
             enemyData[5], enemyData[6])
 
-        win = battle(player, enemy, db)
+        win = battle(player, enemy)
 
         if(win == 0 || win == 2){ //Se o player desistiu ou perdeu, ele perde o torneio
             println("Você perdeu uma batalha do torneio. Você foi eliminado")

@@ -4,7 +4,7 @@ import java.util.Scanner
 
 fun getPossibleEnemies(db: Connect, player: Player): List<Int>{
     var enemiesId: List<Int> = emptyList()
-    val sql = "SELECT * FROM specialenemies WHERE level = ${player.level};"
+    val sql = "SELECT * FROM commonenemies WHERE level = ${player.level};"
     val rs = db.query(sql)
     while(rs!!.next()){
         enemiesId = enemiesId + rs.getInt("id")
@@ -41,12 +41,15 @@ fun getCommonEnemyName(db: Connect, random: Int): String{
     return enemyName
 }
 
-fun getCommonEnemyMovements(db: Connect, player: Player): List<Int>{
-    var enemyMovements: List<Int> = emptyList()
+fun getCommonEnemyMovements(db: Connect, player: Player): List<Movement>{
+    var enemyMovements: List<Movement> = emptyList()
     val sql = "SELECT id FROM movements WHERE minlevel <= ${player.level}"
     val rs = db.query(sql)
     while(rs!!.next()){
-        enemyMovements = enemyMovements + rs.getInt("id")
+        enemyMovements = enemyMovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
+            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
+            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
+            rs.getInt("baseaccuracy"), rs.getInt("price"))
     }
     return enemyMovements
 }
@@ -62,7 +65,7 @@ fun training(db: Connect, player: Player){
     val enemymovements = getCommonEnemyMovements(db, player)
 
     val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4], enemyData[5], player.level)
-    val res = battle(player, enemy, db)
+    val res = battle(player, enemy)
     if(res == 0) {
         println("Você perdeu a batalha. Mais cuidado na próxima")
     } else if(res == 1){
@@ -77,8 +80,9 @@ fun getPossibleMovementsId(db: Connect, player: Player): List<Int>{
     val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
     val rs = db.query(sql)
     while(rs!!.next()){
-        if(rs.getInt("id") in player.skills){
-            continue
+        for(action in player.skills){
+            if(rs.getInt("id") == action.id)
+                continue
         }
         movimentosDisponiveis = movimentosDisponiveis + rs.getInt("id")
     }
@@ -90,8 +94,9 @@ fun getPossibleMovementsName(db: Connect, player: Player): List<String>{
     val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
     val rs = db.query(sql)
     while(rs!!.next()){
-        if(rs.getInt("id") in player.skills){
-            continue
+        for(action in player.skills){
+            if(rs.getInt("id") == action.id)
+                continue
         }
         movimentosDisponiveis = movimentosDisponiveis + rs.getString("name")
     }
@@ -103,8 +108,9 @@ fun getPossibleMovementsPrice(db: Connect, player: Player): List<Int>{
     val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
     val rs = db.query(sql)
     while(rs!!.next()){
-        if(rs.getInt("id") in player.skills){
-            continue
+        for(action in player.skills){
+            if(rs.getInt("id") == action.id)
+                continue
         }
         movimentosDisponiveis = movimentosDisponiveis + rs.getInt("preco")
     }
@@ -121,9 +127,23 @@ fun getPrice(db: Connect, choose: Int): Int{
     return preco
 }
 
-fun buyMovement(player: Player, preco: Int, choose: Int): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
+fun getMovement(db: Connect, choose: Int): Movement{
+    var movimento = Movement(0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0)
+    val sql = "SELECT * FROM movements WHERE id = $choose;"
+    val rs = db.query(sql)
+    while(rs!!.next()){
+        movimento = Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
+            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
+            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
+            rs.getInt("baseaccuracy"), rs.getInt("price"))
+    }
+    return movimento
+}
+
+fun buyMovement(player: Player, preco: Int, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
     if(preco <= player.carteira){
-        player.skills += choose
+        player.skills += movement
         player.carteira -= preco
         return 1
     } else{
@@ -150,7 +170,9 @@ fun getNewMovement(db: Connect, player: Player){
     }
     var preco = getPrice(db, choose)
 
-    if(buyMovement(player, preco, choose) == 1){
+    var movement = getMovement(db, choose)
+
+    if(buyMovement(player, preco, movement) == 1){
         println("Movimento adicionado à sua lista de movimentos")
     } else{
         println("Você não tem dinheiro para adquirir o movimento")
