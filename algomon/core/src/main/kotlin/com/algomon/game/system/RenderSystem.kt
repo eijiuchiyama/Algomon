@@ -1,5 +1,6 @@
 package com.algomon.game.system
 
+import com.algomon.game.Main.Companion.UNIT_SCALE
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.event.MapChangeEvent
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -29,7 +30,7 @@ class RenderSystem(
 
     private val bgdlayers = mutableListOf<TiledMapTileLayer>()
     private val fgdlayers = mutableListOf<TiledMapTileLayer>()
-    private val mapRenderer = OrthogonalTiledMapRenderer(null, 1/16f, stage.batch)
+    private val mapRenderer = OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)
     private val orthoCam = stage.camera as OrthographicCamera
     override fun onTick() {
         super.onTick()
