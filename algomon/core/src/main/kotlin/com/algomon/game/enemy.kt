@@ -28,7 +28,7 @@ class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>,
         val selfArray = movementData.slice(0..5)
         val enemyArray = movementData.slice(6..11)
         val zeroArray = listOf(0,0,0,0,0,0)
-        if(stamina > selfArray[1]){ //If stamina is enough
+        if(stamina > -selfArray[1]){ //If stamina is enough
             if(enemyArray == zeroArray) { //If movement doesn't change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy) {

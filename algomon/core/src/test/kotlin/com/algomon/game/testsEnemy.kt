@@ -1,6 +1,8 @@
 package com.algomon.game
 
+import org.junit.Assert
 import org.junit.Test
+import kotlin.test.assertEquals
 
 var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
     0, 0, 0, 0, 0, 0, 100, 0) + Movement(1, "superataque",
@@ -13,7 +15,24 @@ internal class TestEnemy {
 
     @Test
     fun testGetMovementData(){
+        val random = 1
+        val movementData = enemy.getMovementData(player, 1)
+        assertEquals(movementData[0], 0)
+        assertEquals(movementData[1], -100)
+        assertEquals(movementData[6], -240)
+    }
 
+    @Test
+    fun testUseMovement(){
+        val random = 1
+        var movementData = enemy.getMovementData(player, random)
+        var res = enemy.useMovement(movementData, skills[random].baseaccuracy, player)
+        Assert.assertEquals(res, 0 or 1)
+        enemy.skills[random].staminaown = -200
+        enemy.stamina += 100
+        movementData = enemy.getMovementData(player, random)
+        res = enemy.useMovement(movementData, skills[random].baseaccuracy, player)
+        Assert.assertEquals(res, -1)
     }
 
 
