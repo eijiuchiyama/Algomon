@@ -34,18 +34,17 @@ class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>,
                 if (randomNum < baseAccuracy) {
                     Change_Status(selfArray)
                     return 1
-                } else {
-                    return 0
                 }
+                return 0
+
             } else{  //If movement does change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy - enemy.dodge) {
                     Change_Status(selfArray)
                     enemy.Change_Status(enemyArray)
                     return 1
-                } else {
-                    return 0
                 }
+                return 0
             }
         } else{
             return -1
@@ -56,9 +55,9 @@ class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>,
         val random = kotlin.random.Random.nextInt(0, skills.size)
 
         //Access bank of data of ID choosed -> Data[12]
-        var movementData = getMovementData(enemy, random)
-        var movementName = skills[random].name
-        var baseAccuracy = skills[random].baseaccuracy
+        val movementData = getMovementData(enemy, random)
+        val movementName = skills[random].name
+        val baseAccuracy = skills[random].baseaccuracy
 
         val success = useMovement(movementData, baseAccuracy, enemy)
         if(success == 1){

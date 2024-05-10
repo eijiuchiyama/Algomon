@@ -117,16 +117,6 @@ fun getPossibleMovementsPrice(db: Connect, player: Player): List<Int>{
     return movimentosDisponiveis
 }
 
-fun getPrice(db: Connect, choose: Int): Int{
-    var preco = 0
-    val sql = "SELECT * FROM movements WHERE id = $choose;"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        preco = rs.getInt("preco")
-    }
-    return preco
-}
-
 fun getMovement(db: Connect, choose: Int): Movement{
     var movimento = Movement(0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0)
@@ -141,23 +131,22 @@ fun getMovement(db: Connect, choose: Int): Movement{
     return movimento
 }
 
-fun buyMovement(player: Player, preco: Int, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
-    if(preco <= player.carteira){
+fun buyMovement(player: Player, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
+    if(movement.price <= player.carteira){
         player.skills += movement
-        player.carteira -= preco
+        player.carteira -= movement.price
         return 1
-    } else{
-        return 0
     }
+    return 0
 }
 
 fun getNewMovement(db: Connect, player: Player){
     println("Qual movimento você deseja obter?")
-    var movimentosDisponiveisId = getPossibleMovementsId(db, player)
-    var movimentosDisponiveisName = getPossibleMovementsName(db, player)
-    var movimentosDisponiveisPrice = getPossibleMovementsPrice(db, player)
+    val movimentosDisponiveisId = getPossibleMovementsId(db, player)
+    val movimentosDisponiveisName = getPossibleMovementsName(db, player)
+    val movimentosDisponiveisPrice = getPossibleMovementsPrice(db, player)
 
-    var cont: Int = 0
+    val cont = 0
     for(i in movimentosDisponiveisId){
         println("Id: $i Price: ${movimentosDisponiveisPrice[cont]} Name: ${movimentosDisponiveisName[cont]}")
     }
@@ -168,11 +157,10 @@ fun getNewMovement(db: Connect, player: Player){
         println("Movimento não disponível.")
         return
     }
-    var preco = getPrice(db, choose)
 
-    var movement = getMovement(db, choose)
+    val movement = getMovement(db, choose)
 
-    if(buyMovement(player, preco, movement) == 1){
+    if(buyMovement(player, movement) == 1){
         println("Movimento adicionado à sua lista de movimentos")
     } else{
         println("Você não tem dinheiro para adquirir o movimento")

@@ -1,5 +1,6 @@
 package com.algomon.game
 
+
 fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1 se a batalha continuar após o turno e 0 se ela acabar
     if (player.speed > enemy.speed) {
         if(player.ChooseMovement(enemy) == 0){
@@ -57,20 +58,20 @@ fun battle(player: Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistiu
         println()
 
         val res = turn(player, enemy)
-        if(res == 0) break;
-        if(res == 2) return 2;
+        if(res == 0) break
+        if(res == 2) return 2
         turn++
     }
 
-    if (player.hp == 0){ //O jogador perdeu a batalha
+    if (player.hp == 0) //O jogador perdeu a batalha
         return 0
-    } else{ //O jogador venceu a batalha
-        println("HP +3")
-        println("Stamina +3")
-        println("Atk +1")
-        println("Def +1")
-        println("Speed +1")
-        updatePlayerData(player, enemy)
-        return 1
-    }
+
+    println("HP +3")
+    println("Stamina +3")
+    println("Atk +1")
+    println("Def +1")
+    println("Speed +1")
+    updatePlayerData(player, enemy)
+    return 1
+
 }

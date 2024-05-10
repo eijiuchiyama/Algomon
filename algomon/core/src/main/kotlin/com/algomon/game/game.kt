@@ -75,9 +75,9 @@ fun game(){
     if(start() == 0) //Inicia o jogo, apresentando o contexto
         return
 
-    var playerData = getPlayerData(db)
+    val playerData = getPlayerData(db)
 
-    var playermovements = getPlayerMovements(db)
+    val playermovements = getPlayerMovements(db)
 
     val player = Player("Player", playerData[0], playerData[1], //Cria o player
         playermovements, playerData[2], playerData[3], playerData[4], playerData[5], 0, 0)

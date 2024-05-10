@@ -63,18 +63,18 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>
                 if (randomNum < baseAccuracy) {
                     Change_Status(selfArray)
                     return 1
-                } else {
-                    return 0
                 }
+                return 0
+
             } else { //If movement does change enemy stats
                 val randomNum = kotlin.random.Random.nextInt(1, 101)
                 if (randomNum < baseAccuracy - enemy.dodge) {
                     Change_Status(selfArray)
                     enemy.Change_Status(enemyArray)
                     return 1
-                } else {
-                    return 0
                 }
+                return 0
+
             }
         } else{
             return -1
