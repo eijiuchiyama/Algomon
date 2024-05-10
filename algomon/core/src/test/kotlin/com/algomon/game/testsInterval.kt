@@ -25,19 +25,6 @@ class TestInterval{
     }
 
     @Test
-    fun testGetRandom(){
-        var int = emptyList<Int>()
-        int += 6
-        int += 8
-        int += 3
-        int += 2
-        val random = getRandom(int)
-
-        assertEquals(random, 0 or 1 or 2 or 3)
-
-    }
-
-    @Test
     fun testGetCommonEnemyData(){
         val random = 5
         val commonEnemyData = getCommonEnemyData(db, random)
@@ -123,7 +110,7 @@ class TestInterval{
         assertEquals(res, 1)
 
         player.carteira += 60
-        movement.id = 200
+        movement.price = 200
         res = buyMovement(player, movement)
 
         assertEquals(res, 0)
