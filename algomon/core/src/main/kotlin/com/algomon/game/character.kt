@@ -6,13 +6,13 @@ open class Character(var name: String, var hpbase: Int, var staminabase: Int, va
                      var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,
                      var hp: Int, var stamina: Int, var atk: Int, var def: Int, var dodge: Int, var speed: Int){
 
-    fun Show_Status(){
+    fun ShowStatus(){
         println(name)
         println("Level = $level, HP = $hp, Stamina = $stamina, Atk = $atk, Def = $def, " +
             "Dodge = $dodge, Speed = $speed")
     }
 
-    fun Change_Status(change: List<Int>){
+    fun ChangeStatus(change: List<Int>){
         hp      = max(0,hp     + change[0])
         stamina = max(0,stamina+ change[1])
         atk     = max(0,atk    + change[2])

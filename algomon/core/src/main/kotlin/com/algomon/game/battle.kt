@@ -6,24 +6,24 @@ fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1
         if(player.ChooseMovement(enemy) == 0){
             return 2
         }
-        player.Show_Status()
-        enemy.Show_Status()
+        player.ShowStatus()
+        enemy.ShowStatus()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
         enemy.RandomMovement(player)
-        player.Show_Status()
-        enemy.Show_Status()
+        player.ShowStatus()
+        enemy.ShowStatus()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
     } else {
         enemy.RandomMovement(player)
-        player.Show_Status()
-        enemy.Show_Status()
+        player.ShowStatus()
+        enemy.ShowStatus()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
         player.ChooseMovement(enemy)
-        player.Show_Status()
-        enemy.Show_Status()
+        player.ShowStatus()
+        enemy.ShowStatus()
         println()
         if (player.hp == 0 || enemy.hp == 0) return 0
     }
@@ -32,7 +32,7 @@ fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1
 
 fun updatePlayerData(player: Player, enemy: Enemy){
     player.hpbase += 3
-    player.staminabase += 3
+    player.staminabase += 5
     player.atkbase += 1
     player.defbase += 1
     player.speedbase += 1
@@ -48,8 +48,8 @@ fun battle(player: Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistiu
 
     player.ResetStats()
 
-    player.Show_Status()
-    enemy.Show_Status()
+    player.ShowStatus()
+    enemy.ShowStatus()
 
     while (true) {
 
@@ -67,7 +67,7 @@ fun battle(player: Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistiu
         return 0
 
     println("HP +3")
-    println("Stamina +3")
+    println("Stamina +5")
     println("Atk +1")
     println("Def +1")
     println("Speed +1")

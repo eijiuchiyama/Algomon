@@ -6,11 +6,8 @@ import java.sql.ResultSet
 import java.sql.SQLException
 import java.sql.Statement
 
-class Connect(db: String, local: String, porta: String, banco: String, user: String, senha: String) {
+class Connect(val db: String, val local: String, val porta: String, val banco: String, val user: String, val senha: String) {
     // GETs AND SETs
-    var local: String? = null
-    var user: String? = null
-    var senha: String? = null
     var c: Connection? = null
     var statement: Statement? = null
     var strconexao: String? = null
@@ -19,9 +16,6 @@ class Connect(db: String, local: String, porta: String, banco: String, user: Str
     init {
         if (db == "PostgreSql") {
             strconexao = "jdbc:postgresql://$local:$porta/$banco"
-            this.local = local
-            this.senha = senha
-            this.user = user
             driverjdbc = "org.postgresql.Driver"
         }
     }
