@@ -19,6 +19,10 @@ Nosso projeto se utiliza do SGBD PostgreSQL para organizar os dados a serem util
 ## Testes
 Os testes automatizados foram realizados com o framework JUnit, que pode ser utilizado em linguagens compatíveis com a JVM, como é o caso de Kotlin.
 
+![Diagrama UML do projeto](UML.png)
+
+![Diagrama entidade-relacionamento do banco de dados](ER.png)
+
 ## Autores e Contribuidores
 Fernando Yang: Programador e Designer do Projeto
 Lucas Eiji: Programador e Designer do Projeto
