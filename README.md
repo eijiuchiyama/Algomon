@@ -1,5 +1,7 @@
 # Algomon
 
+![Logo algomon](Logo.png)
+
 ## Descrição do Projeto
 Neste projeto será desenvolvido um jogo eletrônico de batalha em turnos. O projeto faz parte do desenvolvimento do curso MAC0350 - Introdução ao Desenvolvimento de Sistemas de Software, oferecido pelo professor Paulo Roberto Miranda Meirelles no Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP).
 
@@ -19,7 +21,13 @@ Nosso projeto se utiliza do SGBD PostgreSQL para organizar os dados a serem util
 ## Testes
 Os testes automatizados foram realizados com o framework JUnit, que pode ser utilizado em linguagens compatíveis com a JVM, como é o caso de Kotlin.
 
+## Diagramas
+
+Diagrama UML do projeto
+
 ![Diagrama UML do projeto](UML.png)
+
+Diagrama ER do banco de dados
 
 ![Diagrama entidade-relacionamento do banco de dados](ER.png)
 
