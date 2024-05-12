@@ -18,7 +18,7 @@ internal class TestCharacter{
         movementData += 5
         movementData += 10
 
-        player.Change_Status(movementData)
+        player.ChangeStatus(movementData)
         assertEquals(player.hp, 30)
         assertEquals(player.stamina, 80)
         assertEquals(player.atk, 40)

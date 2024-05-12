@@ -6,7 +6,7 @@ class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>,
             dodgebase: Int, speedbase: Int, level: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
             dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
 
-    private fun getMovementData(enemy: Character, random: Int): List<Int>{
+    fun getMovementData(enemy: Character, random: Int): List<Int>{
         var movementData: List<Int> = emptyList()
         movementData = movementData + skills[random].hpown
         movementData = movementData + skills[random].staminaown
@@ -23,7 +23,7 @@ class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>,
         return movementData
     }
 
-    private fun useMovement(movementData: List<Int>, baseAccuracy: Int, enemy: Character): Int{ //Retorna 1 se movimento foi bem-sucedido, 0 se errou
+    fun useMovement(movementData: List<Int>, baseAccuracy: Int, enemy: Character): Int{ //Retorna 1 se movimento foi bem-sucedido, 0 se errou
                                                                                         // e -1 se stamina é insuficiente
         val selfArray = movementData.slice(0..5)
         val enemyArray = movementData.slice(6..11)
