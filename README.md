@@ -1,5 +1,7 @@
 # Algomon
 
+![Logo algomon](Logo.png)
+
 ## Descrição do Projeto
 Neste projeto será desenvolvido um jogo eletrônico de batalha em turnos. O projeto faz parte do desenvolvimento do curso MAC0350 - Introdução ao Desenvolvimento de Sistemas de Software, oferecido pelo professor Paulo Roberto Miranda Meirelles no Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP).
 
