@@ -31,6 +31,33 @@ Diagrama ER do banco de dados
 
 ![Diagrama entidade-relacionamento do banco de dados](ER.png)
 
+## Execução
+
+Execução do jogo: 
+No Android Studio, abra a pasta do projeto. Na barra superior, crie uma nova configuração de run/debug com o tipo Kotlin e os
+seguintes dados:
+Main class: com.algomon.game.lwjgl3.Lwjgl3Launcher
+Working directory: seu_diretorio/algomon/
+Use classpath of module: algomon.lwjgl3.main
+JRE: Default
+Shorten command line: none
+
+Execução do backend:
+Crie uma nova configuração de run/debug com o tipo Kotlin e os seguintes dados:
+Main class: com.algomon.game.GameKt
+Working directory: seu_diretorio/algomon/
+Use classpath of module: algomon.core.main
+JRE: Default
+Shorten command line: none
+
+Execução dos testes:
+Vá aos arquivos de testes e execute a partir das indicações nas linhas de código.
+
+O banco de dados é acessado a partir de localhost:5432
+O arquivo connect.kt acessa o banco de dados de nome postgres, com user postgres e senha 123369
+Basta alterar os dados nesse arquivo para os dados serem acessados de um banco de dados distinto.
+
+
 ## Autores e Contribuidores
 Fernando Yang: Programador e Designer do Projeto
 Lucas Eiji: Programador e Designer do Projeto
