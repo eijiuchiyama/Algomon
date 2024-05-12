@@ -104,6 +104,7 @@ fun game(){
         } else{ //Se ele venceu, ele passa para a próxima fase
             println("Você venceu uma batalha do torneio! Você passou para a próxima fase!")
         }
+        player.level++ //Level do player aumenta em 1 para ser possível aprender novos movimentos
 
         countBattle++
 
