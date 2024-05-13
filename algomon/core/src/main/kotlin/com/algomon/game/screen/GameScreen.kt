@@ -5,9 +5,11 @@ import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
+import com.algomon.game.input.PlayerKeyboardInputProcessor
 import com.algomon.game.system.AnimationSystem
 import com.algomon.game.system.DebugSystem
 import com.algomon.game.system.EntitySpawnSystem
+import com.algomon.game.system.MoveSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -40,6 +42,7 @@ class GameScreen : KtxScreen {
         componentListener<PhysicComponentListener>()
 
         system<EntitySpawnSystem>()
+        system<MoveSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<RenderSystem>()
@@ -55,6 +58,8 @@ class GameScreen : KtxScreen {
         }
         currentMap = TmxMapLoader().load("assets/map/map.tmx")
         stage.fire(MapChangeEvent(currentMap!!))
+
+        PlayerKeyboardInputProcessor(eworld, eworld.mapper())
     }
 
     override fun resize(width: Int, height: Int) {

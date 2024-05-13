@@ -4,9 +4,12 @@ import com.algomon.game.Main.Companion.UNIT_SCALE
 import com.algomon.game.component.AnimationComponent
 import com.algomon.game.component.AnimationModel
 import com.algomon.game.component.AnimationType
+import com.algomon.game.component.DEFAULT_SPEED
 import com.algomon.game.component.ImageComponent
+import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PhysicComponent.Companion.physicCmpFromImage
+import com.algomon.game.component.PlayerComponent
 import com.algomon.game.component.SpawnCfg
 import com.algomon.game.component.SpawnComponent
 import com.algomon.game.event.MapChangeEvent
@@ -62,6 +65,16 @@ class EntitySpawnSystem(
                     box(width, height){
                         isSensor = false
                     }
+                }
+
+                if (cfg.speedScaling > 0f) {
+                    add<MoveComponent>{
+                        speed = DEFAULT_SPEED * cfg.speedScaling
+                    }
+                }
+
+                if (type == "Player"){
+                    add<PlayerComponent>()
                 }
             }
         }
