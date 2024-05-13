@@ -6,6 +6,7 @@ import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListe
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.system.AnimationSystem
+import com.algomon.game.system.DebugSystem
 import com.algomon.game.system.EntitySpawnSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
@@ -20,12 +21,13 @@ import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.log.logger
+import ktx.math.vec2
 
 class GameScreen : KtxScreen {
     private val stage: Stage = Stage(ExtendViewport(21f,16f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
     private var currentMap: TiledMap? = null
-    private val phWorld = createWorld(/*gravity = vec2()*/).apply {
+    private val phWorld = createWorld(gravity = vec2(0f,0f)).apply {
         autoClearForces = false
     }
 
@@ -41,6 +43,7 @@ class GameScreen : KtxScreen {
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<RenderSystem>()
+        system<DebugSystem>()
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
