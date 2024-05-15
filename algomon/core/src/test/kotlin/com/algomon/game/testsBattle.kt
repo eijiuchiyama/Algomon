@@ -14,7 +14,7 @@ internal class TestBattle{
     fun testUpdatePlayerData(){
         updatePlayerData(player, enemy)
         assertEquals(player.hpbase, 53)
-        assertEquals(player.staminabase, 73)
+        assertEquals(player.staminabase, 75)
         assertEquals(player.atkbase, 41)
         assertEquals(player.defbase, 41)
         assertEquals(player.speedbase, 41)

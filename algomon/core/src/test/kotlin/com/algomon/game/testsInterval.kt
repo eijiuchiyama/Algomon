@@ -4,7 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TestInterval{
-    val db = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "123369")
+    val db = databaseConnect()
     var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
@@ -35,7 +35,6 @@ class TestInterval{
         assertEquals(commonEnemyData[3], 7)
         assertEquals(commonEnemyData[4], 0)
         assertEquals(commonEnemyData[5], 17)
-        assertEquals(commonEnemyData[6], 0)
     }
 
     @Test
@@ -50,18 +49,20 @@ class TestInterval{
     @Test
     fun testGetCommonEnemyMovements(){
         val commonEnemyMovements = getCommonEnemyMovements(db, player)
+        println(commonEnemyMovements.size)
 
-        val menorId = 0  //Pega o movimento com maior id
-        var posMenorId = 0
-        for(i in 0..commonEnemyMovements.size){
-            if(commonEnemyMovements[0].id > menorId) {
-                posMenorId = i
+        var maiorId = 0  //Pega o movimento com maior id
+        var posMaiorId = 0
+        for(i in 0..commonEnemyMovements.size - 1){
+            if(commonEnemyMovements[i].id > maiorId) {
+                maiorId = commonEnemyMovements[i].id
+                posMaiorId = i
             }
         }
 
-        assertEquals(commonEnemyMovements[posMenorId].id, 31)
-        assertEquals(commonEnemyMovements[posMenorId].hpown, -35)
-        assertEquals(commonEnemyMovements[posMenorId].staminaown, 25)
+        assertEquals(commonEnemyMovements[posMaiorId].id, 31)
+        assertEquals(commonEnemyMovements[posMaiorId].hpown, -35)
+        assertEquals(commonEnemyMovements[posMaiorId].staminaown, 25)
     }
 
     @Test

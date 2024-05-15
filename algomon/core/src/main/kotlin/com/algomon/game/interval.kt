@@ -4,7 +4,7 @@ import java.util.Scanner
 
 fun getPossibleEnemies(db: Connect, player: Player): List<Int>{
     var enemiesId: List<Int> = emptyList()
-    val sql = "SELECT * FROM commonenemies WHERE level = ${player.level};"
+    val sql = "SELECT id FROM commonenemies WHERE level = ${player.level};"
     val rs = db.query(sql)
     while(rs!!.next()){
         enemiesId = enemiesId + rs.getInt("id")
@@ -33,7 +33,7 @@ fun getCommonEnemyData(db: Connect, random: Int): List<Int>{
 
 fun getCommonEnemyName(db: Connect, random: Int): String{
     var enemyName = ""
-    val sql = "SELECT * FROM commonenemies WHERE id = $random"
+    val sql = "SELECT name FROM commonenemies WHERE id = $random"
     val rs = db.query(sql)
     while(rs!!.next()){
         enemyName = rs.getString("name")
@@ -43,7 +43,7 @@ fun getCommonEnemyName(db: Connect, random: Int): String{
 
 fun getCommonEnemyMovements(db: Connect, player: Player): List<Movement>{
     var enemyMovements: List<Movement> = emptyList()
-    val sql = "SELECT id FROM movements WHERE minlevel <= ${player.level}"
+    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level}"
     val rs = db.query(sql)
     while(rs!!.next()){
         enemyMovements = enemyMovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
@@ -112,7 +112,7 @@ fun getPossibleMovementsPrice(db: Connect, player: Player): List<Int>{
             if(rs.getInt("id") == action.id)
                 continue
         }
-        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("preco")
+        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("price")
     }
     return movimentosDisponiveis
 }

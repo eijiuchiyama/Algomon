@@ -5,7 +5,7 @@ import org.junit.Test
 
 class TestGame{
 
-    val db = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "123369")
+    val db = databaseConnect()
 
     @Test
     fun testGetPlayerData(){
@@ -23,11 +23,12 @@ class TestGame{
     fun testGetPlayerMovements(){
         val playerMovements = getPlayerMovements(db)
 
-        val menorId = 1000  //Pega o movimento com menor id
+        var menorId = 1000  //Pega o movimento com menor id
         var posMenorId = 0
-        for(i in 0..playerMovements.size){
-            if(playerMovements[0].id < menorId) {
+        for(i in 0..playerMovements.size - 1){
+            if(playerMovements[i].id < menorId) {
                 posMenorId = i
+                menorId = playerMovements[i].id
             }
         }
 
@@ -51,19 +52,20 @@ class TestGame{
 
     @Test
     fun testGetSpecialEnemyMovements(){
-        val playerMovements = getSpecialEnemyMovements(db, 0)
+        val specialEnemyMovements = getSpecialEnemyMovements(db, 0)
 
-        val menorId = 1000
+        var menorId = 1000
         var posMenorId = 0
-        for(i in 0..playerMovements.size){
-            if(playerMovements[0].id < menorId) {
+        for(i in 0..specialEnemyMovements.size - 1){
+            if(specialEnemyMovements[i].id < menorId) {
                 posMenorId = i
+                menorId = specialEnemyMovements[i].id
             }
         }
 
-        assertEquals(playerMovements[posMenorId].id, 0)
-        assertEquals(playerMovements[posMenorId].staminaown, -10)
-        assertEquals(playerMovements[posMenorId].hpenemy, -20)
+        assertEquals(specialEnemyMovements[posMenorId].id, 0)
+        assertEquals(specialEnemyMovements[posMenorId].staminaown, -10)
+        assertEquals(specialEnemyMovements[posMenorId].hpenemy, -20)
     }
 
 }

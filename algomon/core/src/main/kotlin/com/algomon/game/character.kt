@@ -1,6 +1,7 @@
 package com.algomon.game
 
 import kotlin.math.max
+import kotlin.math.min
 
 open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Movement>,
                      var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,
@@ -13,12 +14,12 @@ open class Character(var name: String, var hpbase: Int, var staminabase: Int, va
     }
 
     fun ChangeStatus(change: List<Int>){
-        hp      = max(0,hp     + change[0])
-        stamina = max(0,stamina+ change[1])
-        atk     = max(0,atk    + change[2])
-        def     = max(0,def    + change[3])
-        dodge   = max(0,dodge  + change[4])
-        speed   = max(0,speed  + change[5])
+        hp = max(0, min(hp + change[0], hpbase))
+        stamina = max(0, min(stamina + change[1], staminabase))
+        atk = max(0, atk + change[2])
+        def = max(0, def + change[3])
+        dodge = max(0, dodge + change[4])
+        speed = max(0, speed + change[5])
     }
 
 }

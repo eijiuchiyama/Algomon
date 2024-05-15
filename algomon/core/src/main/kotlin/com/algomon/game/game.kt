@@ -18,7 +18,7 @@ fun getPlayerData(db: Connect): List<Int>{
 
 fun getPlayerMovements(db: Connect): List<Movement>{
     var playermovements: List<Movement> = emptyList()
-    val sql = "SELECT id FROM movements WHERE minlevel = 0;"
+    val sql = "SELECT * FROM movements WHERE minlevel = 0;"
     val rs = db.query(sql)
     while(rs!!.next()){
         playermovements = playermovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
@@ -48,7 +48,7 @@ fun getSpecialEnemyData(db: Connect, countBattle: Int): List<Int>{
 
 fun getSpecialEnemyName(db: Connect, countBattle: Int): String{
     var enemyName = ""
-    val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
+    val sql = "SELECT name FROM specialenemies WHERE level = $countBattle;"
     val rs = db.query(sql)
 
     while(rs!!.next()){
@@ -59,7 +59,7 @@ fun getSpecialEnemyName(db: Connect, countBattle: Int): String{
 
 fun getSpecialEnemyMovements(db: Connect, enemyLevel: Int): List<Movement>{
     var enemymovements: List<Movement> = emptyList()
-    val sql = "SELECT id FROM movements WHERE minlevel <= ${enemyLevel};"
+    val sql = "SELECT * FROM movements WHERE minlevel <= ${enemyLevel};"
     val rs = db.query(sql)
     while(rs!!.next()){
         enemymovements = enemymovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),

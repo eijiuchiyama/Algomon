@@ -18,7 +18,12 @@ dependencies {
   api "io.github.libktx:ktx-tiled:$ktxVersion"
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   api "io.github.quillraven.fleks:Fleks:$fleksVersion"
-    implementation files('libs/postgresql-42.7.3.jar')
+  implementation files('libs/postgresql-42.7.3.jar')
   testImplementation('junit:junit:4.12')
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+
+  implementation("io.ktor:ktor-server-core:2.3.11")
+  implementation("io.ktor:ktor-server-netty:2.3.11")
+  implementation("io.ktor:ktor-client-core:2.3.11")
+  implementation("io.ktor:ktor-client-cio:2.3.11")
 }
