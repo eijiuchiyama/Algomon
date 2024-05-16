@@ -27,6 +27,7 @@ fun getCommonEnemyData(db: Connect, random: Int): List<Int>{
         enemyData = enemyData + rs.getInt("basedef")
         enemyData = enemyData + rs.getInt("basedodge")
         enemyData = enemyData + rs.getInt("basespeed")
+        enemyData = enemyData + rs.getInt("level")
     }
     return enemyData
 }

@@ -18,6 +18,9 @@ o projeto será desenvolvido em linguagem Kotlin baseado no framework libGDX. Co
 ## SGBD utilizado
 Nosso projeto se utiliza do SGBD PostgreSQL para organizar os dados a serem utilizados no programa.
 
+## Cliente-servidor
+A requisição de dados do banco de dados é feita por meio de uma rede cliente-servidor implementada por meio do framework Ktor.
+
 ## Testes
 Os testes automatizados foram realizados com o framework JUnit, que pode ser utilizado em linguagens compatíveis com a JVM, como é o caso de Kotlin.
 
@@ -33,29 +36,17 @@ Diagrama ER do banco de dados
 
 ## Execução
 
-Execução do jogo: 
-No Android Studio, abra a pasta do projeto. Na barra superior, crie uma nova configuração de run/debug com o tipo Kotlin e os
-seguintes dados:
-Main class: com.algomon.game.lwjgl3.Lwjgl3Launcher
-Working directory: seu_diretorio/algomon/
-Use classpath of module: algomon.lwjgl3.main
-JRE: Default
-Shorten command line: none
+Execução do jogo (gráfico): 
+Execute o main do arquivo Lwjgl3Launcher.kt, localizado no diretório lwgl3.
 
-Execução do backend:
-Crie uma nova configuração de run/debug com o tipo Kotlin e os seguintes dados:
-Main class: com.algomon.game.GameKt
-Working directory: seu_diretorio/algomon/
-Use classpath of module: algomon.core.main
-JRE: Default
-Shorten command line: none
+Execução do jogo (linha de comando):
+Execute o main do arquivo game.kt localizado no diretório core.
+
+Execução do servidor:
+O servidor é iniciado por meio do main do arquivo server.kt, também esse no diretório core.
 
 Execução dos testes:
 Vá aos arquivos de testes e execute a partir das indicações nas linhas de código.
-
-O banco de dados é acessado a partir de localhost:5432
-O arquivo connect.kt acessa o banco de dados de nome postgres, com user postgres e senha 123369
-Basta alterar os dados nesse arquivo para os dados serem acessados de um banco de dados distinto.
 
 
 ## Autores e Contribuidores
