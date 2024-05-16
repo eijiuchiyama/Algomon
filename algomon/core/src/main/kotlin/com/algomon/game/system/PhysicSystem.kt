@@ -2,6 +2,7 @@ package com.algomon.game.system
 
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.PhysicComponent
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.World
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -33,16 +34,26 @@ class PhysicSystem (
     }
     override fun onTickEntity(entity: Entity) {
         val physicCmp = physicCmps[entity]
-        val imageCmp = imageCmps[entity]
+
+        physicCmp.prevPos.set(physicCmp.body.position)
 
         if (!physicCmp.impulse.isZero){
             physicCmp.body.applyLinearImpulse(physicCmp.impulse, physicCmp.body.worldCenter, true)
             physicCmp.impulse.setZero()
         }
+    }
 
+    override fun onAlphaEntity(entity: Entity, alpha: Float) {
+        val physicCmp = physicCmps[entity]
+        val imageCmp = imageCmps[entity]
+
+        val (prevX, prevY) = physicCmp.prevPos
         val (bodyX, bodyY) = physicCmp.body.position
         imageCmp.image.run{
-            setPosition(bodyX-width*0.5f,bodyY-height*0.5f)
+            setPosition(
+                MathUtils.lerp(prevX,bodyX,alpha) - width * 0.5f,
+                MathUtils.lerp(prevY,bodyY,alpha) - height * 0.5f
+            )
         }
     }
 
