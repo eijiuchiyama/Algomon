@@ -1,83 +1,54 @@
 package com.algomon.game
 
-fun getPlayerData(db: Connect): List<Int>{
-    var playerData: List<Int> = emptyList()
-    val sql = "SELECT * FROM players WHERE id = 0;"
-    val rs = db.query(sql)
+import kotlinx.serialization.json.Json
 
-    while(rs!!.next()){
-        playerData = playerData + rs.getInt("basehp")
-        playerData = playerData + rs.getInt("basestamina")
-        playerData = playerData + rs.getInt("baseatk")
-        playerData = playerData + rs.getInt("basedef")
-        playerData = playerData + rs.getInt("basedodge")
-        playerData = playerData + rs.getInt("basespeed")
-    }
+suspend fun getPlayerData(): List<Int>{
+    var playerData: List<Int> = emptyList()
+    //val sql = "SELECT * FROM players WHERE id = 0;"
+    val body = request("playerdata" , "*", "players", "id=0")
+    playerData = Json.decodeFromString(body)
     return playerData
 }
 
-fun getPlayerMovements(db: Connect): List<Movement>{
+suspend fun getPlayerMovements(): List<Movement>{
     var playermovements: List<Movement> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel = 0;"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        playermovements = playermovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
-            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
-            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
-            rs.getInt("baseaccuracy"), rs.getInt("price"))
-    }
+    //val sql = "SELECT * FROM movements WHERE minlevel = 0;"
+    val body = request("movementsdata" , "*", "movements", "minlevel=0")
+    playermovements = Json.decodeFromString(body)
     return playermovements
 }
 
-fun getSpecialEnemyData(db: Connect, countBattle: Int): List<Int>{
+suspend fun getSpecialEnemyData(countBattle: Int): List<Int>{
     var enemyData: List<Int> = emptyList()
-    val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
-    val rs = db.query(sql)
-
-    while(rs!!.next()){
-        enemyData = enemyData + rs.getInt("basehp")
-        enemyData = enemyData + rs.getInt("basestamina")
-        enemyData = enemyData + rs.getInt("baseatk")
-        enemyData = enemyData + rs.getInt("basedef")
-        enemyData = enemyData + rs.getInt("basedodge")
-        enemyData = enemyData + rs.getInt("basespeed")
-        enemyData = enemyData + rs.getInt("level")
-    }
+    //val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
+    val body = request("enemydata" , "*", "specialenemies", "level=$countBattle")
+    enemyData = Json.decodeFromString(body)
     return enemyData
 }
 
-fun getSpecialEnemyName(db: Connect, countBattle: Int): String{
+suspend fun getSpecialEnemyName(countBattle: Int): String{
     var enemyName = ""
-    val sql = "SELECT name FROM specialenemies WHERE level = $countBattle;"
-    val rs = db.query(sql)
-
-    while(rs!!.next()){
-        enemyName = rs.getString("name")
-    }
+    //val sql = "SELECT name FROM specialenemies WHERE level = $countBattle;"
+    val body = request("name" , "name", "specialenemies", "level=$countBattle")
+    enemyName = Json.decodeFromString(body)
     return enemyName
 }
 
-fun getSpecialEnemyMovements(db: Connect, enemyLevel: Int): List<Movement>{
+suspend fun getSpecialEnemyMovements(enemyLevel: Int): List<Movement>{
     var enemymovements: List<Movement> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel <= ${enemyLevel};"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        enemymovements = enemymovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
-            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
-            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
-            rs.getInt("baseaccuracy"), rs.getInt("price"))
-    }
+    //val sql = "SELECT * FROM movements WHERE minlevel <= $enemyLevel;"
+    val body = request("movementsdata" , "*", "movements", "minlevel<=$enemyLevel")
+    enemymovements = Json.decodeFromString(body)
     return enemymovements
 }
 
-fun game(){
-    val db = databaseConnect() //Realiza a conexão entre o jogo e o banco de dados
+suspend fun game(){
     if(start() == 0) //Inicia o jogo, apresentando o contexto
         return
 
-    val playerData = getPlayerData(db)
+    val playerData = getPlayerData()
 
-    val playermovements = getPlayerMovements(db)
+    val playermovements = getPlayerMovements()
 
     val player = Player("Player", playerData[0], playerData[1], //Cria o player
         playermovements, playerData[2], playerData[3], playerData[4], playerData[5], 0, 0)
@@ -88,9 +59,9 @@ fun game(){
     while(countBattle <= 1) { //Realiza um certo número de batalhas principais
 
         //Escolhe o oponente de specialenemies relativo à batalha atual do torneio
-        val enemyData = getSpecialEnemyData(db, countBattle)
-        val enemyName = getSpecialEnemyName(db, countBattle)
-        val enemymovements = getSpecialEnemyMovements(db, enemyData[6])
+        val enemyData = getSpecialEnemyData(countBattle)
+        val enemyName = getSpecialEnemyName(countBattle)
+        val enemymovements = getSpecialEnemyMovements(enemyData[6])
 
 
         val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4],
@@ -109,18 +80,18 @@ fun game(){
         countBattle++
 
         //Começa o intervalo
-        interval(player, db)
+        interval(player)
     }
 
     if(win == 0 || win == 2) println("Você perdeu o torneio. Mais sorte no próximo ano.")
     else println("Você venceu o torneio. Parabéns.")
 
-    databaseDisconnect(db)
+    closeClient()
 
 }
 
 
-fun main() {
+suspend fun main() {
 
 	/**
      *Personagem

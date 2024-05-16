@@ -1,14 +1,14 @@
 package com.algomon.game
 
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.util.Scanner
 
-fun getPossibleEnemies(db: Connect, player: Player): List<Int>{
+suspend fun getPossibleEnemies(player: Player): List<Int>{
     var enemiesId: List<Int> = emptyList()
-    val sql = "SELECT id FROM commonenemies WHERE level = ${player.level};"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        enemiesId = enemiesId + rs.getInt("id")
-    }
+    //val sql = "SELECT id FROM commonenemies WHERE level = ${player.level};"
+    val body = request("ids" , "id", "commonenemies", "level=${player.level}")
+    enemiesId = Json.decodeFromString(body)
     return enemiesId
 }
 
@@ -16,54 +16,39 @@ fun getRandom(possibleEnemiesId: List<Int>): Int{
     return possibleEnemiesId[kotlin.random.Random.nextInt(0, possibleEnemiesId.size)]
 }
 
-fun getCommonEnemyData(db: Connect, random: Int): List<Int>{
+suspend fun getCommonEnemyData(random: Int): List<Int>{
     var enemyData: List<Int> = emptyList()
-    val sql = "SELECT * FROM commonenemies WHERE id = $random"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        enemyData = enemyData + rs.getInt("basehp")
-        enemyData = enemyData + rs.getInt("basestamina")
-        enemyData = enemyData + rs.getInt("baseatk")
-        enemyData = enemyData + rs.getInt("basedef")
-        enemyData = enemyData + rs.getInt("basedodge")
-        enemyData = enemyData + rs.getInt("basespeed")
-        enemyData = enemyData + rs.getInt("level")
-    }
+    //val sql = "SELECT * FROM commonenemies WHERE id = $random"
+    val body = request("enemydata" , "*", "commonenemies", "level=$random")
+    enemyData = Json.decodeFromString(body)
     return enemyData
 }
 
-fun getCommonEnemyName(db: Connect, random: Int): String{
+suspend fun getCommonEnemyName(random: Int): String{
     var enemyName = ""
-    val sql = "SELECT name FROM commonenemies WHERE id = $random"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        enemyName = rs.getString("name")
-    }
+    //val sql = "SELECT name FROM commonenemies WHERE id = $random"
+    val body = request("name" , "name", "commonenemies", "id=$random")
+    enemyName = Json.decodeFromString(body)
     return enemyName
 }
 
-fun getCommonEnemyMovements(db: Connect, player: Player): List<Movement>{
+suspend fun getCommonEnemyMovements(player: Player): List<Movement>{
     var enemyMovements: List<Movement> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level}"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        enemyMovements = enemyMovements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
-            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
-            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
-            rs.getInt("baseaccuracy"), rs.getInt("price"))
-    }
+    //val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level}"
+    val body = request("movementsdata" , "*", "movements", "minlevel<=${player.level}")
+    enemyMovements = Json.decodeFromString(body)
     return enemyMovements
 }
 
-fun training(db: Connect, player: Player){
+suspend fun training(player: Player){
 
     //Escolhe o oponente de commonenemies aleatoriamente
-    val possibleEnemiesId = getPossibleEnemies(db, player)
+    val possibleEnemiesId = getPossibleEnemies(player)
     val random = getRandom(possibleEnemiesId)
 
-    val enemyData = getCommonEnemyData(db, random)
-    val enemyName = getCommonEnemyName(db, random)
-    val enemymovements = getCommonEnemyMovements(db, player)
+    val enemyData = getCommonEnemyData(random)
+    val enemyName = getCommonEnemyName(random)
+    val enemymovements = getCommonEnemyMovements(player)
 
     val enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemymovements, enemyData[2], enemyData[3], enemyData[4], enemyData[5], player.level)
     val res = battle(player, enemy)
@@ -76,59 +61,66 @@ fun training(db: Connect, player: Player){
     }
 }
 
-fun getPossibleMovementsId(db: Connect, player: Player): List<Int>{
-    var movimentosDisponiveis: List<Int> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        for(action in player.skills){
-            if(rs.getInt("id") == action.id)
-                continue
+suspend fun getPossibleMovementsId(player: Player): List<Int>{
+    var movimentosDisponiveisId: List<Int> = emptyList()
+    val body = request("movementsdata", "*", "movements", "minlevel<=${player.level}")
+    val movementsId: List<Movement> = Json.decodeFromString(body)
+    for(i in 0..movementsId.size - 1){
+        var found = 0
+        for (action in player.skills){
+            if(action.id == movementsId[i].id){
+                found = 1
+                break
+            }
         }
-        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("id")
+        if(found == 0)
+            movimentosDisponiveisId += movementsId[i].id
     }
-    return movimentosDisponiveis
+    return movimentosDisponiveisId
 }
 
-fun getPossibleMovementsName(db: Connect, player: Player): List<String>{
-    var movimentosDisponiveis: List<String> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        for(action in player.skills){
-            if(rs.getInt("id") == action.id)
-                continue
+suspend fun getPossibleMovementsName(player: Player): List<String>{
+    var movimentosDisponiveisName: List<String> = emptyList()
+    val body = request("names", "names", "movements", "minlevel<=${player.level}")
+    val movementsName: List<String> = Json.decodeFromString(body)
+    for(i in 0..movementsName.size - 1){
+        var found = 0
+        for (action in player.skills){
+            if(action.name == movementsName[i]){
+                found = 1
+                break
+            }
         }
-        movimentosDisponiveis = movimentosDisponiveis + rs.getString("name")
+        if(found == 0)
+            movimentosDisponiveisName += movementsName[i]
     }
-    return movimentosDisponiveis
+    return movimentosDisponiveisName
 }
 
-fun getPossibleMovementsPrice(db: Connect, player: Player): List<Int>{
-    var movimentosDisponiveis: List<Int> = emptyList()
-    val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level};"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        for(action in player.skills){
-            if(rs.getInt("id") == action.id)
-                continue
+suspend fun getPossibleMovementsPrice(player: Player): List<Int>{
+    var movimentosDisponiveisPrice: List<Int> = emptyList()
+    val body = request("movementsdata", "*", "movements", "minlevel<=${player.level}")
+    val movementsId: List<Movement> = Json.decodeFromString(body)
+    for(i in 0..movementsId.size - 1){
+        var found = 0
+        for (action in player.skills){
+            if(action.id == movementsId[i].id){
+                found = 1
+                break
+            }
         }
-        movimentosDisponiveis = movimentosDisponiveis + rs.getInt("price")
+        if(found == 0)
+            movimentosDisponiveisPrice += movementsId[i].price
     }
-    return movimentosDisponiveis
+    return movimentosDisponiveisPrice
 }
 
-fun getMovement(db: Connect, choose: Int): Movement{
+suspend fun getMovement(choose: Int): Movement{
     var movimento = Movement(0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0)
-    val sql = "SELECT * FROM movements WHERE id = $choose;"
-    val rs = db.query(sql)
-    while(rs!!.next()){
-        movimento = Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
-            rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
-            rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
-            rs.getInt("baseaccuracy"), rs.getInt("price"))
-    }
+    //val sql = "SELECT * FROM movements WHERE id = $choose;"
+    val body = request("movementdata", "*", "movements", "id=$choose")
+    movimento = Json.decodeFromString(body)
     return movimento
 }
 
@@ -141,11 +133,11 @@ fun buyMovement(player: Player, movement: Movement): Int{ //Retorna 1 se foi pos
     return 0
 }
 
-fun getNewMovement(db: Connect, player: Player){
+suspend fun getNewMovement(player: Player){
     println("Qual movimento você deseja obter?")
-    val movimentosDisponiveisId = getPossibleMovementsId(db, player)
-    val movimentosDisponiveisName = getPossibleMovementsName(db, player)
-    val movimentosDisponiveisPrice = getPossibleMovementsPrice(db, player)
+    val movimentosDisponiveisId = getPossibleMovementsId(player)
+    val movimentosDisponiveisName = getPossibleMovementsName(player)
+    val movimentosDisponiveisPrice = getPossibleMovementsPrice(player)
 
     val cont = 0
     for(i in movimentosDisponiveisId){
@@ -159,7 +151,7 @@ fun getNewMovement(db: Connect, player: Player){
         return
     }
 
-    val movement = getMovement(db, choose)
+    val movement = getMovement(choose)
 
     if(buyMovement(player, movement) == 1){
         println("Movimento adicionado à sua lista de movimentos")
@@ -168,7 +160,7 @@ fun getNewMovement(db: Connect, player: Player){
     }
 }
 
-fun interval(player: Player, db:Connect){
+suspend fun interval(player: Player){
     while(true) {
 
         println("Quer descansar, treinar ou aprender novo movimento? (d/t/n)")
@@ -181,11 +173,11 @@ fun interval(player: Player, db:Connect){
 
         } else if(choice == "t" || choice == "T") { //Caso escolhe treinar
 
-            training(db, player)
+            training(player)
 
         } else{ //Caso escolhe obter movimento
 
-            getNewMovement(db, player)
+            getNewMovement(player)
 
         }
     }
