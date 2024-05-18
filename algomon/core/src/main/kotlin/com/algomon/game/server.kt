@@ -10,7 +10,7 @@ import kotlinx.serialization.encodeToString
 
 fun main() {
     val db = databaseConnect()
-    embeddedServer(Netty, port = 8080){
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0"){
         routing {
             get("/game") {
                 val type = call.request.queryParameters["type"]
@@ -36,7 +36,7 @@ fun main() {
                     while(rs!!.next()){
                         name = rs.getString("name")
                     }
-                    call.respond(name)
+                    call.respond(Json.encodeToString(name))
 
                 } else if(type == "names"){ //Pegar nomes
 

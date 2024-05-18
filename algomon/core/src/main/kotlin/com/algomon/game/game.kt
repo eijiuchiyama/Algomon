@@ -47,6 +47,7 @@ suspend fun game(){
         return
 
     val playerData = getPlayerData()
+    //println(playerData)
 
     val playermovements = getPlayerMovements()
 

@@ -4,14 +4,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TestInterval{
-    val db = databaseConnect()
     var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
 
     @Test
-    fun testGetPossibleEnemies(){
-        val possibleEnemies = getPossibleEnemies(db, player)
+    suspend fun testGetPossibleEnemies(){
+        val possibleEnemies = getPossibleEnemies(player)
 
         var maiorId = 0  //Pega o inimigo com maior id
         for(i in possibleEnemies){
@@ -25,9 +24,9 @@ class TestInterval{
     }
 
     @Test
-    fun testGetCommonEnemyData(){
+    suspend fun testGetCommonEnemyData(){
         val random = 5
-        val commonEnemyData = getCommonEnemyData(db, random)
+        val commonEnemyData = getCommonEnemyData(random)
 
         assertEquals(commonEnemyData[0], 140)
         assertEquals(commonEnemyData[1], 150)
@@ -38,17 +37,17 @@ class TestInterval{
     }
 
     @Test
-    fun testGetCommonEnemyName(){
+    suspend fun testGetCommonEnemyName(){
         val random = 6
-        val commonEnemyName = getCommonEnemyName(db, random)
+        val commonEnemyName = getCommonEnemyName(random)
 
         assertEquals(commonEnemyName, "Inimigo paia                  ")
 
     }
 
     @Test
-    fun testGetCommonEnemyMovements(){
-        val commonEnemyMovements = getCommonEnemyMovements(db, player)
+    suspend fun testGetCommonEnemyMovements(){
+        val commonEnemyMovements = getCommonEnemyMovements(player)
         println(commonEnemyMovements.size)
 
         var maiorId = 0  //Pega o movimento com maior id
@@ -66,8 +65,8 @@ class TestInterval{
     }
 
     @Test
-    fun testGetPossibleMovementsId(){
-        val movementsId = getPossibleMovementsId(db, player)
+    suspend fun testGetPossibleMovementsId(){
+        val movementsId = getPossibleMovementsId(player)
 
         var maiorId = 0  //Pega o movimento com maior id
         for(i in movementsId){
@@ -80,8 +79,8 @@ class TestInterval{
     }
 
     @Test
-    fun testGetPossibleMovementsPrice(){
-        val movementsPrice = getPossibleMovementsPrice(db, player)
+    suspend fun testGetPossibleMovementsPrice(){
+        val movementsPrice = getPossibleMovementsPrice(player)
 
         var maiorPreco = 0  //Pega o movimento com maior preco
         for(i in movementsPrice){
@@ -94,8 +93,8 @@ class TestInterval{
     }
 
     @Test
-    fun testGetMovement(){
-        val movement = getMovement(db, 1)
+    suspend fun testGetMovement(){
+        val movement = getMovement(1)
 
         assertEquals(movement.id, 1)
         assertEquals(movement.staminaown, -20)

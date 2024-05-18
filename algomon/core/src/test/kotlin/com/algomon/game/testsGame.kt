@@ -5,11 +5,9 @@ import org.junit.Test
 
 class TestGame{
 
-    val db = databaseConnect()
-
     @Test
-    fun testGetPlayerData(){
-        val playerData = getPlayerData(db)
+    suspend fun testGetPlayerData(){
+        val playerData = getPlayerData()
 
         assertEquals(playerData[0], 100)
         assertEquals(playerData[1], 120)
@@ -20,8 +18,8 @@ class TestGame{
     }
 
     @Test
-    fun testGetPlayerMovements(){
-        val playerMovements = getPlayerMovements(db)
+    suspend fun testGetPlayerMovements(){
+        val playerMovements = getPlayerMovements()
 
         var menorId = 1000  //Pega o movimento com menor id
         var posMenorId = 0
@@ -38,8 +36,8 @@ class TestGame{
     }
 
     @Test
-    fun testSpecialEnemyData(){
-        val specialEnemyData = getSpecialEnemyData(db, 0)
+    suspend fun testSpecialEnemyData(){
+        val specialEnemyData = getSpecialEnemyData(0)
 
         assertEquals(specialEnemyData[0], 100)
         assertEquals(specialEnemyData[1], 120)
@@ -51,8 +49,8 @@ class TestGame{
     }
 
     @Test
-    fun testGetSpecialEnemyMovements(){
-        val specialEnemyMovements = getSpecialEnemyMovements(db, 0)
+    suspend fun testGetSpecialEnemyMovements(){
+        val specialEnemyMovements = getSpecialEnemyMovements(0)
 
         var menorId = 1000
         var posMenorId = 0

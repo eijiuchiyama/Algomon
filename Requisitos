@@ -1,26 +1,30 @@
 Requisitos do projeto
 
-Ao iniciar o jogo, deve-se ter a opção de criar novo jogo e continuar o que foi feito anteriormente.
+Ao iniciar o jogo, aparece uma tela inicial na qual há um botão que inicia o jogo.
 Após iniciar o jogo, é contado o contexto do jogo.
-    Contexto:
+Contexto: A história do jogo acontece em um campeonato de programadores que ocorre na cidade na qual a personagem principal (jogador) se residencia. Devido ao sonho de se tornar um programador experiente, mesmo sendo um iniciante, o personagem principal se inscreve e torna-se um competidor do campeonato. O campeonato é dividido em várias fases, na qual cada fase o jogador deve enfrentar os outros competidores batalhando com código. Durante o período da competição o personagem principal vai se aprimorando as suas habilidades de programação, adquirir conhecimentos sobre diferentes algoritmos e teorias, e por fim derrota todos os inimigos e torna o vencedor do campeonato.
 Após ser contado o contexto, começa o torneio.
 
 Torneio
-O torneio consiste de x batalhas
-Entre cada batalha, o jogador tem a opção de treinar para a próxima batalha (assim melhorando seu status), adquirir novos movimentos para si, (adquirir itens) ou descansar (não fazer nada).
+O torneio consiste de 12 batalhas.
+Entre cada batalha, o jogador tem a opção de treinar para a próxima batalha (assim melhorando seus dados de status), adquirir novos movimentos para si ou descansar (não fazer nada).
     O jogador pode continuar no treino por tempo indeterminado.
     O adversário durante o treino é escolhido aleatoriamente entre os adversários comuns.
 
 Batalha
 O jogador e o inimigo começam com stamina e HP no máximo.
 O jogador com maior speed realiza o primeiro movimento na rodada.
-A cada rodada, o jogador pode executar um movimento, (utilizar um item) ou fugir da batalha. 
-	A fuga tem chance de sucesso de 50%.
+A cada rodada, o jogador pode executar um movimento ou fugir da batalha. 
 	Se a batalha for contra um adversário do torneio, se o jogador fugir da batalha, ele perde o jogo automaticamente.
 	Os movimentos podem tirar o HP do adversário ou modificar o ataque, defesa, etc.
 Uma vez que um dos personagens tem seu HP reduzido a zero, a batalha se encerra.
     Caso o jogador perca a batalha, ele perde o jogo.
-	Após a batalha, o jogador melhora seu status em um valor proporcional ao status do adversário, no caso em que ele ganha a batalha.
+	Após a batalha, o jogador melhora seu status em um valor fixo e ganha dinheiro para adquirir novos movimentos.
+
+Compra
+Cada movimento tem um level mínimo para ser adquirido e um preço dependendo desse level. Ao escolher adquirir um novo movimento, as opções são apresentadas
+e o jogador pode escolher qual comprar.
+Se o dinheiro na carteira do jogador não for suficiente para adquiri o movimento, ele não poderá ser adquirido.
 
 Movimentos
     Os movimentos possíveis são divididos entre movimentos que retiram HP do adversário e a própria stamina ou movimentos que modificam 
