@@ -21,6 +21,7 @@ dependencies {
   implementation files("libs/postgresql-42.7.3.jar")
   testImplementation("junit:junit:$jUnitVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
   implementation("io.ktor:ktor-server-core:$ktorVersion")
   implementation("io.ktor:ktor-server-netty:$ktorVersion")
   implementation("io.ktor:ktor-client-core:$ktorVersion")

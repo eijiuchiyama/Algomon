@@ -1,6 +1,5 @@
 package com.algomon.game
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.util.Scanner
 
@@ -19,7 +18,7 @@ fun getRandom(possibleEnemiesId: List<Int>): Int{
 suspend fun getCommonEnemyData(random: Int): List<Int>{
     var enemyData: List<Int> = emptyList()
     //val sql = "SELECT * FROM commonenemies WHERE id = $random"
-    val body = request("enemydata" , "*", "commonenemies", "level=$random")
+    val body = request("enemydata" , "*", "commonenemies", "id=$random")
     enemyData = Json.decodeFromString(body)
     return enemyData
 }

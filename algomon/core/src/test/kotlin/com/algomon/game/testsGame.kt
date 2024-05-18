@@ -1,12 +1,13 @@
 package com.algomon.game
 
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TestGame{
 
     @Test
-    suspend fun testGetPlayerData(){
+    fun testGetPlayerData() = runTest{
         val playerData = getPlayerData()
 
         assertEquals(playerData[0], 100)
@@ -18,7 +19,7 @@ class TestGame{
     }
 
     @Test
-    suspend fun testGetPlayerMovements(){
+    fun testGetPlayerMovements() = runTest{
         val playerMovements = getPlayerMovements()
 
         var menorId = 1000  //Pega o movimento com menor id
@@ -36,7 +37,7 @@ class TestGame{
     }
 
     @Test
-    suspend fun testSpecialEnemyData(){
+    fun testSpecialEnemyData() = runTest{
         val specialEnemyData = getSpecialEnemyData(0)
 
         assertEquals(specialEnemyData[0], 100)
@@ -49,7 +50,7 @@ class TestGame{
     }
 
     @Test
-    suspend fun testGetSpecialEnemyMovements(){
+    fun testGetSpecialEnemyMovements() = runTest{
         val specialEnemyMovements = getSpecialEnemyMovements(0)
 
         var menorId = 1000

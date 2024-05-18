@@ -1,5 +1,6 @@
 package com.algomon.game
 
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -9,7 +10,7 @@ class TestInterval{
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
 
     @Test
-    suspend fun testGetPossibleEnemies(){
+    fun testGetPossibleEnemies() = runTest{
         val possibleEnemies = getPossibleEnemies(player)
 
         var maiorId = 0  //Pega o inimigo com maior id
@@ -24,7 +25,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetCommonEnemyData(){
+    fun testGetCommonEnemyData() = runTest{
         val random = 5
         val commonEnemyData = getCommonEnemyData(random)
 
@@ -37,7 +38,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetCommonEnemyName(){
+    fun testGetCommonEnemyName() = runTest{
         val random = 6
         val commonEnemyName = getCommonEnemyName(random)
 
@@ -46,7 +47,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetCommonEnemyMovements(){
+    fun testGetCommonEnemyMovements() = runTest{
         val commonEnemyMovements = getCommonEnemyMovements(player)
         println(commonEnemyMovements.size)
 
@@ -65,7 +66,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetPossibleMovementsId(){
+    fun testGetPossibleMovementsId() = runTest{
         val movementsId = getPossibleMovementsId(player)
 
         var maiorId = 0  //Pega o movimento com maior id
@@ -79,7 +80,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetPossibleMovementsPrice(){
+    fun testGetPossibleMovementsPrice() = runTest{
         val movementsPrice = getPossibleMovementsPrice(player)
 
         var maiorPreco = 0  //Pega o movimento com maior preco
@@ -93,7 +94,7 @@ class TestInterval{
     }
 
     @Test
-    suspend fun testGetMovement(){
+    fun testGetMovement() = runTest{
         val movement = getMovement(1)
 
         assertEquals(movement.id, 1)
