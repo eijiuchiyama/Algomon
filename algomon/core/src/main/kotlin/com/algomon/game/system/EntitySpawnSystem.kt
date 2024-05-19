@@ -61,7 +61,7 @@ class EntitySpawnSystem(
                     nextAnimation(cfg.model, AnimationType.idleFront)
                 }
 
-                physicCmpFromImage(phWorld, imageCmp.image, DynamicBody){ phCmp, width, height ->
+                physicCmpFromImage(phWorld, imageCmp.image, cfg.bodyType){ phCmp, width, height ->
                     val w = width * cfg.physicScaling.x
                     val h = height * cfg.physicScaling.y
 
