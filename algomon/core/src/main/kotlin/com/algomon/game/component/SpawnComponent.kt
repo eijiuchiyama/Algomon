@@ -7,7 +7,9 @@ const val DEFAULT_SPEED = 3f
 
 data class SpawnCfg(
     val model: AnimationModel,
-    val speedScaling: Float = 1f
+    val speedScaling: Float = 1f,
+    val physicScaling: Vector2 = vec2(1f,1f),
+    val physicOffset: Vector2 = vec2(0f,0f)
 )
 
 data class SpawnComponent(

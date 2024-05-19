@@ -62,7 +62,10 @@ class EntitySpawnSystem(
                 }
 
                 physicCmpFromImage(phWorld, imageCmp.image, DynamicBody){ phCmp, width, height ->
-                    box(width, height){
+                    val w = width * cfg.physicScaling.x
+                    val h = height * cfg.physicScaling.y
+
+                    box(w, h, cfg.physicOffset){
                         isSensor = false
                     }
                 }
@@ -83,8 +86,16 @@ class EntitySpawnSystem(
 
     private fun spawnCfg(type: String): SpawnCfg = cacheCfgs.getOrPut(type) {
         when(type){
-            "Player" -> SpawnCfg(AnimationModel.player)
-            "Slime" -> SpawnCfg(AnimationModel.slime)
+            "Player" -> SpawnCfg(
+                AnimationModel.player,
+                physicScaling = vec2(0.3f, 0.3f),
+                physicOffset = vec2(0f, -10f * UNIT_SCALE)
+            )
+            "Slime" -> SpawnCfg(
+                AnimationModel.slime,
+                physicScaling = vec2(0.3f, 0.3f),
+                physicOffset = vec2(0f, -2f * UNIT_SCALE)
+            )
             else -> gdxError("Type $type has no SpawnCfg setup")
         }
     }
