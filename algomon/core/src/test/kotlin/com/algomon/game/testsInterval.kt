@@ -42,7 +42,7 @@ class TestInterval{
         val random = 6
         val commonEnemyName = getCommonEnemyName(random)
 
-        assertEquals(commonEnemyName, "Inimigo paia                  ")
+        assertEquals(commonEnemyName, "Inimigo paia")
 
     }
 
