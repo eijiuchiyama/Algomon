@@ -1,6 +1,7 @@
 package com.algomon.game.component
 
 import com.algomon.game.Main.Companion.UNIT_SCALE
+import com.algomon.game.system.CollisionSpawnSystem.Companion.SPAWN_AREA_SIZE
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Shape2D
 import com.badlogic.gdx.physics.box2d.Body
@@ -13,6 +14,7 @@ import com.github.quillraven.fleks.EntityCreateCfg
 import ktx.app.gdxError
 import ktx.box2d.BodyDefinition
 import ktx.box2d.body
+import ktx.box2d.circle
 import ktx.box2d.loop
 import ktx.math.vec2
 
@@ -46,6 +48,7 @@ class PhysicComponent {
                                 vec2(bodyW,bodyH),
                                 vec2(0f,bodyH)
                             )
+                            circle(SPAWN_AREA_SIZE + 1f){ isSensor = true }
                         }
                     }
                 }

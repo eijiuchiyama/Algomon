@@ -1,7 +1,9 @@
 package com.algomon.game.system
 
+import com.algomon.game.component.CollisionComponent
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.PhysicComponent
+import com.algomon.game.component.TiledComponent
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
@@ -24,7 +26,9 @@ import ktx.math.vec2
 class PhysicSystem (
     private val phworld : World,
     private val imageCmps : ComponentMapper<ImageComponent>,
-    private val physicCmps : ComponentMapper<PhysicComponent>
+    private val physicCmps : ComponentMapper<PhysicComponent>,
+    private val tiledCmps : ComponentMapper<TiledComponent>,
+    private val collisionCmps : ComponentMapper<CollisionComponent>
 ):ContactListener, IteratingSystem(interval = Fixed(1/60f)){
 
     init {
@@ -69,12 +73,38 @@ class PhysicSystem (
         }
     }
 
-    override fun beginContact(contact: Contact?) {
+    override fun beginContact(contact: Contact) {
+        val entityA: Entity = contact.fixtureA.body.userData as Entity
+        val entityB: Entity = contact.fixtureB.body.userData as Entity
+        val isEntityATiledCollisionSensor = entityA in tiledCmps && contact.fixtureA.isSensor
+        val isEntityBTiledCollisionSensor = entityB in tiledCmps && contact.fixtureB.isSensor
+        val isEntityACollisionFixture = entityA in collisionCmps && !contact.fixtureA.isSensor
+        val isEntityBCollisionFixture = entityB in collisionCmps && !contact.fixtureB.isSensor
 
+        when{
+             isEntityATiledCollisionSensor && isEntityBCollisionFixture -> {
+                tiledCmps[entityA].nearbyEntities += entityB
+            }
+            isEntityBTiledCollisionSensor && isEntityACollisionFixture -> {
+                tiledCmps[entityB].nearbyEntities += entityA
+            }
+        }
     }
 
-    override fun endContact(contact: Contact?) {
+    override fun endContact(contact: Contact) {
+        val entityA: Entity = contact.fixtureA.body.userData as Entity
+        val entityB: Entity = contact.fixtureB.body.userData as Entity
+        val isEntityATiledCollisionSensor = entityA in tiledCmps && contact.fixtureA.isSensor
+        val isEntityBTiledCollisionSensor = entityB in tiledCmps && contact.fixtureB.isSensor
 
+        when{
+            isEntityATiledCollisionSensor && !contact.fixtureB.isSensor -> {
+                tiledCmps[entityA].nearbyEntities -= entityB
+            }
+            isEntityBTiledCollisionSensor && !contact.fixtureA.isSensor -> {
+                tiledCmps[entityB].nearbyEntities -= entityA
+            }
+        }
     }
 
     override fun preSolve(contact: Contact, oldManifold: Manifold) {

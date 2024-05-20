@@ -4,6 +4,7 @@ import com.algomon.game.component.CollisionComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PhysicComponent.Companion.physicCmpFromShape2D
 import com.algomon.game.component.TiledComponent
+import com.algomon.game.event.CollisionDespawnEvent
 import com.algomon.game.event.MapChangeEvent
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell
@@ -52,7 +53,7 @@ class CollisionSpawnSystem(
         val(entityX, entityY) = physicCmps[entity].body.position
 
         tiledLayers.forEach { layer ->
-            layer.forEachCell(entityX.toInt(), entityY.toInt(), SPAWNN_AREA_SIZE){ cell, x, y ->
+            layer.forEachCell(entityX.toInt(), entityY.toInt(), SPAWN_AREA_SIZE){ cell, x, y ->
                 if (cell.tile.objects.isEmpty()){
                     return@forEachCell
                 }
@@ -100,11 +101,17 @@ class CollisionSpawnSystem(
                 }
                 return true
             }
+
+            is CollisionDespawnEvent -> {
+                processedCells.remove(event.cell)
+                return true
+            }
+
             else -> return false
         }
     }
 
     companion object{
-        private const val SPAWNN_AREA_SIZE = 2
+        const val SPAWN_AREA_SIZE = 2
     }
 }
