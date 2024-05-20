@@ -4,6 +4,7 @@ import com.algomon.game.Main.Companion.UNIT_SCALE
 import com.algomon.game.component.AnimationComponent
 import com.algomon.game.component.AnimationModel
 import com.algomon.game.component.AnimationType
+import com.algomon.game.component.CollisionComponent
 import com.algomon.game.component.DEFAULT_SPEED
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.MoveComponent
@@ -89,6 +90,10 @@ class EntitySpawnSystem(
 
                 if (type == "Player"){
                     add<PlayerComponent>()
+                }
+
+                if(cfg.bodyType != StaticBody){
+                    add<CollisionComponent>()
                 }
             }
         }
