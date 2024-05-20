@@ -8,6 +8,7 @@ import com.algomon.game.event.fire
 import com.algomon.game.input.PlayerKeyboardInputProcessor
 import com.algomon.game.system.AnimationSystem
 import com.algomon.game.system.CameraSystem
+import com.algomon.game.system.CollisionSpawnSystem
 import com.algomon.game.system.DebugSystem
 import com.algomon.game.system.EntitySpawnSystem
 import com.algomon.game.system.MoveSystem
@@ -43,6 +44,7 @@ class GameScreen : KtxScreen {
         componentListener<PhysicComponentListener>()
 
         system<EntitySpawnSystem>()
+        system<CollisionSpawnSystem>()
         system<MoveSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()

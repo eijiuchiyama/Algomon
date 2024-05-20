@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType.StaticBody
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
@@ -65,8 +66,18 @@ class EntitySpawnSystem(
                     val w = width * cfg.physicScaling.x
                     val h = height * cfg.physicScaling.y
 
+                    // Sensor Box
                     box(w, h, cfg.physicOffset){
-                        isSensor = false
+                        isSensor = cfg.bodyType != StaticBody
+                    }
+
+                    // Collision Box
+                    if (cfg.bodyType != StaticBody){
+                        val collH = h * 0.4f
+                        val collOffset = vec2().apply { set(cfg.physicOffset) }
+                        collOffset.y -= h * 0.5f - collH * 0.5f
+
+                        box(w, collH, collOffset)
                     }
                 }
 
