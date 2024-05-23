@@ -29,7 +29,7 @@ import ktx.log.logger
 import ktx.math.vec2
 
 class GameScreen : KtxScreen {
-    private val stage: Stage = Stage(ExtendViewport(17f,13f))
+    private val stage: Stage = Stage(ExtendViewport(12f,9f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
     private var currentMap: TiledMap? = null
     private val phWorld = createWorld(gravity = vec2(0f,0f)).apply {

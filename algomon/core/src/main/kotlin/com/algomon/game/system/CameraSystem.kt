@@ -27,8 +27,8 @@ class CameraSystem(
             val viewW = camera.viewportWidth * 0.5f
             val viewH = camera.viewportHeight * 0.5f
             camera.position.set(
-                image.x.coerceIn(viewW, maxW-viewW),
-                image.y.coerceIn(viewH, maxH-viewH),
+                if (maxW >= 2 * viewW) image.x.coerceIn(viewW, maxW-viewW) else maxW/2,
+                if (maxH >= 2 * viewH) image.y.coerceIn(viewH, maxH-viewH) else maxH/2,
                 camera.position.z
             )
         }
@@ -37,6 +37,7 @@ class CameraSystem(
     override fun handle(event: Event?): Boolean {
         if (event is MapChangeEvent){
             maxW = event.map.width.toFloat()
+            print(maxW)
             maxH = event.map.height.toFloat()
             return true
         }
