@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="21" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="4">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="21" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="4">
  <tileset firstgid="1" source="ground.tsx"/>
  <tileset firstgid="392" source="map.tsx"/>
  <tileset firstgid="1816" name="entities" tilewidth="48" tileheight="48" tilecount="2" columns="0">
@@ -11,19 +11,25 @@
    <image width="32" height="32" source="../graphictmp/game/slime/idleFront_01.png"/>
   </tile>
  </tileset>
+ <tileset firstgid="1818" source="ceil.tsx"/>
  <layer id="1" name="ground" width="21" height="16">
   <data encoding="base64" compression="zlib">
    eJxjYBg64CYWTKm+UTNpbya5eNTMUTOpbSa1AQDBrKs7
   </data>
  </layer>
- <layer id="3" name="bgd_2" width="21" height="16">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFQwkIM1NfnzKZZpKi7wcjdvFfOMSJARxMDAycQHybEZXmYiLfzFEwCkgBAMeDBFw=
-  </data>
- </layer>
  <layer id="4" name="wall" width="21" height="16">
   <data encoding="base64" compression="zlib">
-   eJyTZWBgUGbExPwM+IEgDn3yQHE9IDZhxMSKBMxUxKHPAGomLj2EzMQGhpqZsPB1QGJrYQl/ZIwsj6wPZqY1IwQzILGtsYQ/MkZWh6wPn9/JBaNmjppJTTPtGSD5gFrYEYgBvYcWAA==
+   eJyTZWBgUGbExPwM+IEgDn3yQHE9IDZhxMSKBMxUxKHPAGomLj2EzMQGhpqZsPBlQGJrYQl/ZIwsj6wPZqY1IwQzILGtsYQ/MkZWh6wPn9/JBaNmjppJTTPtgdiBitgRiAEDeBWA
+  </data>
+ </layer>
+ <layer id="3" name="bgd_2" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4D24AcjdvFfOMSJARxMDAycQHybEZXmYiLfzFEwCkgBAEIQA+Q=
+  </data>
+ </layer>
+ <layer id="2" name="bgd_1" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFnEwMDNJMEJoe+igF7Gj2ZQD5mUyYbFzqsQFxNDUVQH4lEyYbl/qBAj7MqPwYZuzqBhK8ZMZPkwN+MuOnyQED5c59wLS0nwlBUwOcA5pznglB0woAAFwnGnE=
   </data>
  </layer>
  <objectgroup id="5" name="entities">
@@ -31,9 +37,14 @@
   <object id="2" type="Slime" gid="1817" x="182.211" y="165.565" width="32" height="32"/>
   <object id="3" type="Slime" gid="1817" x="222.11" y="135.482" width="32" height="32"/>
  </objectgroup>
- <layer id="2" name="bgd_1" width="21" height="16">
+ <layer id="6" name="fgd_2" width="21" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh6gJuJuvo4geLSTBCaFECuPkoBO5p9GUB+JhMmG5d6bEAcTU0FkF/JhMnGpX6ggA8zKj+GGbu6gQQvmfHT5ICfzPhpcgAx7lwHjPf1TAiaGu7cBzRnPxOCpgY4BzTnPBOCphUAAK04HU0=
+   eJxjYBh6gJuJvvoGExBmpr4+ZTLNJFffKBi6YB0wD61nQtAjHQAA28QDVQ==
+  </data>
+ </layer>
+ <layer id="7" name="fgd_1" width="21" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQwlEstNX3ygYBaMANwAAnFAAwQ==
   </data>
  </layer>
 </map>

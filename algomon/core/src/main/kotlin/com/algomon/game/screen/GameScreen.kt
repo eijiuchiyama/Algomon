@@ -52,7 +52,7 @@ class GameScreen : KtxScreen {
         system<AnimationSystem>()
         system<CameraSystem>()
         system<RenderSystem>()
-        system<DebugSystem>()
+        //system<DebugSystem>()
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
