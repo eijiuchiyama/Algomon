@@ -104,8 +104,8 @@ class EntitySpawnSystem(
         when(type){
             "Player" -> SpawnCfg(
                 AnimationModel.player,
-                physicScaling = vec2(0.3f, 0.3f),
-                physicOffset = vec2(0f, -10f * UNIT_SCALE)
+                physicScaling = vec2(0.3f, 0.55f),
+                physicOffset = vec2(0f, 0f * UNIT_SCALE)
             )
             "Slime" -> SpawnCfg(
                 AnimationModel.slime,
