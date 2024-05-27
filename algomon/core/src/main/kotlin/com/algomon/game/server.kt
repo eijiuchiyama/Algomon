@@ -10,7 +10,7 @@ import kotlinx.serialization.encodeToString
 
 fun main() {
     val db = databaseConnect()
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0"){
+    embeddedServer(Netty, port = 8080, host = "localhost"){
         routing {
             get("/game") {
                 val type = call.request.queryParameters["type"]

@@ -9,7 +9,7 @@ val client = HttpClient(CIO)
 
 suspend fun request(type: String, column: String, table: String, condition: String): String {
 
-    val response = client.get("http://0.0.0.0:8080/game?type=$type&column=$column&table=$table&condition=$condition")
+    val response = client.get("http://localhost:8080/game?type=$type&column=$column&table=$table&condition=$condition")
     return response.body()
 
 }
