@@ -7,6 +7,7 @@ import com.algomon.game.component.AnimationType
 import com.algomon.game.component.CollisionComponent
 import com.algomon.game.component.DEFAULT_SPEED
 import com.algomon.game.component.ImageComponent
+import com.algomon.game.component.InteractComponent
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PhysicComponent.Companion.physicCmpFromImage
@@ -66,10 +67,13 @@ class EntitySpawnSystem(
                 physicCmpFromImage(phWorld, imageCmp.image, cfg.bodyType){ phCmp, width, height ->
                     val w = width * cfg.physicScaling.x
                     val h = height * cfg.physicScaling.y
+                    phCmp.offset.set(cfg.physicOffset)
+                    phCmp.size.set(w,h)
 
                     // Sensor Box
                     box(w, h, cfg.physicOffset){
                         isSensor = cfg.bodyType != StaticBody
+                        userData = HIT_BOX_SENSOR
                     }
 
                     // Collision Box
@@ -85,6 +89,13 @@ class EntitySpawnSystem(
                 if (cfg.speedScaling > 0f) {
                     add<MoveComponent>{
                         speed = DEFAULT_SPEED * cfg.speedScaling
+                    }
+                }
+
+                if (cfg.canInteract) {
+                    add<InteractComponent>{
+                        maxDelay = cfg.interactDelay
+                        extraRange = cfg.interactExtraRange
                     }
                 }
 
@@ -105,7 +116,8 @@ class EntitySpawnSystem(
             "Player" -> SpawnCfg(
                 AnimationModel.player,
                 physicScaling = vec2(0.3f, 0.55f),
-                physicOffset = vec2(0f, 0f * UNIT_SCALE)
+                physicOffset = vec2(0f, 0f * UNIT_SCALE),
+                canInteract = true
             )
             "Slime" -> SpawnCfg(
                 AnimationModel.slime,
@@ -142,5 +154,9 @@ class EntitySpawnSystem(
             }
         }
         return false
+    }
+
+    companion object {
+        const val HIT_BOX_SENSOR = "Hitbox"
     }
 }

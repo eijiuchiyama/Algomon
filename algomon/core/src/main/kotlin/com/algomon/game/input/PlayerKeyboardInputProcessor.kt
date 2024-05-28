@@ -1,5 +1,7 @@
 package com.algomon.game.input
 
+import com.algomon.game.component.InteractComponent
+import com.algomon.game.component.InteractState
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PlayerComponent
 import com.badlogic.gdx.Gdx
@@ -10,7 +12,8 @@ import ktx.app.KtxInputAdapter
 
 class PlayerKeyboardInputProcessor(
     world: World,
-    private val moveCmps: ComponentMapper<MoveComponent>,
+    private val moveCmps: ComponentMapper<MoveComponent> = world.mapper(),
+    private val interactCmps: ComponentMapper<InteractComponent> = world.mapper()
 ):KtxInputAdapter {
     private val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
     private var playerSin = 0f
@@ -42,6 +45,17 @@ class PlayerKeyboardInputProcessor(
                 LEFT -> playerCos = -1f
             }
             updatePlayerMovement()
+            return true
+        } else if(keycode == SPACE){
+            playerEntities.forEach {
+                //interactCmps[it].doInteract = true
+                with(interactCmps[it]){
+                    if (state == InteractState.READY){
+                        doInteract = true
+                        startInteract()
+                    }
+                }
+            }
             return true
         }
         return false

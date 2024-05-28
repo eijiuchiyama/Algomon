@@ -12,6 +12,7 @@ import com.algomon.game.system.CollisionDespawnSystem
 import com.algomon.game.system.CollisionSpawnSystem
 import com.algomon.game.system.DebugSystem
 import com.algomon.game.system.EntitySpawnSystem
+import com.algomon.game.system.InteractSystem
 import com.algomon.game.system.MoveSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
@@ -48,11 +49,12 @@ class GameScreen : KtxScreen {
         system<CollisionSpawnSystem>()
         system<CollisionDespawnSystem>()
         system<MoveSystem>()
+        system<InteractSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<CameraSystem>()
         system<RenderSystem>()
-        //system<DebugSystem>()
+        system<DebugSystem>()
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
@@ -65,7 +67,7 @@ class GameScreen : KtxScreen {
         currentMap = TmxMapLoader().load("assets/map/map.tmx")
         stage.fire(MapChangeEvent(currentMap!!))
 
-        PlayerKeyboardInputProcessor(eworld, eworld.mapper())
+        PlayerKeyboardInputProcessor(eworld)
     }
 
     override fun resize(width: Int, height: Int) {
