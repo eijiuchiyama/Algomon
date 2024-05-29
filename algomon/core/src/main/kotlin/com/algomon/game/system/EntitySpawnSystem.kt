@@ -124,6 +124,24 @@ class EntitySpawnSystem(
                 physicScaling = vec2(0.3f, 0.3f),
                 physicOffset = vec2(0f, -2f * UNIT_SCALE)
             )
+            "Door" -> SpawnCfg(
+                AnimationModel.door,
+                physicScaling = vec2(1f, 0.9f),
+                physicOffset = vec2(0f, 0f * UNIT_SCALE),
+                //bodyType = StaticBody
+            )
+            "Shelf" -> SpawnCfg(
+                AnimationModel.shelf,
+                physicScaling = vec2(0.5f, 0.2f),
+                physicOffset = vec2(0f, -6f * UNIT_SCALE),
+                bodyType = StaticBody
+            )
+            "Computer" -> SpawnCfg(
+                AnimationModel.computer,
+                physicScaling = vec2(1f, 0.5f),
+                physicOffset = vec2(0f, -8f * UNIT_SCALE),
+                bodyType = StaticBody
+            )
             else -> gdxError("Type $type has no SpawnCfg setup")
         }
     }

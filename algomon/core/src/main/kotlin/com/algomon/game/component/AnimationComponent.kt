@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 enum class AnimationModel{
-    player, slime, chest, UNDEFINED;
+    player, slime, door, shelf, computer, UNDEFINED;
 
     val atlasKey: String = this.toString()
 }
