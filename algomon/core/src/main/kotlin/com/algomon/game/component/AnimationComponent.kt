@@ -32,6 +32,10 @@ class AnimationComponent(
         nextAnimation = "${model.atlasKey}/${type.atlasKey}"
     }
 
+    fun nextAnimation(type: AnimationType){
+        nextAnimation = "${model.atlasKey}/${type.atlasKey}"
+    }
+
     companion object{
         val NO_ANIMATION = ""
     }

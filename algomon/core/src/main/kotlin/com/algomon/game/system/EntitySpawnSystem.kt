@@ -8,6 +8,7 @@ import com.algomon.game.component.CollisionComponent
 import com.algomon.game.component.DEFAULT_SPEED
 import com.algomon.game.component.ImageComponent
 import com.algomon.game.component.InteractComponent
+import com.algomon.game.component.InteractableComponent
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PhysicComponent.Companion.physicCmpFromImage
@@ -92,15 +93,16 @@ class EntitySpawnSystem(
                     }
                 }
 
-                if (cfg.canInteract) {
+                if (type == "Player"){
+                    add<PlayerComponent>()
                     add<InteractComponent>{
                         maxDelay = cfg.interactDelay
                         extraRange = cfg.interactExtraRange
                     }
                 }
 
-                if (type == "Player"){
-                    add<PlayerComponent>()
+                if (cfg.interactable){
+                    add<InteractableComponent>()
                 }
 
                 if(cfg.bodyType != StaticBody){
@@ -117,7 +119,8 @@ class EntitySpawnSystem(
                 AnimationModel.player,
                 physicScaling = vec2(0.3f, 0.55f),
                 physicOffset = vec2(0f, 0f * UNIT_SCALE),
-                canInteract = true
+                interactDelay = 0.05f,
+                interactExtraRange = 0.6f,
             )
             "Slime" -> SpawnCfg(
                 AnimationModel.slime,
@@ -128,6 +131,7 @@ class EntitySpawnSystem(
                 AnimationModel.door,
                 physicScaling = vec2(1f, 0.9f),
                 physicOffset = vec2(0f, 0f * UNIT_SCALE),
+                interactable = true
                 //bodyType = StaticBody
             )
             "Shelf" -> SpawnCfg(

@@ -2,7 +2,9 @@ package com.algomon.game.system
 
 import com.algomon.game.component.InteractComponent
 import com.algomon.game.component.InteractState
+import com.algomon.game.component.InteractableComponent
 import com.algomon.game.component.PhysicComponent
+import com.algomon.game.component.PlayerComponent
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
@@ -18,6 +20,8 @@ import ktx.math.component2
 class InteractSystem (
     private val interactCmps: ComponentMapper<InteractComponent>,
     private val physicCmps: ComponentMapper<PhysicComponent>,
+    private val interactableCmps: ComponentMapper<InteractableComponent>,
+    private val playerCmps: ComponentMapper<PlayerComponent>,
     private val phWorld: World
 ) : IteratingSystem() {
     override fun onTickEntity(entity: Entity) {
@@ -64,7 +68,11 @@ class InteractSystem (
                 }
 
                 configureEntity(fixtureEntity){
-
+                    if (entity in playerCmps) {
+                        interactableCmps.getOrNull(it)?.let { interactableCmp ->
+                            interactableCmp.interactEntity = entity
+                        }
+                    }
                 }
 
                 return@query false

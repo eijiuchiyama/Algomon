@@ -9,9 +9,9 @@ const val DEFAULT_SPEED = 3f
 data class SpawnCfg(
     val model: AnimationModel,
     val speedScaling: Float = 3f,
-    val canInteract: Boolean = false,
-    val interactDelay: Float = 0.05f,
-    val interactExtraRange: Float = 0.6f,
+    val interactDelay: Float = 1f,
+    val interactExtraRange: Float = 1f,
+    val interactable: Boolean = false,
     val physicScaling: Vector2 = vec2(1f,1f),
     val physicOffset: Vector2 = vec2(0f,0f),
     val bodyType: BodyType = BodyType.DynamicBody

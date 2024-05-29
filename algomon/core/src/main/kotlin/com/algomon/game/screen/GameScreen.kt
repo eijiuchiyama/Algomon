@@ -14,6 +14,7 @@ import com.algomon.game.system.DebugSystem
 import com.algomon.game.system.EntitySpawnSystem
 import com.algomon.game.system.FloatingTextSystem
 import com.algomon.game.system.InteractSystem
+import com.algomon.game.system.InteractableSystem
 import com.algomon.game.system.MoveSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
@@ -54,6 +55,7 @@ class GameScreen : KtxScreen {
         system<CollisionDespawnSystem>()
         system<MoveSystem>()
         system<InteractSystem>()
+        system<InteractableSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<CameraSystem>()
