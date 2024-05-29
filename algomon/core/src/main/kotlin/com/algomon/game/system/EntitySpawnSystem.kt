@@ -131,8 +131,8 @@ class EntitySpawnSystem(
                 AnimationModel.door,
                 physicScaling = vec2(1f, 0.9f),
                 physicOffset = vec2(0f, 0f * UNIT_SCALE),
-                interactable = true
-                //bodyType = StaticBody
+                interactable = true,
+                bodyType = StaticBody
             )
             "Shelf" -> SpawnCfg(
                 AnimationModel.shelf,

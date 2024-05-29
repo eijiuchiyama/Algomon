@@ -34,7 +34,7 @@ class FloatingTextSystem(
 
             time += deltaTime
             uiLocation.toUiCoordinates(txtLocation)
-            uiTarger.toUiCoordinates(txtLocation)
+            uiTarger.toUiCoordinates(txtTarget)
 
             uiLocation.interpolate(uiTarger, (time/lifeSpan).coerceAtMost(1f), Interpolation.smooth)
             label.setPosition(uiLocation.x, uiStage.viewport.worldHeight - uiLocation.y)
