@@ -14,15 +14,16 @@ import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.Qualifier
 import com.github.quillraven.fleks.collection.compareEntity
 import ktx.assets.disposeSafely
 import ktx.graphics.use
 import ktx.tiled.forEachLayer
-import java.security.PrivateKey
 
 @AllOf([ImageComponent::class])
 class RenderSystem(
-    private val stage: Stage,
+    private val gamestage: Stage,
+    @Qualifier("uiStage") private val uiStage: Stage,
     private val imageCmps: ComponentMapper<ImageComponent>
 ): EventListener, IteratingSystem(
     comparator = compareEntity{ e1, e2 -> imageCmps[e1].compareTo(imageCmps[e2]) }
@@ -30,19 +31,19 @@ class RenderSystem(
 
     private val bgdlayers = mutableListOf<TiledMapTileLayer>()
     private val fgdlayers = mutableListOf<TiledMapTileLayer>()
-    private val mapRenderer = OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)
-    private val orthoCam = stage.camera as OrthographicCamera
+    private val mapRenderer = OrthogonalTiledMapRenderer(null, UNIT_SCALE, gamestage.batch)
+    private val orthoCam = gamestage.camera as OrthographicCamera
     override fun onTick() {
         super.onTick()
 
-        with(stage){
+        with(gamestage){
             viewport.apply()
 
             AnimatedTiledMapTile.updateAnimationBaseTime()
             mapRenderer.setView(orthoCam)
 
             if (bgdlayers.isNotEmpty()){
-                stage.batch.use(orthoCam.combined) {
+                gamestage.batch.use(orthoCam.combined) {
                     bgdlayers.forEach { mapRenderer.renderTileLayer(it) }
                 }
             }
@@ -51,10 +52,16 @@ class RenderSystem(
             draw()
 
             if (fgdlayers.isNotEmpty()){
-                stage.batch.use(orthoCam.combined) {
+                gamestage.batch.use(orthoCam.combined) {
                     fgdlayers.forEach { mapRenderer.renderTileLayer(it) }
                 }
             }
+        }
+
+        with(uiStage){
+            viewport.apply()
+            act(deltaTime)
+            draw()
         }
     }
     override fun onTickEntity(entity: Entity) {
