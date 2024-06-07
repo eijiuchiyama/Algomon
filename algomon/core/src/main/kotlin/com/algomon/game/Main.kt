@@ -4,6 +4,7 @@ import com.algomon.game.screen.GameScreen
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -13,11 +14,14 @@ import ktx.app.KtxScreen
 class Main : KtxGame<KtxScreen>(){
 
     var batch: SpriteBatch? = null
+    var font: BitmapFont? = null
 
     override fun create() {
         batch = SpriteBatch()
+        font = BitmapFont()
+
         Gdx.app.logLevel = Application.LOG_DEBUG
-        addScreen(StartScreen())
+        addScreen(StartScreen(this))
         setScreen<StartScreen>()
     }
 
