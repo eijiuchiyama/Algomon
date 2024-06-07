@@ -12,8 +12,8 @@ fun main() {
     if (StartupHelper.startNewJvmIfRequired())
       return
     Lwjgl3Application(Main(), Lwjgl3ApplicationConfiguration().apply {
-        setTitle("algomon")
+        setTitle("Algomon")
         setWindowedMode(640, 480)
-        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
+        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "icon$it.png" }.toTypedArray()))
     })
 }

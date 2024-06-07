@@ -94,6 +94,6 @@ class GameScreen : KtxScreen {
         phWorld.disposeSafely()
     }
     companion object {
-        private val log = logger<GameScreen>()
+        val log = logger<GameScreen>()
     }
 }
