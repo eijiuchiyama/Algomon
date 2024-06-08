@@ -54,5 +54,8 @@ Fernando Yang: Programador e Designer do Projeto
 Lucas Eiji: Programador e Designer do Projeto
 Paulo Roberto Miranda Meirelles: Orientador do Projeto
 
+As músicas utilizadas neste projeto são de autoria de XtremeFreddy, e estão disponíveis em https://pixabay.com/pt/users/xtremefreddy-32332307/
+
+
 ## License
 A licença (GNU General Public License v3.0) pode ser verificada no arquivo LICENSE.
