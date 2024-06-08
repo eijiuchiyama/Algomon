@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
+import com.badlogic.gdx.utils.Timer
 import com.sun.media.sound.EmergencySoundbank.toFloat
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -28,7 +29,9 @@ class StartScreen(var game: Main) : KtxScreen {
     private val buttonHoverTexture = Texture("assets/startScreen/buttonHover.png")
     private val exitTexture = Texture("assets/startScreen/exit.png")
     private val exitHoverTexture = Texture("assets/startScreen/exitHover.png")
+
     private val music = Gdx.audio.newMusic(Gdx.files.internal(("assets/music/bitBeats1.mp3")))
+    private val soundEffect = Gdx.audio.newMusic(Gdx.files.internal("assets/music/buttonSound.mp3"))
 
     init {
         ortographicCamera.setToOrtho(false, 640F, 480F)
@@ -60,7 +63,9 @@ class StartScreen(var game: Main) : KtxScreen {
             screenHeight - Gdx.input.getY().toFloat() in 100F..100F + buttonHeight){
             game.batch?.draw(buttonHoverTexture, screenWidth/2 - buttonWidth/2, 100F)
 
-            if(Gdx.input.isTouched()){
+            if(Gdx.input.justTouched()){
+                soundEffect.play()
+
                 this.dispose()
                 game.addScreen(IntroScreen(game))
                 game.setScreen<IntroScreen>()
@@ -74,14 +79,14 @@ class StartScreen(var game: Main) : KtxScreen {
         if(Gdx.input.getX().toFloat() in screenWidth-30-exitWidth..screenWidth-30F &&
             screenHeight - Gdx.input.getY().toFloat() in 30F..30F + exitHeight){
             game.batch?.draw(exitHoverTexture, screenWidth-30-exitWidth, 30F)
-            if(Gdx.input.isTouched()){
+            if(Gdx.input.justTouched()){
                 Gdx.app.exit()
             }
         } else{
             game.batch?.draw(exitTexture, screenWidth-30-exitWidth, 30F)
         }
 
-        game.font?.draw(game.batch, "Criado por Fernando Yang e Lucas Eiji Uchiyama.", 5F, 20F)
+        game.font12?.draw(game.batch, "Criado por Fernando Yang e Lucas Eiji Uchiyama", 5F, 20F)
 
         game.batch?.end()
 

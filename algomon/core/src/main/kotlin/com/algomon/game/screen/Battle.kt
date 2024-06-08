@@ -1,0 +1,106 @@
+package com.algomon.game.screen
+
+import com.algomon.game.Main
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.utils.ScreenUtils
+import ktx.app.KtxScreen
+
+
+class Battle(var game: Main): KtxScreen{
+
+    private val screenWidth = 640F
+    private val screenHeight = 480F
+    private val boxWidth = 640F
+    private val boxHeight = 120F
+    private val playerWidth = 150F
+    private val playerHeight = 200F
+    private val boxDataWidth = 150F
+    private val boxDataHeight = 100F
+
+    private val boxTexture = Texture("assets/battle/box.png")
+    private val playerTexture = Texture("assets/battle/player.png")
+    private val boxDataTexture = Texture("assets/battle/boxData.png")
+    private val commonEnemyTexture = Texture("assets/battle/enemyCommon.png")
+    private val specialEnemyTexture = Texture("assets/battle/enemySpecial.png")
+
+    private val music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/2dExplorer.mp3"))
+    override fun show() {
+
+    }
+
+    override fun render(delta: Float) {
+        ScreenUtils.clear(0.5F, 0.5F, 0.9F, 1F)
+
+        if(!music.isPlaying) {
+            music.play()
+        }
+
+        game.batch?.begin()
+        game.batch?.draw(boxTexture, screenWidth/2 - boxWidth/2, 0F)
+        game.batch?.draw(playerTexture, 0F, boxHeight, playerWidth*1.5F, playerHeight*1.5F)
+        game.batch?.draw(boxDataTexture, playerWidth*1.5F+10F, boxHeight+10F)
+        game.batch?.draw(commonEnemyTexture, screenWidth-playerWidth*1.2F,screenHeight-playerHeight*1.2F,playerWidth*1.2F, playerHeight*1.2F)
+        game.batch?.draw(boxDataTexture, screenWidth-playerWidth*1.2F-boxDataWidth-10F, screenHeight-boxDataHeight-10F)
+
+        showText(0)
+        showData()
+
+        game.batch?.end()
+
+
+    }
+
+    //Exibe a caixa de texto
+    fun showText(text: Int){
+        if(text == 0){
+            game.font18?.draw(game.batch, "Player usa Hacking\n\nHP de player vai a 200",
+                20F, boxHeight-20F,
+                boxWidth-20, -1, true)
+        } else if(text == 1){
+            game.font12?.draw(game.batch, "Inimigo usa Hacking\n\nHP de inimigo vai a 140",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        } else if(text == 2){
+            game.font12?.draw(game.batch, "Player erra Hacking",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        } else if(text == 3){
+            game.font12?.draw(game.batch, "Inimigo erra Hacking",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        } else if(text == 4) {
+            game.font12?.draw(
+                game.batch, "Player vence",
+                20F, boxHeight - 20F,
+                boxWidth - 20F, -1, true)
+        } else if(text == 5){
+            game.font12?.draw(game.batch, "Enemy vence",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        } else if(text == 6){
+            game.font12?.draw(game.batch, "Player consegue fugir",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        } else if(text == 7){
+            game.font12?.draw(game.batch, "Player não consegue fugir",
+                20F, boxHeight-20F,
+                boxWidth-20F, -1, true)
+        }
+    }
+
+    fun showData(){
+        game.font12?.draw(game.batch, "Player\n\nHP: 120/200\n\n" +
+            "Stamina: 70/320", playerWidth*1.5F+10F+10F, boxHeight+10F+boxDataHeight-10F,
+            boxDataWidth-10F, -1, true)
+
+        game.font12?.draw(game.batch, "Inimigo\n\nHP: 150/200\n\n" +
+            "Stamina: 140/320", screenWidth-playerWidth*1.2F-10F-boxDataWidth+10F, screenHeight-10F-10F,
+            boxDataWidth-10F, -1, true)
+    }
+
+    fun showOptions(){
+
+    }
+}
