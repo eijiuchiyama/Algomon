@@ -1,6 +1,8 @@
 package com.algomon.game
 
 import com.algomon.game.screen.Battle
+import com.algomon.game.screen.GameOver
+import com.algomon.game.screen.YouWin
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
@@ -18,6 +20,8 @@ class Main : KtxGame<KtxScreen>(){
     var batch: SpriteBatch? = null
     var font18: BitmapFont? = null
     var font12: BitmapFont? = null
+    var fontGameOver: BitmapFont? = null
+    var fontYouWin: BitmapFont? = null
 
     override fun create() {
         batch = SpriteBatch()
@@ -28,12 +32,17 @@ class Main : KtxGame<KtxScreen>(){
         font18 = generator.generateFont(parameter) // font size 12 pixels
         parameter.size = 12
         font12 = generator.generateFont(parameter)
+        parameter.size = 40
+        parameter.color = Color.RED
+        fontGameOver = generator.generateFont(parameter)
+        parameter.color = Color.GOLDENROD
+        fontYouWin = generator.generateFont(parameter)
 
         generator.dispose()
 
         Gdx.app.logLevel = Application.LOG_DEBUG
-        addScreen(StartScreen(this))
-        setScreen<StartScreen>()
+        addScreen(YouWin(this))
+        setScreen<YouWin>()
     }
 
     companion object{

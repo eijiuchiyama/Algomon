@@ -10,6 +10,8 @@ import ktx.app.KtxScreen
 
 class Battle(var game: Main): KtxScreen{
 
+    private var textShown = false
+
     private val screenWidth = 640F
     private val screenHeight = 480F
     private val boxWidth = 640F
@@ -18,12 +20,17 @@ class Battle(var game: Main): KtxScreen{
     private val playerHeight = 200F
     private val boxDataWidth = 150F
     private val boxDataHeight = 100F
+    private val movementButtonWidth = 400F
+    private val movementButtonHeight = 120F
 
     private val boxTexture = Texture("assets/battle/box.png")
     private val playerTexture = Texture("assets/battle/player.png")
     private val boxDataTexture = Texture("assets/battle/boxData.png")
     private val commonEnemyTexture = Texture("assets/battle/enemyCommon.png")
     private val specialEnemyTexture = Texture("assets/battle/enemySpecial.png")
+
+    private val movementButtonTexture = Texture("assets/battle/movementButton.png")
+    private val runButtonTexture = Texture("assets/battle/runButton.png")
 
     private val music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/2dExplorer.mp3"))
     override fun show() {
@@ -44,8 +51,26 @@ class Battle(var game: Main): KtxScreen{
         game.batch?.draw(commonEnemyTexture, screenWidth-playerWidth*1.2F,screenHeight-playerHeight*1.2F,playerWidth*1.2F, playerHeight*1.2F)
         game.batch?.draw(boxDataTexture, screenWidth-playerWidth*1.2F-boxDataWidth-10F, screenHeight-boxDataHeight-10F)
 
-        showText(0)
         showData()
+
+        if(textShown == true) {
+            showText(0)
+        } else{
+            showOptions()
+        }
+
+        if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+            screenHeight - Gdx.input.getY().toFloat() < 120F){
+
+            if(Gdx.input.justTouched()){
+                if(textShown) {
+                    textShown = false
+                } else{
+                    textShown = true
+                }
+            }
+
+        }
 
         game.batch?.end()
 
@@ -101,6 +126,7 @@ class Battle(var game: Main): KtxScreen{
     }
 
     fun showOptions(){
-
+        game.batch?.draw(movementButtonTexture, 0F, 0F)
+        game.batch?.draw(runButtonTexture, movementButtonWidth, 0F)
     }
 }

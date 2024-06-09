@@ -12,9 +12,9 @@ import ktx.app.KtxScreen
 class IntroScreen(var game: Main): KtxScreen {
 
     private val nextWidth = 100F
-    private val nextHeight = 50
+    private val nextHeight = 50F
     private val skipAllWidth = 150F
-    private val skipAllHeight = 50
+    private val skipAllHeight = 50F
     private val screenTextureWidth = 600F
     private val screenTextureHeight = 350F
     private val screenWidth = 640F
