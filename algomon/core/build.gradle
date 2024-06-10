@@ -31,4 +31,5 @@ dependencies {
   implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
   implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
   implementation("org.slf4j:slf4j-log4j12:1.7.29")
+  implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }
