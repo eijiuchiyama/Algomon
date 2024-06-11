@@ -1,5 +1,6 @@
 package com.algomon.game.screen
 
+import com.algomon.game.Main
 import com.algomon.game.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
@@ -31,7 +32,7 @@ import ktx.box2d.createWorld
 import ktx.log.logger
 import ktx.math.vec2
 
-class GameScreen : KtxScreen {
+class GameScreen(var game: Main) : KtxScreen {
     private val gameStage: Stage = Stage(ExtendViewport(12f,9f))
     private val uiStage: Stage = Stage(ExtendViewport(960f,720f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
@@ -43,6 +44,8 @@ class GameScreen : KtxScreen {
     private val eworld: World = World{
         inject(gameStage)
         inject("uiStage", uiStage)
+        inject(game)
+        inject("gameScreen",this)
         inject(textureAtlas)
         inject(phWorld)
 

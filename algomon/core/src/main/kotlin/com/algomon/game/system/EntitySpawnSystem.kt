@@ -144,6 +144,7 @@ class EntitySpawnSystem(
                 AnimationModel.computer,
                 physicScaling = vec2(1f, 0.5f),
                 physicOffset = vec2(0f, -8f * UNIT_SCALE),
+                interactable = true,
                 bodyType = StaticBody
             )
             else -> gdxError("Type $type has no SpawnCfg setup")

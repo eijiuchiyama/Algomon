@@ -2,6 +2,7 @@ package com.algomon.game
 
 import com.algomon.game.screen.Battle
 import com.algomon.game.screen.GameOver
+import com.algomon.game.screen.GameScreen
 import com.algomon.game.screen.YouWin
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
@@ -42,7 +43,8 @@ class Main : KtxGame<KtxScreen>(){
 
         Gdx.app.logLevel = Application.LOG_DEBUG
         addScreen(YouWin(this))
-        setScreen<YouWin>()
+        addScreen(GameScreen(this))
+        setScreen<GameScreen>()
     }
 
     companion object{
