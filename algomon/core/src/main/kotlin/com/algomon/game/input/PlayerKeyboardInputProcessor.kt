@@ -52,7 +52,6 @@ class PlayerKeyboardInputProcessor(
                 with(interactCmps[it]){
                     if (state == InteractState.READY){
                         doInteract = true
-                        startInteract()
                     }
                 }
             }

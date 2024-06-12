@@ -4,6 +4,8 @@ import com.algomon.game.Main
 import com.algomon.game.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
+import com.algomon.game.component.StateComponent
+import com.algomon.game.component.StateComponent.Companion.StateComponentListener
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.input.PlayerKeyboardInputProcessor
@@ -19,6 +21,7 @@ import com.algomon.game.system.InteractableSystem
 import com.algomon.game.system.MoveSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
+import com.algomon.game.system.StateSystem
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
@@ -45,13 +48,13 @@ class GameScreen(var game: Main) : KtxScreen {
         inject(gameStage)
         inject("uiStage", uiStage)
         inject(game)
-        inject("gameScreen",this)
         inject(textureAtlas)
         inject(phWorld)
 
         componentListener<ImageComponentListener>()
         componentListener<PhysicComponentListener>()
         componentListener<FloatingTextComponentListener>()
+        componentListener<StateComponentListener>()
 
         system<EntitySpawnSystem>()
         system<CollisionSpawnSystem>()
@@ -61,6 +64,7 @@ class GameScreen(var game: Main) : KtxScreen {
         system<InteractableSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
+        system<StateSystem>()
         system<CameraSystem>()
         system<FloatingTextSystem>()
         system<RenderSystem>()

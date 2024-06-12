@@ -1,5 +1,6 @@
 package com.algomon.game.system
 
+import com.algomon.game.component.Direction
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.github.quillraven.fleks.AllOf
@@ -19,6 +20,7 @@ class MoveSystem (
         val physicCmp = physicCmps[entity]
         val mass = physicCmp.body.mass
         val (velX,velY) = physicCmp.body.linearVelocity
+        val directionChecker = moveCmp.direction
 
         if(moveCmp.cos == 0f && moveCmp.sin == 0f){
             physicCmp.impulse.set(
@@ -27,6 +29,13 @@ class MoveSystem (
             )
             return
         }
+
+
+        if (moveCmp.cos > 0f) moveCmp.direction = Direction.RIGHT
+        else if(moveCmp.cos < 0f) moveCmp.direction = Direction.LEFT
+        if (moveCmp.sin > 0f) moveCmp.direction = Direction.BACK
+        else if(moveCmp.sin < 0f) moveCmp.direction = Direction.FRONT
+        if(directionChecker != moveCmp.direction) moveCmp.changeDirection = true
 
         physicCmp.impulse.set(
             mass * (moveCmp.speed * moveCmp.cos - velX),

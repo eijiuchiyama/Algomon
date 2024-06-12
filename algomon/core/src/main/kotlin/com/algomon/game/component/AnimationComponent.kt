@@ -10,11 +10,8 @@ enum class AnimationModel{
     val atlasKey: String = this.toString()
 }
 enum class AnimationType{
-    idleFront, idleSide, idleBack,
-    runFront, runSide, runBack,
-    attackFront, attackSide, attackBack,
-    attacked,
-    death,
+    idleFront, idleLeft, idleRight, idleBack,
+    runFront, runLeft, runRight, runBack,
     open;
 
     val atlasKey: String = this.toString()

@@ -1,8 +1,10 @@
 package com.algomon.game.system
 
+import com.algomon.game.component.Direction
 import com.algomon.game.component.InteractComponent
 import com.algomon.game.component.InteractState
 import com.algomon.game.component.InteractableComponent
+import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.component.PlayerComponent
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
@@ -22,6 +24,7 @@ class InteractSystem (
     private val physicCmps: ComponentMapper<PhysicComponent>,
     private val interactableCmps: ComponentMapper<InteractableComponent>,
     private val playerCmps: ComponentMapper<PlayerComponent>,
+    private val moveCmps: ComponentMapper<MoveComponent>,
     private val phWorld: World
 ) : IteratingSystem() {
     override fun onTickEntity(entity: Entity) {
@@ -43,21 +46,58 @@ class InteractSystem (
             interactCmp.state = InteractState.DO_ACTION
 
             val physicCmp = physicCmps[entity]
-            val direction = 1
+            val direction = moveCmps[entity].direction
             val (x, y) = physicCmp.body.position
             val (offX, offY) = physicCmp.offset
             val (w, h) = physicCmp.size
             val halfW = w * 0.5f
             val halfH = h * 0.5f
 
-            AABB_RECT.set(
-                x + offX - halfW - interactCmp.extraRange,
-                y + offY - halfH,
-                x + offX + halfW,
-                y + offY + halfH
-            )
+            when(direction){
+                Direction.FRONT -> {
+                    AABB_RECT.set(
+                        x + offX - halfW,
+                        y + offY - halfH,
+                        x + offX + halfW,
+                        y + offY - halfH/2
+                    )
+                }
+                Direction.BACK -> {
+                    AABB_RECT.set(
+                        x + offX - halfW,
+                        y + offY,
+                        x + offX + halfW,
+                        y + offY + halfH
+                    )
+                }
+                Direction.RIGHT -> {
+                    AABB_RECT.set(
+                        x + offX - halfW,
+                        y + offY - halfH,
+                        x + offX + halfW + interactCmp.extraRange,
+                        y + offY + halfH
+                    )
+                }
+                Direction.LEFT -> {
+                    AABB_RECT.set(
+                        x + offX - halfW - interactCmp.extraRange,
+                        y + offY - halfH,
+                        x + offX + halfW,
+                        y + offY + halfH
+                    )
+                }
+                Direction.NULL -> {
+                    AABB_RECT.set(
+                        x + offX - halfW - interactCmp.extraRange/2,
+                        y + offY - halfH - interactCmp.extraRange/2,
+                        x + offX + halfW + interactCmp.extraRange/2,
+                        y + offY + halfH + interactCmp.extraRange/2
+                    )
+                }
+            }
 
             phWorld.query(AABB_RECT.x, AABB_RECT.y, AABB_RECT.width, AABB_RECT.height) { fixture ->
+                println(12)
                 if (fixture.userData != HIT_BOX_SENSOR) {
                     return@query true
                 }

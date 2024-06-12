@@ -15,6 +15,7 @@ import com.algomon.game.component.PhysicComponent.Companion.physicCmpFromImage
 import com.algomon.game.component.PlayerComponent
 import com.algomon.game.component.SpawnCfg
 import com.algomon.game.component.SpawnComponent
+import com.algomon.game.component.StateComponent
 import com.algomon.game.event.MapChangeEvent
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
@@ -99,6 +100,7 @@ class EntitySpawnSystem(
                         maxDelay = cfg.interactDelay
                         extraRange = cfg.interactExtraRange
                     }
+                    add<StateComponent>()
                 }
 
                 if (cfg.interactable){
