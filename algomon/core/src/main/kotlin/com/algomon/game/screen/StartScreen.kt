@@ -67,7 +67,8 @@ class StartScreen(var game: Main) : KtxScreen {
                 soundEffect.play()
 
                 this.dispose()
-                game.addScreen(IntroScreen(game))
+                if(!game.containsScreen<IntroScreen>())
+                    game.addScreen(IntroScreen(game))
                 game.setScreen<IntroScreen>()
             }
 

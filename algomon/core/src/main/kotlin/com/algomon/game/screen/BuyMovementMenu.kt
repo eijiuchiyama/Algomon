@@ -1,6 +1,7 @@
 package com.algomon.game.screen
 
 import com.algomon.game.Main
+import com.algomon.game.Movement
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
@@ -19,6 +20,10 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
     private val downTexture = Texture("assets/interval/down.png")
     private val backTexture = Texture("assets/interval/back.png")
     private val screenTexture = Texture("assets/interval/screen.png")
+    private val boxTexture = Texture("assets/battle/box.png")
+    private val moveBox = Texture("assets/battle/moveBox.png")
+
+    private var i = 0
 
     override fun render(delta: Float) {
         ScreenUtils.clear(0.9F, 0.5F, 0.5F, 1F)
@@ -29,8 +34,23 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
             screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão back
             if(Gdx.input.justTouched()){
                 this.dispose()
-                game.addScreen(IntervalMenu(game))
+                if(!game.containsScreen<IntervalMenu>())
+                    game.addScreen(IntervalMenu(game))
                 game.setScreen<IntervalMenu>()
+            }
+        }
+
+        if(Gdx.input.getX().toFloat() > 20F && Gdx.input.getX().toFloat() < 20F+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-buttonHeight-40F &&
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão up
+            if(Gdx.input.justTouched()){
+                i--
+            }
+        }
+
+        if(Gdx.input.getX().toFloat() > 20F+buttonWidth+20F && Gdx.input.getX().toFloat() < 20F+2*buttonWidth+20F && screenHeight - Gdx.input.getY().toFloat() > screenHeight-buttonHeight-40F &&
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão down
+            if(Gdx.input.justTouched()){
+                i++
             }
         }
 
@@ -40,6 +60,18 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
         game.batch?.draw(screenTexture, 20F, 20F)
 
         game.batch?.end()
+    }
+
+    fun showMovements(movimentos: List<Movement>){
+
+    }
+
+    fun removeMovement(){
+        game.batch?.draw(boxTexture, 0F, 0F)
+    }
+
+    fun showMovements(){
+        game.batch?.draw(moveBox, 0F, 0F)
     }
 
 }

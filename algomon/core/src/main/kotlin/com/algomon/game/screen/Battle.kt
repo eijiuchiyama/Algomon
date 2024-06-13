@@ -84,7 +84,8 @@ class Battle(var game: Main): KtxScreen{
                 screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão run
                 if(Gdx.input.justTouched()){
                     this.dispose()
-                    game.addScreen(IntervalMenu(game))
+                    if(!game.containsScreen<IntervalMenu>())
+                        game.addScreen(IntervalMenu(game))
                     game.setScreen<IntervalMenu>()
                 }
             }

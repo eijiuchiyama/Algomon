@@ -25,10 +25,6 @@ class GameOver(var game: Main): KtxScreen{
 
     private val soundEffect = Gdx.audio.newSound(Gdx.files.internal("assets/music/buttonSound.mp3"))
 
-    override fun show() {
-
-    }
-
     override fun render(delta: Float) {
         ScreenUtils.clear(0.2F, 0.2F, 0.2F, 1F)
 
@@ -46,7 +42,8 @@ class GameOver(var game: Main): KtxScreen{
             if(Gdx.input.justTouched()){
                 soundEffect.play()
                 this.dispose()
-                game.addScreen(StartScreen(game))
+                if(!game.containsScreen<StartScreen>())
+                    game.addScreen(StartScreen(game))
                 game.setScreen<StartScreen>()
 
             }

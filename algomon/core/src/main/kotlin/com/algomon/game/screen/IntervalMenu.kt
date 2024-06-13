@@ -1,6 +1,7 @@
 package com.algomon.game.screen
 
 import com.algomon.game.Main
+import com.algomon.game.Movement
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
@@ -23,28 +24,31 @@ class IntervalMenu(var game: Main): KtxScreen {
         game.batch?.begin()
 
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-buttonHeight-40F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão back
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){
             if(Gdx.input.justTouched()){
                 this.dispose()
-                game.addScreen(Battle(game))
+                if(!game.containsScreen<Battle>())
+                    game.addScreen(Battle(game))
                 game.setScreen<Battle>()
             }
         }
 
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-2*buttonHeight-80F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-buttonHeight-80F){ //Toca no botão back
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-buttonHeight-80F){
             if(Gdx.input.justTouched()){
                 this.dispose()
-                game.addScreen(BuyMovementMenu(game))
+                if(!game.containsScreen<BuyMovementMenu>())
+                    game.addScreen(BuyMovementMenu(game))
                 game.setScreen<BuyMovementMenu>()
             }
         }
 
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-3*buttonHeight-120F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-2*buttonHeight-120F){ //Toca no botão back
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-2*buttonHeight-120F){
             if(Gdx.input.justTouched()){
                 this.dispose()
-                game.addScreen(Battle(game))
+                if(!game.containsScreen<Battle>())
+                    game.addScreen(Battle(game))
                 game.setScreen<Battle>()
             }
         }

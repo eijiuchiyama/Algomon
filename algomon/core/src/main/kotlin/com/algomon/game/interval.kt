@@ -123,11 +123,25 @@ suspend fun getMovement(choose: Int): Movement{
     return movimento
 }
 
+fun removeMovement(player: Player, i: Int){
+
+}
+
 fun buyMovement(player: Player, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
-    if(movement.price <= player.carteira){
-        player.skills += movement
-        player.carteira -= movement.price
-        return 1
+    if (movement.price <= player.carteira) {
+        if (player.skills.size == 6) {
+            println("Remova um movimento para adquirir um novo")
+            val i = Scanner(System.`in`).nextLine().toInt()
+            removeMovement(player, i)
+            player.skills += movement
+            player.carteira -= movement.price
+            return 1
+        } else {
+            player.skills += movement
+            player.carteira -= movement.price
+            return 1
+
+        }
     }
     return 0
 }

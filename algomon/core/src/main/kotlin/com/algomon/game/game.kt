@@ -43,8 +43,6 @@ suspend fun getSpecialEnemyMovements(enemyLevel: Int): List<Movement>{
 }
 
 suspend fun game(){
-    if(start() == 0) //Inicia o jogo, apresentando o contexto
-        return
 
     val playerData = getPlayerData()
     //println(playerData)

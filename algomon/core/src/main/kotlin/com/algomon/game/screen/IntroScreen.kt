@@ -47,8 +47,6 @@ class IntroScreen(var game: Main): KtxScreen {
             music.play()
         }
 
-        println(texto)
-
         game.batch?.begin()
 
         game.batch?.draw(screenTexture, screenWidth/2 - screenTextureWidth/2, 100F)
@@ -63,7 +61,8 @@ class IntroScreen(var game: Main): KtxScreen {
                 soundEffect.play()
 
                 this.dispose()
-                game.addScreen(Battle(game))
+                if(!game.containsScreen<Battle>())
+                    game.addScreen(Battle(game))
                 game.setScreen<Battle>()
 
             }
@@ -77,7 +76,8 @@ class IntroScreen(var game: Main): KtxScreen {
                     texto++
                 } else{
                     this.dispose()
-                    game.addScreen(Battle(game))
+                    if(!game.containsScreen<Battle>())
+                        game.addScreen(Battle(game))
                     game.setScreen<Battle>()
                 }
             }
