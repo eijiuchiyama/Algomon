@@ -12,6 +12,7 @@ data class SpawnCfg(
     val interactDelay: Float = 1f,
     val interactExtraRange: Float = 1f,
     val interactable: Boolean = false,
+    val aiTreePath: String = "",
     val physicScaling: Vector2 = vec2(1f,1f),
     val physicOffset: Vector2 = vec2(0f,0f),
     val bodyType: BodyType = BodyType.DynamicBody

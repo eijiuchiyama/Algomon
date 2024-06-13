@@ -1,6 +1,7 @@
 package com.algomon.game.system
 
 import com.algomon.game.Main.Companion.UNIT_SCALE
+import com.algomon.game.component.AiComponent
 import com.algomon.game.component.AnimationComponent
 import com.algomon.game.component.AnimationModel
 import com.algomon.game.component.AnimationType
@@ -110,6 +111,12 @@ class EntitySpawnSystem(
                 if(cfg.bodyType != StaticBody){
                     add<CollisionComponent>()
                 }
+
+                if(cfg.aiTreePath.isNotBlank()){
+                    add<AiComponent>{
+                        treePath = cfg.aiTreePath
+                    }
+                }
             }
         }
         world.remove(entity)
@@ -127,7 +134,8 @@ class EntitySpawnSystem(
             "Slime" -> SpawnCfg(
                 AnimationModel.slime,
                 physicScaling = vec2(0.3f, 0.3f),
-                physicOffset = vec2(0f, -2f * UNIT_SCALE)
+                physicOffset = vec2(0f, -2f * UNIT_SCALE),
+                aiTreePath = "ai/npc.tree"
             )
             "Door" -> SpawnCfg(
                 AnimationModel.door,

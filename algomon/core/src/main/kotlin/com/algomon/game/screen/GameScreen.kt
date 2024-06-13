@@ -1,6 +1,8 @@
 package com.algomon.game.screen
 
 import com.algomon.game.Main
+import com.algomon.game.component.AiComponent
+import com.algomon.game.component.AiComponent.Companion.AiComponentListener
 import com.algomon.game.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
@@ -8,6 +10,7 @@ import com.algomon.game.component.StateComponent.Companion.StateComponentListene
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.input.PlayerKeyboardInputProcessor
+import com.algomon.game.system.AiSystem
 import com.algomon.game.system.AnimationSystem
 import com.algomon.game.system.AudioSystem
 import com.algomon.game.system.CameraSystem
@@ -22,6 +25,7 @@ import com.algomon.game.system.MoveSystem
 import com.algomon.game.system.PhysicSystem
 import com.algomon.game.system.RenderSystem
 import com.algomon.game.system.StateSystem
+import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
@@ -56,6 +60,7 @@ class GameScreen(var game: Main) : KtxScreen {
         componentListener<PhysicComponentListener>()
         componentListener<FloatingTextComponentListener>()
         componentListener<StateComponentListener>()
+        componentListener<AiComponentListener>()
 
         system<EntitySpawnSystem>()
         system<CollisionSpawnSystem>()
@@ -66,6 +71,7 @@ class GameScreen(var game: Main) : KtxScreen {
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<StateSystem>()
+        system<AiSystem>()
         system<CameraSystem>()
         system<FloatingTextSystem>()
         system<RenderSystem>()
@@ -91,8 +97,9 @@ class GameScreen(var game: Main) : KtxScreen {
         uiStage.viewport.update(width,height,true)
     }
     override fun render(delta: Float) {
-        eworld.update(delta.coerceAtMost(0.25f))
-
+        val dt = delta.coerceAtMost(0.25f)
+        GdxAI.getTimepiece().update(dt)
+        eworld.update(dt)
     }
 
     override fun dispose() {

@@ -1,0 +1,7 @@
+import idle: "com.algomon.game.ai.IdleTask"
+import run: "com.algomon.game.ai.RunTask"
+
+root
+    selector
+        (random success:0.5) idle duration:"uniform,2.0,3.5"
+        run
