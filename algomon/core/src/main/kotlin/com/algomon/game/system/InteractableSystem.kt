@@ -36,7 +36,7 @@ class InteractableSystem(
     private val moveCmps: ComponentMapper<MoveComponent>,
     private val stage: Stage,
 ) : IteratingSystem() {
-    private val textFont = BitmapFont(Gdx.files.internal("assets/textFont/textFont.fnt"))
+    private val textFont = BitmapFont(Gdx.files.internal("assets/textFont/textFont.fnt")).apply { data.setScale(0.25f) }
     private val floatingTextStyle = LabelStyle(textFont ,Color.WHITE)
     override fun onTickEntity(entity: Entity) {
         with(interactableCmps[entity]){

@@ -32,7 +32,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.github.quillraven.fleks.World
+import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
@@ -42,41 +42,47 @@ import ktx.math.vec2
 class GameScreen(var game: Main) : KtxScreen {
 
     private val gameStage: Stage = Stage(ExtendViewport(12f,9f))
-    private val uiStage: Stage = Stage(ExtendViewport(960f,720f))
+    private val uiStage: Stage = Stage(ExtendViewport(240f,180f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
     private var currentMap: TiledMap? = null
     private val phWorld = createWorld(gravity = vec2(0f,0f)).apply {
         autoClearForces = false
     }
 
-    private val eworld: World = World{
-        inject(gameStage)
-        inject("uiStage", uiStage)
-        inject(game)
-        inject(textureAtlas)
-        inject(phWorld)
+    private val eworld = world{
+        injectables {
+            add(gameStage)
+            add("uiStage", uiStage)
+            add(game)
+            add(textureAtlas)
+            add(phWorld)
+        }
 
-        componentListener<ImageComponentListener>()
-        componentListener<PhysicComponentListener>()
-        componentListener<FloatingTextComponentListener>()
-        componentListener<StateComponentListener>()
-        componentListener<AiComponentListener>()
+        components {
+            add<ImageComponentListener>()
+            add<PhysicComponentListener>()
+            add<FloatingTextComponentListener>()
+            add<StateComponentListener>()
+            add<AiComponentListener>()
+        }
 
-        system<EntitySpawnSystem>()
-        system<CollisionSpawnSystem>()
-        system<CollisionDespawnSystem>()
-        system<MoveSystem>()
-        system<InteractSystem>()
-        system<InteractableSystem>()
-        system<PhysicSystem>()
-        system<AnimationSystem>()
-        system<StateSystem>()
-        system<AiSystem>()
-        system<CameraSystem>()
-        system<FloatingTextSystem>()
-        system<RenderSystem>()
-        system<AudioSystem>()
-        system<DebugSystem>()
+        systems {
+            add<EntitySpawnSystem>()
+            add<CollisionSpawnSystem>()
+            add<CollisionDespawnSystem>()
+            add<MoveSystem>()
+            add<InteractSystem>()
+            add<InteractableSystem>()
+            add<PhysicSystem>()
+            add<AnimationSystem>()
+            add<StateSystem>()
+            add<AiSystem>()
+            add<CameraSystem>()
+            add<FloatingTextSystem>()
+            add<RenderSystem>()
+            add<AudioSystem>()
+            add<DebugSystem>()
+        }
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
