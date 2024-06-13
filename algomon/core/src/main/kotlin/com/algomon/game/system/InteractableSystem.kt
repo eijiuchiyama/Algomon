@@ -8,18 +8,23 @@ import com.algomon.game.component.FloatingTextComponent
 import com.algomon.game.component.InteractableComponent
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
+import com.algomon.game.event.EntityOpenEvent
+import com.algomon.game.event.fire
 import com.algomon.game.screen.Battle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.Qualifier
+import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 
 @AllOf([InteractableComponent::class])
@@ -29,6 +34,7 @@ class InteractableSystem(
     private val aniCmps: ComponentMapper<AnimationComponent>,
     private val physicCmps: ComponentMapper<PhysicComponent>,
     private val moveCmps: ComponentMapper<MoveComponent>,
+    private val stage: Stage,
 ) : IteratingSystem() {
     private val textFont = BitmapFont(Gdx.files.internal("assets/textFont/textFont.fnt"))
     private val floatingTextStyle = LabelStyle(textFont ,Color.WHITE)
@@ -48,24 +54,32 @@ class InteractableSystem(
 
             if (aniCmp.model == AnimationModel.door && direction == Direction.BACK){
                 interactEntity = null
+                stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Boom", physicCmp.body.position, physicCmp.size)
                 if (physicCmp.body.userData != HIT_BOX_SENSOR){
                     configureEntity(entity){
                         physicCmps.remove(entity)
                     }
+                    /*aniCmp.nextAnimation(AnimationType.open)
+                    aniCmp.playMode = Animation.PlayMode.NORMAL*/
                 }
-                //configureEntity(entity){ physicCmps.remove(it) }
-                /*aniCmp.nextAnimation(AnimationType.open)
-                aniCmp.playMode = Animation.PlayMode.NORMAL*/
             }
 
             if (aniCmp.model == AnimationModel.computer && direction == Direction.FRONT){
                 interactEntity = null
+                stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Click", physicCmp.body.position, physicCmp.size)
                 gameMain.addScreen(Battle(gameMain))
                 gameMain.setScreen<Battle>()
+            }
+
+            if (aniCmp.model == AnimationModel.shelf && (direction == Direction.FRONT || direction == Direction.BACK)){
+                interactEntity = null
+                stage.fire(EntityOpenEvent(aniCmp.model))
+                val physicCmp = physicCmps[entity]
+                floatingText("Shuuaa", physicCmp.body.position, physicCmp.size)
             }
 
             interactEntity = null

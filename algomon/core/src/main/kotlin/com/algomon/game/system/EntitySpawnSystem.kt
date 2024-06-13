@@ -140,6 +140,7 @@ class EntitySpawnSystem(
                 AnimationModel.shelf,
                 physicScaling = vec2(0.5f, 0.2f),
                 physicOffset = vec2(0f, -6f * UNIT_SCALE),
+                interactable = true,
                 bodyType = StaticBody
             )
             "Computer" -> SpawnCfg(

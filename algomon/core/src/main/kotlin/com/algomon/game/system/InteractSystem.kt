@@ -97,7 +97,6 @@ class InteractSystem (
             }
 
             phWorld.query(AABB_RECT.x, AABB_RECT.y, AABB_RECT.width, AABB_RECT.height) { fixture ->
-                println(12)
                 if (fixture.userData != HIT_BOX_SENSOR) {
                     return@query true
                 }

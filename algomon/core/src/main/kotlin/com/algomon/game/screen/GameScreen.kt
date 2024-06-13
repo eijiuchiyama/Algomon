@@ -4,12 +4,12 @@ import com.algomon.game.Main
 import com.algomon.game.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.algomon.game.component.ImageComponent.Companion.ImageComponentListener
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
-import com.algomon.game.component.StateComponent
 import com.algomon.game.component.StateComponent.Companion.StateComponentListener
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.input.PlayerKeyboardInputProcessor
 import com.algomon.game.system.AnimationSystem
+import com.algomon.game.system.AudioSystem
 import com.algomon.game.system.CameraSystem
 import com.algomon.game.system.CollisionDespawnSystem
 import com.algomon.game.system.CollisionSpawnSystem
@@ -36,6 +36,7 @@ import ktx.log.logger
 import ktx.math.vec2
 
 class GameScreen(var game: Main) : KtxScreen {
+
     private val gameStage: Stage = Stage(ExtendViewport(12f,9f))
     private val uiStage: Stage = Stage(ExtendViewport(960f,720f))
     private val textureAtlas = TextureAtlas("assets/graphic/gameObject.atlas")
@@ -68,6 +69,7 @@ class GameScreen(var game: Main) : KtxScreen {
         system<CameraSystem>()
         system<FloatingTextSystem>()
         system<RenderSystem>()
+        system<AudioSystem>()
         system<DebugSystem>()
     }
     override fun show() {
@@ -90,6 +92,7 @@ class GameScreen(var game: Main) : KtxScreen {
     }
     override fun render(delta: Float) {
         eworld.update(delta.coerceAtMost(0.25f))
+
     }
 
     override fun dispose() {
