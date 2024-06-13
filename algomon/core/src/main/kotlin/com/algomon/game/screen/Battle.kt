@@ -11,6 +11,7 @@ import ktx.app.KtxScreen
 class Battle(var game: Main): KtxScreen{
 
     private var textShown = false
+    private var options = true
 
     private val screenWidth = 640F
     private val screenHeight = 480F
@@ -22,6 +23,8 @@ class Battle(var game: Main): KtxScreen{
     private val boxDataHeight = 100F
     private val movementButtonWidth = 400F
     private val movementButtonHeight = 120F
+    private val movementsBoxWidth = 640F
+    private val movementsBoxHeight = 200F
 
     private val boxTexture = Texture("assets/battle/box.png")
     private val playerTexture = Texture("assets/battle/player.png")
@@ -31,6 +34,8 @@ class Battle(var game: Main): KtxScreen{
 
     private val movementButtonTexture = Texture("assets/battle/movementButton.png")
     private val runButtonTexture = Texture("assets/battle/runButton.png")
+
+    private val movementsBoxTexture = Texture("assets/battle/moveBox.png")
 
     private val music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/2dExplorer.mp3"))
     override fun show() {
@@ -45,32 +50,54 @@ class Battle(var game: Main): KtxScreen{
         }
 
         game.batch?.begin()
-        game.batch?.draw(boxTexture, screenWidth/2 - boxWidth/2, 0F)
         game.batch?.draw(playerTexture, 0F, boxHeight, playerWidth*1.5F, playerHeight*1.5F)
-        game.batch?.draw(boxDataTexture, playerWidth*1.5F+10F, boxHeight+10F)
+        game.batch?.draw(boxDataTexture, playerWidth*1.5F+10F, boxHeight+100F)
         game.batch?.draw(commonEnemyTexture, screenWidth-playerWidth*1.2F,screenHeight-playerHeight*1.2F,playerWidth*1.2F, playerHeight*1.2F)
-        game.batch?.draw(boxDataTexture, screenWidth-playerWidth*1.2F-boxDataWidth-10F, screenHeight-boxDataHeight-10F)
+        game.batch?.draw(boxDataTexture, screenWidth-playerWidth*1.2F-boxDataWidth-10F, screenHeight-boxDataHeight-20F)
 
         showData()
 
         if(textShown == true) {
             showText(0)
-        } else{
+        } else if(options == true){
             showOptions()
+        } else{
+            showMovements()
         }
 
-        if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-            screenHeight - Gdx.input.getY().toFloat() < 120F){
-
-            if(Gdx.input.justTouched()){
-                if(textShown) {
+        if(textShown == true){ //Toca na caixa de texto
+            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < 120F){
+                if(Gdx.input.justTouched()){
                     textShown = false
-                } else{
+                    options = true
+                }
+            }
+        } else if(options == true){ //Toca nas opções
+            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < movementButtonWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão movements
+                if(Gdx.input.justTouched()){
+                    options = false
+                }
+            }
+            if(Gdx.input.getX().toFloat() > movementButtonWidth && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão run
+                if(Gdx.input.justTouched()){
+                    this.dispose()
+                    game.addScreen(IntervalMenu(game))
+                    game.setScreen<IntervalMenu>()
+                }
+            }
+        } else{ //Toca nos movimentos
+            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){
+                if(Gdx.input.justTouched()){
                     textShown = true
                 }
             }
-
         }
+
+
 
         game.batch?.end()
 
@@ -79,6 +106,7 @@ class Battle(var game: Main): KtxScreen{
 
     //Exibe a caixa de texto
     fun showText(text: Int){
+        game.batch?.draw(boxTexture, screenWidth/2 - boxWidth/2, 0F)
         if(text == 0){
             game.font18?.draw(game.batch, "Player usa Hacking\n\nHP de player vai a 200",
                 20F, boxHeight-20F,
@@ -117,16 +145,20 @@ class Battle(var game: Main): KtxScreen{
 
     fun showData(){
         game.font12?.draw(game.batch, "Player\n\nHP: 120/200\n\n" +
-            "Stamina: 70/320", playerWidth*1.5F+10F+10F, boxHeight+10F+boxDataHeight-10F,
+            "Stamina: 70/320", playerWidth*1.5F+10F+10F, boxHeight+100F+boxDataHeight-10F,
             boxDataWidth-10F, -1, true)
 
         game.font12?.draw(game.batch, "Inimigo\n\nHP: 150/200\n\n" +
-            "Stamina: 140/320", screenWidth-playerWidth*1.2F-10F-boxDataWidth+10F, screenHeight-10F-10F,
+            "Stamina: 140/320", screenWidth-playerWidth*1.2F-10F-boxDataWidth+10F, screenHeight-20F-10F,
             boxDataWidth-10F, -1, true)
     }
 
     fun showOptions(){
         game.batch?.draw(movementButtonTexture, 0F, 0F)
         game.batch?.draw(runButtonTexture, movementButtonWidth, 0F)
+    }
+
+    fun showMovements(){
+        game.batch?.draw(movementsBoxTexture, 0F, 0F)
     }
 }

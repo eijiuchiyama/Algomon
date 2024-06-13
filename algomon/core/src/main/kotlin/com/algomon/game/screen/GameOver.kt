@@ -45,7 +45,6 @@ class GameOver(var game: Main): KtxScreen{
             screenHeight - Gdx.input.getY().toFloat() in 30F..30F + tryAgainHeight){
             if(Gdx.input.justTouched()){
                 soundEffect.play()
-
                 this.dispose()
                 game.addScreen(StartScreen(game))
                 game.setScreen<StartScreen>()
