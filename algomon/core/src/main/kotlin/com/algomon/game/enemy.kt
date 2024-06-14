@@ -2,7 +2,7 @@ package com.algomon.game
 
 import kotlin.math.min
 
-class Enemy(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>, atkbase: Int, defbase: Int,
+class Enemy(name: String, hpbase: Int, staminabase: Int, skills: MutableList<Movement>, atkbase: Int, defbase: Int,
             dodgebase: Int, speedbase: Int, level: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
             dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
 

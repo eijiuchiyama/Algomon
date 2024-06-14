@@ -17,6 +17,8 @@ class StartScreen(var game: Main) : KtxScreen {
 
     var ortographicCamera = OrthographicCamera()
 
+    private val logoWidth = 300F
+    private val logoHeight = 250F
     private val buttonWidth: Float = 200F
     private val buttonHeight = 70
     private val exitWidth: Float = 50F
@@ -56,7 +58,7 @@ class StartScreen(var game: Main) : KtxScreen {
 
         game.batch?.begin()
 
-        game.batch?.draw(logoTexture, 170F, 200F)
+        game.batch?.draw(logoTexture, 140F, 180F, logoWidth*1.2F, logoHeight*1.2F)
 
         //Start button
         if(Gdx.input.getX().toFloat() in screenWidth/2-buttonWidth/2..screenWidth/2 + buttonWidth/2 &&

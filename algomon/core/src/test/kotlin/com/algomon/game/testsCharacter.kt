@@ -8,7 +8,7 @@ internal class TestCharacter{
     @Test
     fun testChangeStatus(){
 
-        val movements: List<Movement> = emptyList()
+        lateinit var movements: MutableList<Movement>
         val player = Player("Thomas", 50, 100, movements, 30, 30, 5, 40, 0, 100)
         var movementData: List<Int> = emptyList()
         movementData += -20

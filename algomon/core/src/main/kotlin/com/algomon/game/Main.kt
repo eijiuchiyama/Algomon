@@ -44,8 +44,8 @@ class Main : KtxGame<KtxScreen>(){
         Gdx.app.logLevel = Application.LOG_DEBUG
         //addScreen(YouWin(this))
         //addScreen(StartScreen(this))
-        addScreen(GameScreen(this))
-        setScreen<GameScreen>()
+        addScreen(StartScreen(this))
+        setScreen<StartScreen>()
     }
 
     companion object{

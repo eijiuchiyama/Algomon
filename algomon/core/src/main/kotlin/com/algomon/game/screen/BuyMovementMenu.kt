@@ -30,6 +30,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
 
         game.batch?.begin()
 
+        printCarteira(100)
+
         if(Gdx.input.getX().toFloat() > screenWidth-buttonWidth-20F && Gdx.input.getX().toFloat() < screenWidth-20F && screenHeight - Gdx.input.getY().toFloat() > screenHeight-buttonHeight-40F &&
             screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão back
             if(Gdx.input.justTouched()){
@@ -72,6 +74,11 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
 
     fun showMovements(){
         game.batch?.draw(moveBox, 0F, 0F)
+    }
+
+    fun printCarteira(carteira: Int){
+        game.font18?.draw(game.batch, "Carteira: $${carteira}", 20F+2*buttonWidth+40F , screenHeight-40F-20F,
+            screenWidth-3*buttonWidth-5*20F, 1, true)
     }
 
 }

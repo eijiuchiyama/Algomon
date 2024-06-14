@@ -5,9 +5,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TestInterval{
-    var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
+    lateinit var skills: MutableList<Movement>
+    var move = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
+
+    init{
+        skills.add(move)
+    }
 
     @Test
     fun testGetPossibleEnemies() = runTest{

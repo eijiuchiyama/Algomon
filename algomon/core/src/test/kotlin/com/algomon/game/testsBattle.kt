@@ -5,10 +5,15 @@ import org.junit.Test
 
 internal class TestBattle{
 
-    var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
+    lateinit var skills: MutableList<Movement>
+    var move = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
     val enemy = Enemy("Pedrão", 500, 140, skills, 80, 80, 5, 80, 6)
+
+    init{
+        skills.add(move)
+    }
 
     @Test
     fun testUpdatePlayerData(){

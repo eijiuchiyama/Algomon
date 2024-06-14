@@ -3,7 +3,7 @@ package com.algomon.game
 import kotlin.math.max
 import kotlin.math.min
 
-open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: List<Movement>,
+open class Character(var name: String, var hpbase: Int, var staminabase: Int, var skills: MutableList<Movement>,
                      var atkbase: Int, var defbase: Int, var dodgebase: Int, var speedbase: Int, var level: Int,
                      var hp: Int, var stamina: Int, var atk: Int, var def: Int, var dodge: Int, var speed: Int){
 

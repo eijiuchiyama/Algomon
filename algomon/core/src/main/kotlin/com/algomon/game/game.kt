@@ -10,8 +10,8 @@ suspend fun getPlayerData(): List<Int>{
     return playerData
 }
 
-suspend fun getPlayerMovements(): List<Movement>{
-    var playermovements: List<Movement> = emptyList()
+suspend fun getPlayerMovements(): MutableList<Movement>{
+    var playermovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel = 0;"
     val body = request("movementsdata" , "*", "movements", "minlevel=0")
     playermovements = Json.decodeFromString(body)
@@ -34,8 +34,8 @@ suspend fun getSpecialEnemyName(countBattle: Int): String{
     return enemyName
 }
 
-suspend fun getSpecialEnemyMovements(enemyLevel: Int): List<Movement>{
-    var enemymovements: List<Movement> = emptyList()
+suspend fun getSpecialEnemyMovements(enemyLevel: Int): MutableList<Movement>{
+    var enemymovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel <= $enemyLevel;"
     val body = request("movementsdata" , "*", "movements", "minlevel<=$enemyLevel")
     enemymovements = Json.decodeFromString(body)

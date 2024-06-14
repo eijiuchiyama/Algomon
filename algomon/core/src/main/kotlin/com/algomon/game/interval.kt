@@ -31,8 +31,8 @@ suspend fun getCommonEnemyName(random: Int): String{
     return enemyName
 }
 
-suspend fun getCommonEnemyMovements(player: Player): List<Movement>{
-    var enemyMovements: List<Movement> = emptyList()
+suspend fun getCommonEnemyMovements(player: Player): MutableList<Movement>{
+    var enemyMovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level}"
     val body = request("movementsdata" , "*", "movements", "minlevel<=${player.level}")
     enemyMovements = Json.decodeFromString(body)
@@ -124,7 +124,7 @@ suspend fun getMovement(choose: Int): Movement{
 }
 
 fun removeMovement(player: Player, i: Int){
-
+    player.skills.removeAt(i)
 }
 
 fun buyMovement(player: Player, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível

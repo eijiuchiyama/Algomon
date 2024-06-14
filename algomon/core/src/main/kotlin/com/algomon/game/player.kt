@@ -3,7 +3,7 @@ package com.algomon.game
 import java.util.Scanner
 import kotlin.math.min
 
-class Player(name: String, hpbase: Int, staminabase: Int, skills: List<Movement>, atkbase: Int, defbase: Int, dodgebase: Int,
+class Player(name: String, hpbase: Int, staminabase: Int, skills: MutableList<Movement>, atkbase: Int, defbase: Int, dodgebase: Int,
                 speedbase: Int, level: Int, var carteira: Int) : Character(name, hpbase, staminabase, skills, atkbase, defbase,
                 dodgebase, speedbase, level, hpbase, staminabase, atkbase, defbase, dodgebase, speedbase){
 

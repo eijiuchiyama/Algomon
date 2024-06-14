@@ -5,12 +5,19 @@ import org.junit.Test
 
 internal class TestEnemy {
 
-    var skills: List<Movement> = emptyList<Movement>() + Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
-        0, 0, 0, 0, 0, 0, 100, 0) + Movement(1, "superataque",
+    lateinit var skills: MutableList<Movement>
+    var move1 = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
+        0, 0, 0, 0, 0, 0, 100, 0)
+    var move2 = Movement(1, "superataque",
         0, -100, 0, 0, 0, 0, -200, 0, 0, 0, 0, 0,
         1, 100, 100)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
     val enemy = Enemy("Pedrão", 100, 140, skills, 80, 80, 5, 80, 6)
+
+    init{
+        skills.add(move1)
+        skills.add(move2)
+    }
 
     @Test
     fun testGetMovementData(){
