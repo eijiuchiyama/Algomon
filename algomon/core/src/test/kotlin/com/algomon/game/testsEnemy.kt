@@ -5,7 +5,7 @@ import org.junit.Test
 
 internal class TestEnemy {
 
-    lateinit var skills: MutableList<Movement>
+    var skills = mutableListOf<Movement>()
     var move1 = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     var move2 = Movement(1, "superataque",

@@ -5,12 +5,11 @@ import org.junit.Test
 
 internal class TestPlayer{
 
-    lateinit var skills: MutableList<Movement>
+    var skills = mutableListOf<Movement>()
     var move = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)
     val enemy = Enemy("Pedrão", 500, 140, skills, 80, 80, 5, 80, 6)
-    //val db = Connect("PostgreSql", "localhost", "5432", "postgres", "postgres", "123369")
 
     init{
         skills.add(move)

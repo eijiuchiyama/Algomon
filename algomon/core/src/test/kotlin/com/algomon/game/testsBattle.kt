@@ -5,7 +5,7 @@ import org.junit.Test
 
 internal class TestBattle{
 
-    lateinit var skills: MutableList<Movement>
+    var skills = mutableListOf<Movement>()
     var move = Movement(0, "ataque", 0, -50, 0, 0, 0, 0, -100,
         0, 0, 0, 0, 0, 0, 100, 0)
     val player = Player("Pedrinho", 50, 70, skills, 40, 40, 5, 40, 3, 100)

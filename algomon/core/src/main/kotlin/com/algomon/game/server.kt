@@ -62,13 +62,13 @@ fun main() {
 
                 } else if(type == "movementsdata"){ //Pegar dados de movimento
 
-                    var movements: List<Movement> = emptyList()
+                    var movements = mutableListOf<Movement>()
                     val rs = db.query("SELECT $column FROM $table WHERE $condition;")
                     while(rs!!.next()){
-                        movements = movements + Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
+                        movements.add(Movement(rs.getInt("id"), rs.getString("name"), rs.getInt("hpown"), rs.getInt("staminaown"),
                             rs.getInt("atkown"), rs.getInt("defown"), rs.getInt("dodgeown"), rs.getInt("speedown"), rs.getInt("hpenemy"), rs.getInt("staminaenemy"),
                             rs.getInt("atkenemy"), rs.getInt("defenemy"), rs.getInt("dodgeenemy"), rs.getInt("speedenemy"), rs.getInt("minlevel"),
-                            rs.getInt("baseaccuracy"), rs.getInt("price"))
+                            rs.getInt("baseaccuracy"), rs.getInt("price")))
                     }
                     call.respond(Json.encodeToString(movements))
 

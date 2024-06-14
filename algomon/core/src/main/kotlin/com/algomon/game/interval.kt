@@ -80,7 +80,7 @@ suspend fun getPossibleMovementsId(player: Player): List<Int>{
 
 suspend fun getPossibleMovementsName(player: Player): List<String>{
     var movimentosDisponiveisName: List<String> = emptyList()
-    val body = request("names", "names", "movements", "minlevel<=${player.level}")
+    val body = request("names", "name", "movements", "minlevel<=${player.level}")
     val movementsName: List<String> = Json.decodeFromString(body)
     for(i in 0..movementsName.size - 1){
         var found = 0
@@ -123,17 +123,11 @@ suspend fun getMovement(choose: Int): Movement{
     return movimento
 }
 
-fun removeMovement(player: Player, i: Int){
-    player.skills.removeAt(i)
-}
-
-fun buyMovement(player: Player, movement: Movement): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
+fun buyMovement(player: Player, movement: Movement, remove:Boolean, removed:Int): Int{ //Retorna 1 se foi possível comprar e 0 se não for possível
     if (movement.price <= player.carteira) {
-        if (player.skills.size == 6) {
-            println("Remova um movimento para adquirir um novo")
-            val i = Scanner(System.`in`).nextLine().toInt()
-            removeMovement(player, i)
-            player.skills += movement
+        if (remove) {
+            player.skills.removeAt(removed)
+            player.skills.add(movement)
             player.carteira -= movement.price
             return 1
         } else {
@@ -166,7 +160,15 @@ suspend fun getNewMovement(player: Player){
 
     val movement = getMovement(choose)
 
-    if(buyMovement(player, movement) == 1){
+    var remove = false
+    var removed = 0
+    if (player.skills.size == 6) {
+        remove = true
+        println("Remova um movimento para adquirir um novo")
+        removed = Scanner(System.`in`).nextLine().toInt()
+    }
+
+    if(buyMovement(player, movement, remove, removed) == 1){
         println("Movimento adicionado à sua lista de movimentos")
     } else{
         println("Você não tem dinheiro para adquirir o movimento")
