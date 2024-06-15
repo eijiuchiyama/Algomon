@@ -14,6 +14,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 
+//Define as variáveis globais
+var playerData = emptyList<Int>()
+var playerMovements = mutableListOf<Movement>()
+var player = Player("",0,0, mutableListOf<Movement>(), 0,0,0,0,0,0)
+var enemy = Enemy("", 0, 0, mutableListOf<Movement>(), 0,0,0, 0, 0)
+var countBattle = 0
+var win = false
+
 
 /** [com.badlogic.gdx.ApplicationListener] implementation shared by all platforms. */
 class Main : KtxGame<KtxScreen>(){
@@ -25,6 +33,9 @@ class Main : KtxGame<KtxScreen>(){
     var fontYouWin: BitmapFont? = null
 
     override fun create() {
+
+        playerData = getPlayerData()
+
         batch = SpriteBatch()
         val generator = FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/pixelOperator/PixelOperator8.ttf"))
         val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
