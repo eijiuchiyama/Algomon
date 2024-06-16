@@ -2,7 +2,7 @@ name=gameObject
 filename=
 output=.
 
-alias=true
+alias=false
 alphaThreshold=0
 debug=false
 duplicatePadding=false
@@ -10,7 +10,7 @@ edgePadding=false
 fast=false
 filterMag=Nearest
 filterMin=Nearest
-ignoreBlankImages=true
+ignoreBlankImages=false
 maxHeight=2048
 maxWidth=2048
 minHeight=16

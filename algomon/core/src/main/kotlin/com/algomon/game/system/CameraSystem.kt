@@ -37,7 +37,6 @@ class CameraSystem(
     override fun handle(event: Event?): Boolean {
         if (event is MapChangeEvent){
             maxW = event.map.width.toFloat()
-            print(maxW)
             maxH = event.map.height.toFloat()
             return true
         }

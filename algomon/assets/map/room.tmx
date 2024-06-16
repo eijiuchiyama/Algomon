@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="7">
+ <tileset firstgid="1" source="ground.tsx"/>
+ <tileset firstgid="392" source="ceil.tsx"/>
+ <tileset firstgid="783" name="entities" tilewidth="32" tileheight="48" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="16" height="32" source="../graphictmp/game/door/idleFront_01.png"/>
+  </tile>
+  <tile id="1">
+   <image width="16" height="32" source="../graphictmp/game/computer/idleFront_01.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="../graphictmp/game/player/idleFront_01.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="48" source="../graphictmp/game/shelf/idleFront_01.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="787" source="map.tsx"/>
+ <layer id="1" name="ground" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA+uEMAj1R1xAAAOk4wIQ==
+  </data>
+ </layer>
+ <layer id="2" name="wall" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJyTZWBgcGXEjhmgcvJAWg+IwxixYwaonAFUHSEwEtXZA7EDAewIxADxXgn4
+  </data>
+ </layer>
+ <objectgroup id="4" name="entities">
+  <object id="1" type="Door2" gid="783" x="112" y="32" width="16" height="32"/>
+  <object id="2" type="Computer2" gid="784" x="32" y="64" width="16" height="32"/>
+  <object id="3" type="Player" gid="785" x="104.75" y="61" width="32" height="32"/>
+  <object id="4" type="Shelf" gid="786" x="64" y="48" width="32" height="48"/>
+  <object id="5" type="Shelf" gid="786" x="80" y="48" width="32" height="48"/>
+ </objectgroup>
+ <layer id="5" name="bgd" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg4MIUZlR4FDAwAQnkBLw==
+  </data>
+ </layer>
+ <layer id="3" name="fgd" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANjjPikRwFNAEAJD4AyQ==
+  </data>
+ </layer>
+</map>

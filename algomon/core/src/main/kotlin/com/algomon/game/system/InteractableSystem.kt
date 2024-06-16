@@ -9,12 +9,15 @@ import com.algomon.game.component.InteractableComponent
 import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.event.EntityOpenEvent
+import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.screen.Battle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.maps.tiled.TiledMap
+import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -64,6 +67,28 @@ class InteractableSystem(
                     /*aniCmp.nextAnimation(AnimationType.open)
                     aniCmp.playMode = Animation.PlayMode.NORMAL*/
                 }
+            }
+
+            if (aniCmp.model == AnimationModel.door2 && direction == Direction.BACK){
+                interactEntity = null
+                stage.fire(EntityOpenEvent(aniCmp.model))
+                val physicCmp = physicCmps[entity]
+                floatingText("Boom", physicCmp.body.position, physicCmp.size)
+                if (physicCmp.body.userData != HIT_BOX_SENSOR){
+                    configureEntity(entity){
+                        physicCmps.remove(entity)
+                    }
+                    /*aniCmp.nextAnimation(AnimationType.open)
+                    aniCmp.playMode = Animation.PlayMode.NORMAL*/
+                }
+                val currentMap = TmxMapLoader().load("assets/map/map.tmx")
+                stage.fire(MapChangeEvent(currentMap!!))
+            }
+
+            if (aniCmp.model == AnimationModel.exit && direction == Direction.FRONT){
+                interactEntity = null
+                val currentMap = TmxMapLoader().load("assets/map/room.tmx")
+                stage.fire(MapChangeEvent(currentMap!!))
             }
 
             if (aniCmp.model == AnimationModel.computer && direction == Direction.FRONT){

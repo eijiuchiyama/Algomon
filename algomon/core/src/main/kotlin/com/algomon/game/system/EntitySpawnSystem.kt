@@ -144,6 +144,13 @@ class EntitySpawnSystem(
                 interactable = true,
                 bodyType = StaticBody
             )
+            "Door2" -> SpawnCfg(
+                AnimationModel.door2,
+                physicScaling = vec2(1f, 0.9f),
+                physicOffset = vec2(0f, 0f * UNIT_SCALE),
+                interactable = true,
+                bodyType = StaticBody
+            )
             "Shelf" -> SpawnCfg(
                 AnimationModel.shelf,
                 physicScaling = vec2(0.5f, 0.2f),
@@ -151,8 +158,22 @@ class EntitySpawnSystem(
                 interactable = true,
                 bodyType = StaticBody
             )
+            "Exit" -> SpawnCfg(
+                AnimationModel.exit,
+                physicScaling = vec2(1f, 1f),
+                physicOffset = vec2(0f, -1f * UNIT_SCALE),
+                interactable = true,
+                bodyType = StaticBody
+            )
             "Computer" -> SpawnCfg(
                 AnimationModel.computer,
+                physicScaling = vec2(1f, 0.5f),
+                physicOffset = vec2(0f, -8f * UNIT_SCALE),
+                interactable = true,
+                bodyType = StaticBody
+            )
+            "Computer2" -> SpawnCfg(
+                AnimationModel.computer2,
                 physicScaling = vec2(1f, 0.5f),
                 physicOffset = vec2(0f, -8f * UNIT_SCALE),
                 interactable = true,
@@ -174,6 +195,7 @@ class EntitySpawnSystem(
     override fun handle(event: Event?): Boolean {
         when(event){
             is MapChangeEvent -> {
+                world.removeAll()
                 val entityLayer = event.map.layer("entities")
                 entityLayer.objects.forEach { mapObj ->
                     val type = mapObj.type ?: gdxError("MapObject $mapObj does not have a type")

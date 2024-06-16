@@ -1,6 +1,7 @@
 package com.algomon.game
 
 import com.algomon.game.screen.BuyMovementMenu
+import com.algomon.game.screen.GameScreen
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
@@ -30,13 +31,13 @@ class Main : KtxGame<KtxScreen>(){
 
     override fun create(){
 
-        playerData = getPlayerData()
+       /* playerData = getPlayerData()
         playerMovements = getPlayerMovements()
         player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
             playerData[4], playerData[5], 0, 0)
         println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
         player.level = 5
-        player.carteira = 1000
+        player.carteira = 1000*/
 
         batch = SpriteBatch()
         val generator = FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/pixelOperator/PixelOperator8.ttf"))
@@ -57,8 +58,8 @@ class Main : KtxGame<KtxScreen>(){
         Gdx.app.logLevel = Application.LOG_DEBUG
         //addScreen(YouWin(this))
         //addScreen(StartScreen(this))
-        addScreen(BuyMovementMenu(this))
-        setScreen<BuyMovementMenu>()
+        addScreen(GameScreen(this))
+        setScreen<GameScreen>()
     }
 
     companion object{

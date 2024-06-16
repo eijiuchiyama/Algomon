@@ -92,7 +92,7 @@ class GameScreen(var game: Main) : KtxScreen {
                 gameStage.addListener(system)
             }
         }
-        currentMap = TmxMapLoader().load("assets/map/map.tmx")
+        currentMap = TmxMapLoader().load("assets/map/room.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
 
         PlayerKeyboardInputProcessor(eworld)
