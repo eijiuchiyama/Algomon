@@ -2,7 +2,7 @@ package com.algomon.game
 
 import kotlinx.serialization.json.Json
 
-suspend fun getPlayerData(): List<Int>{
+fun getPlayerData(): List<Int>{
     var playerData: List<Int> = emptyList()
     //val sql = "SELECT * FROM players WHERE id = 0;"
     val body = request("playerdata" , "*", "players", "id=0")
@@ -10,7 +10,7 @@ suspend fun getPlayerData(): List<Int>{
     return playerData
 }
 
-suspend fun getPlayerMovements(): MutableList<Movement>{
+fun getPlayerMovements(): MutableList<Movement>{
     var playermovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel = 0;"
     val body = request("movementsdata" , "*", "movements", "minlevel=0")
@@ -18,7 +18,7 @@ suspend fun getPlayerMovements(): MutableList<Movement>{
     return playermovements
 }
 
-suspend fun getSpecialEnemyData(countBattle: Int): List<Int>{
+fun getSpecialEnemyData(countBattle: Int): List<Int>{
     var enemyData: List<Int> = emptyList()
     //val sql = "SELECT * FROM specialenemies WHERE level = $countBattle;"
     val body = request("enemydata" , "*", "specialenemies", "level=$countBattle")
@@ -26,7 +26,7 @@ suspend fun getSpecialEnemyData(countBattle: Int): List<Int>{
     return enemyData
 }
 
-suspend fun getSpecialEnemyName(countBattle: Int): String{
+fun getSpecialEnemyName(countBattle: Int): String{
     var enemyName = ""
     //val sql = "SELECT name FROM specialenemies WHERE level = $countBattle;"
     val body = request("name" , "name", "specialenemies", "level=$countBattle")
@@ -34,7 +34,7 @@ suspend fun getSpecialEnemyName(countBattle: Int): String{
     return enemyName
 }
 
-suspend fun getSpecialEnemyMovements(enemyLevel: Int): MutableList<Movement>{
+fun getSpecialEnemyMovements(enemyLevel: Int): MutableList<Movement>{
     var enemymovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel <= $enemyLevel;"
     val body = request("movementsdata" , "*", "movements", "minlevel<=$enemyLevel")
@@ -42,7 +42,7 @@ suspend fun getSpecialEnemyMovements(enemyLevel: Int): MutableList<Movement>{
     return enemymovements
 }
 
-suspend fun game(){
+fun game(){
 
     val playerData = getPlayerData()
     //println(playerData)
@@ -54,8 +54,9 @@ suspend fun game(){
 
     var win = 1 //Ao perder, win = 0 e o jogador perde o jogo
     var countBattle = 0 //Conta as batalhas
+    val nBatalhas = 12
 
-    while(countBattle <= 1) { //Realiza um certo número de batalhas principais
+    while(countBattle <= nBatalhas) { //Realiza um certo número de batalhas principais
 
         //Escolhe o oponente de specialenemies relativo à batalha atual do torneio
         val enemyData = getSpecialEnemyData(countBattle)
@@ -79,7 +80,9 @@ suspend fun game(){
         countBattle++
 
         //Começa o intervalo
-        interval(player)
+        if(countBattle <= nBatalhas - 1) {
+            interval(player)
+        }
     }
 
     if(win == 0 || win == 2) println("Você perdeu o torneio. Mais sorte no próximo ano.")
@@ -90,7 +93,7 @@ suspend fun game(){
 }
 
 
-suspend fun main() {
+fun main() {
 
 	/**
      *Personagem

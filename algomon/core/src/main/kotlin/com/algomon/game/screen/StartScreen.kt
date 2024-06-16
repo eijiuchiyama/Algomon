@@ -2,14 +2,10 @@ package com.algomon.game.screen
 
 import com.algomon.game.Main
 import com.algomon.game.screen.GameScreen.Companion.log
-import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
-import com.badlogic.gdx.utils.Timer
-import com.sun.media.sound.EmergencySoundbank.toFloat
-import ktx.app.KtxGame
 import ktx.app.KtxScreen
 
 

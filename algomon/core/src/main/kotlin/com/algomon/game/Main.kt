@@ -1,9 +1,5 @@
 package com.algomon.game
 
-import com.algomon.game.screen.Battle
-import com.algomon.game.screen.GameOver
-import com.algomon.game.screen.GameScreen
-import com.algomon.game.screen.YouWin
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
@@ -20,8 +16,8 @@ var playerMovements = mutableListOf<Movement>()
 var player = Player("",0,0, mutableListOf<Movement>(), 0,0,0,0,0,0)
 var enemy = Enemy("", 0, 0, mutableListOf<Movement>(), 0,0,0, 0, 0)
 var countBattle = 0
-var win = false
-
+var win = true
+var nBattles = 1
 
 /** [com.badlogic.gdx.ApplicationListener] implementation shared by all platforms. */
 class Main : KtxGame<KtxScreen>(){
@@ -32,9 +28,13 @@ class Main : KtxGame<KtxScreen>(){
     var fontGameOver: BitmapFont? = null
     var fontYouWin: BitmapFont? = null
 
-    override fun create() {
+    override fun create(){
 
         playerData = getPlayerData()
+        playerMovements = getPlayerMovements()
+        player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
+            playerData[4], playerData[5], 0, 0)
+        println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
 
         batch = SpriteBatch()
         val generator = FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/pixelOperator/PixelOperator8.ttf"))

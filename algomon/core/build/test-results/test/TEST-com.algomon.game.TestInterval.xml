@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.algomon.game.TestInterval" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-06-14T13:58:24" hostname="lucaseiji-Inspiron-15-5510" time="0.516">
+<testsuite name="com.algomon.game.TestInterval" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-06-16T01:36:45" hostname="lucaseiji-Inspiron-15-5510" time="0.507">
   <properties/>
-  <testcase name="testBuyMovement" classname="com.algomon.game.TestInterval" time="0.003"/>
-  <testcase name="testGetPossibleMovementsPrice" classname="com.algomon.game.TestInterval" time="0.454"/>
-  <testcase name="testGetCommonEnemyData" classname="com.algomon.game.TestInterval" time="0.013"/>
+  <testcase name="testBuyMovement" classname="com.algomon.game.TestInterval" time="0.002"/>
+  <testcase name="testGetPossibleMovementsPrice" classname="com.algomon.game.TestInterval" time="0.451"/>
+  <testcase name="testGetCommonEnemyData" classname="com.algomon.game.TestInterval" time="0.009"/>
   <testcase name="testGetCommonEnemyName" classname="com.algomon.game.TestInterval" time="0.008"/>
-  <testcase name="testGetCommonEnemyMovements" classname="com.algomon.game.TestInterval" time="0.012"/>
+  <testcase name="testGetCommonEnemyMovements" classname="com.algomon.game.TestInterval" time="0.011"/>
   <testcase name="testGetMovement" classname="com.algomon.game.TestInterval" time="0.008"/>
-  <testcase name="testGetPossibleMovementsId" classname="com.algomon.game.TestInterval" time="0.009"/>
-  <testcase name="testGetPossibleEnemies" classname="com.algomon.game.TestInterval" time="0.008"/>
+  <testcase name="testGetPossibleMovementsId" classname="com.algomon.game.TestInterval" time="0.008"/>
+  <testcase name="testGetPossibleEnemies" classname="com.algomon.game.TestInterval" time="0.009"/>
   <system-out><![CDATA[12
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

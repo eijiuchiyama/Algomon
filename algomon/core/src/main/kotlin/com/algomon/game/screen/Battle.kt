@@ -1,6 +1,14 @@
 package com.algomon.game.screen
 
+import com.algomon.game.Enemy
 import com.algomon.game.Main
+import com.algomon.game.countBattle
+import com.algomon.game.enemy
+import com.algomon.game.getSpecialEnemyData
+import com.algomon.game.getSpecialEnemyMovements
+import com.algomon.game.getSpecialEnemyName
+import com.algomon.game.nBattles
+import com.algomon.game.player
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -10,8 +18,10 @@ import ktx.app.KtxScreen
 
 class Battle(var game: Main): KtxScreen{
 
+    private var initialize = false
     private var textShown = false
     private var options = true
+    private var playerTurn = false
 
     private val screenWidth = 640F
     private val screenHeight = 480F
@@ -47,6 +57,15 @@ class Battle(var game: Main): KtxScreen{
 
         if(!music.isPlaying) {
             music.play()
+        }
+
+        if(!initialize){
+            initialize()
+            getEnemy()
+            if(player.speed >= enemy.speed)
+                playerTurn = true
+            else
+                playerTurn = false
         }
 
         game.batch?.begin()
@@ -145,12 +164,12 @@ class Battle(var game: Main): KtxScreen{
     }
 
     fun showData(){
-        game.font12?.draw(game.batch, "Player\n\nHP: 120/200\n\n" +
-            "Stamina: 70/320", playerWidth*1.5F+10F+10F, boxHeight+100F+boxDataHeight-10F,
+        game.font12?.draw(game.batch, "Player\n\nHP: ${player.hp}/${player.hpbase}\n\n" +
+            "Stamina: ${player.stamina}/${player.staminabase}", playerWidth*1.5F+10F+10F, boxHeight+100F+boxDataHeight-10F,
             boxDataWidth-10F, -1, true)
 
-        game.font12?.draw(game.batch, "Inimigo\n\nHP: 150/200\n\n" +
-            "Stamina: 140/320", screenWidth-playerWidth*1.2F-10F-boxDataWidth+10F, screenHeight-20F-10F,
+        game.font12?.draw(game.batch, "${enemy.name}\n\nHP: ${enemy.hp}/${enemy.hpbase}\n\n" +
+            "Stamina: ${enemy.stamina}/${enemy.staminabase}", screenWidth-playerWidth*1.2F-10F-boxDataWidth+10F, screenHeight-20F-10F,
             boxDataWidth-10F, -1, true)
     }
 
@@ -161,5 +180,34 @@ class Battle(var game: Main): KtxScreen{
 
     fun showMovements(){
         game.batch?.draw(movementsBoxTexture, 0F, 0F)
+        var x = 0F
+        var y = 0F
+        for(i in player.skills){
+            game.font12?.draw(game.batch, i.name, 10F+x, movementsBoxHeight-40-y, screenWidth/3-40, 1, true)
+            if(x > screenWidth / 2) {
+                x = 0F
+                y += movementsBoxHeight/2
+            } else {
+                x += screenWidth / 3
+            }
+        }
+    }
+
+    //Inicializa os status do jogador para iniciar a batalha
+    fun initialize(){
+        player.hp = player.hpbase
+        player.stamina = player.staminabase
+        player.atk = player.atkbase
+        player.def = player.defbase
+        player.dodge = player.dodgebase
+        player.speed = player.speedbase
+    }
+
+    fun getEnemy(){
+        val enemyName = getSpecialEnemyName(countBattle)
+        val enemyData = getSpecialEnemyData(countBattle)
+        val enemyMovements = getSpecialEnemyMovements(countBattle)
+        enemy = Enemy(enemyName, enemyData[0], enemyData[1], enemyMovements, enemyData[2], enemyData[3], enemyData[4],
+            enemyData[5], player.level)
     }
 }

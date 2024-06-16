@@ -3,7 +3,7 @@ package com.algomon.game
 import kotlinx.serialization.json.Json
 import java.util.Scanner
 
-suspend fun getPossibleEnemies(player: Player): List<Int>{
+fun getPossibleEnemies(player: Player): List<Int>{
     var enemiesId: List<Int> = emptyList()
     //val sql = "SELECT id FROM commonenemies WHERE level = ${player.level};"
     val body = request("ids" , "id", "commonenemies", "level=${player.level}")
@@ -15,7 +15,7 @@ fun getRandom(possibleEnemiesId: List<Int>): Int{
     return possibleEnemiesId[kotlin.random.Random.nextInt(0, possibleEnemiesId.size)]
 }
 
-suspend fun getCommonEnemyData(random: Int): List<Int>{
+fun getCommonEnemyData(random: Int): List<Int>{
     var enemyData: List<Int> = emptyList()
     //val sql = "SELECT * FROM commonenemies WHERE id = $random"
     val body = request("enemydata" , "*", "commonenemies", "id=$random")
@@ -23,7 +23,7 @@ suspend fun getCommonEnemyData(random: Int): List<Int>{
     return enemyData
 }
 
-suspend fun getCommonEnemyName(random: Int): String{
+fun getCommonEnemyName(random: Int): String{
     var enemyName = ""
     //val sql = "SELECT name FROM commonenemies WHERE id = $random"
     val body = request("name" , "name", "commonenemies", "id=$random")
@@ -31,7 +31,7 @@ suspend fun getCommonEnemyName(random: Int): String{
     return enemyName
 }
 
-suspend fun getCommonEnemyMovements(player: Player): MutableList<Movement>{
+fun getCommonEnemyMovements(player: Player): MutableList<Movement>{
     var enemyMovements: MutableList<Movement>
     //val sql = "SELECT * FROM movements WHERE minlevel <= ${player.level}"
     val body = request("movementsdata" , "*", "movements", "minlevel<=${player.level}")
@@ -39,7 +39,7 @@ suspend fun getCommonEnemyMovements(player: Player): MutableList<Movement>{
     return enemyMovements
 }
 
-suspend fun training(player: Player){
+fun training(player: Player){
 
     //Escolhe o oponente de commonenemies aleatoriamente
     val possibleEnemiesId = getPossibleEnemies(player)
@@ -60,7 +60,7 @@ suspend fun training(player: Player){
     }
 }
 
-suspend fun getPossibleMovementsId(player: Player): List<Int>{
+fun getPossibleMovementsId(player: Player): List<Int>{
     var movimentosDisponiveisId: List<Int> = emptyList()
     val body = request("movementsdata", "*", "movements", "minlevel<=${player.level}")
     val movementsId: List<Movement> = Json.decodeFromString(body)
@@ -78,7 +78,7 @@ suspend fun getPossibleMovementsId(player: Player): List<Int>{
     return movimentosDisponiveisId
 }
 
-suspend fun getPossibleMovementsName(player: Player): List<String>{
+fun getPossibleMovementsName(player: Player): List<String>{
     var movimentosDisponiveisName: List<String> = emptyList()
     val body = request("names", "name", "movements", "minlevel<=${player.level}")
     val movementsName: List<String> = Json.decodeFromString(body)
@@ -96,7 +96,7 @@ suspend fun getPossibleMovementsName(player: Player): List<String>{
     return movimentosDisponiveisName
 }
 
-suspend fun getPossibleMovementsPrice(player: Player): List<Int>{
+fun getPossibleMovementsPrice(player: Player): List<Int>{
     var movimentosDisponiveisPrice: List<Int> = emptyList()
     val body = request("movementsdata", "*", "movements", "minlevel<=${player.level}")
     val movementsId: List<Movement> = Json.decodeFromString(body)
@@ -114,7 +114,7 @@ suspend fun getPossibleMovementsPrice(player: Player): List<Int>{
     return movimentosDisponiveisPrice
 }
 
-suspend fun getMovement(choose: Int): Movement{
+fun getMovement(choose: Int): Movement{
     var movimento = Movement(0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0)
     //val sql = "SELECT * FROM movements WHERE id = $choose;"
@@ -140,7 +140,7 @@ fun buyMovement(player: Player, movement: Movement, remove:Boolean, removed:Int)
     return 0
 }
 
-suspend fun getNewMovement(player: Player){
+fun getNewMovement(player: Player){
     println("Qual movimento você deseja obter?")
     val movimentosDisponiveisId = getPossibleMovementsId(player)
     val movimentosDisponiveisName = getPossibleMovementsName(player)
@@ -175,7 +175,7 @@ suspend fun getNewMovement(player: Player){
     }
 }
 
-suspend fun interval(player: Player){
+fun interval(player: Player){
     while(true) {
 
         println("Quer descansar, treinar ou aprender novo movimento? (d/t/n)")
