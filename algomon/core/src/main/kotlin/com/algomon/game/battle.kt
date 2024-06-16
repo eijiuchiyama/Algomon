@@ -1,6 +1,5 @@
 package com.algomon.game
 
-
 fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1 se a batalha continuar após o turno e 0 se ela acabar
     if (player.speed > enemy.speed) {
         if(player.ChooseMovement(enemy) == 0){

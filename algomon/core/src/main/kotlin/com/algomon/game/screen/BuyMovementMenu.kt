@@ -2,6 +2,10 @@ package com.algomon.game.screen
 
 import com.algomon.game.Main
 import com.algomon.game.Movement
+import com.algomon.game.getMovement
+import com.algomon.game.getPossibleMovementsId
+import com.algomon.game.getPossibleMovementsPrice
+import com.algomon.game.player
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
@@ -29,6 +33,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
         ScreenUtils.clear(0.9F, 0.5F, 0.5F, 1F)
 
         game.batch?.begin()
+
+        showMovements()
 
         printCarteira(100)
 
@@ -64,16 +70,17 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
         game.batch?.end()
     }
 
-    fun showMovements(movimentos: List<Movement>){
-
-    }
-
     fun removeMovement(){
         game.batch?.draw(boxTexture, 0F, 0F)
     }
 
     fun showMovements(){
         game.batch?.draw(moveBox, 0F, 0F)
+        val possibleMovements = getPossibleMovementsId(player)
+        val possibleMovementsPrice = getPossibleMovementsPrice(player)
+        for(i in possibleMovements){
+            val possibleMovementData = getMovement(i)
+        }
     }
 
     fun printCarteira(carteira: Int){

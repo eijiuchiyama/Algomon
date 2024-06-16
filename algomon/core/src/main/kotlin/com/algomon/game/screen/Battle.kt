@@ -9,6 +9,8 @@ import com.algomon.game.getSpecialEnemyMovements
 import com.algomon.game.getSpecialEnemyName
 import com.algomon.game.nBattles
 import com.algomon.game.player
+import com.algomon.game.updatePlayerData
+import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -22,6 +24,7 @@ class Battle(var game: Main): KtxScreen{
     private var textShown = false
     private var options = true
     private var playerTurn = false
+    private var movimentoPlayer = 0
 
     private val screenWidth = 640F
     private val screenHeight = 480F
@@ -55,6 +58,14 @@ class Battle(var game: Main): KtxScreen{
     override fun render(delta: Float) {
         ScreenUtils.clear(0.5F, 0.5F, 0.9F, 1F)
 
+        //Se o jogador vence a última batalha, ele vence o jogo e vai para a tela final
+        if(countBattle == nBattles){
+            this.dispose()
+            if(!game.containsScreen<YouWin>())
+                game.addScreen(YouWin(game))
+            game.setScreen<YouWin>()
+        }
+
         if(!music.isPlaying) {
             music.play()
         }
@@ -66,6 +77,24 @@ class Battle(var game: Main): KtxScreen{
                 playerTurn = true
             else
                 playerTurn = false
+        }
+
+        //Se o hp do player é zero, ele perde a batalha e, consequentemente, o jogo
+        if(player.hp == 0){
+            this.dispose()
+            if(!game.containsScreen<GameOver>())
+                game.addScreen(GameOver(game))
+            game.setScreen<GameOver>()
+        }
+
+        //Se o hp do inimigo é zero, o jogador vence a batalha
+        if(enemy.hp == 0){
+            updatePlayerData(player, enemy)
+            countBattle++
+            this.dispose()
+            if(!game.containsScreen<IntervalMenu>())
+                game.addScreen(IntervalMenu(game))
+            game.setScreen<IntervalMenu>()
         }
 
         game.batch?.begin()
@@ -103,18 +132,79 @@ class Battle(var game: Main): KtxScreen{
                 screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão run
                 if(Gdx.input.justTouched()){
                     this.dispose()
-                    if(!game.containsScreen<IntervalMenu>())
-                        game.addScreen(IntervalMenu(game))
-                    game.setScreen<IntervalMenu>()
+                    if(!game.containsScreen<GameOver>())
+                        game.addScreen(GameOver(game))
+                    game.setScreen<GameOver>()
                 }
             }
         } else{ //Toca nos movimentos
-            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){
+            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no primeiro movimento
                 if(Gdx.input.justTouched()){
+                    println("Movimento 0 escolhido")
+                    movimentoPlayer = 0
+                    val movement = player.getMovementData(enemy, 0)
+                    val baseAccuracy = player.getBaseAccuracy(0)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
                     textShown = true
                 }
             }
+            if(Gdx.input.getX().toFloat() > screenWidth/3 && Gdx.input.getX().toFloat() < 2*screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no segundo movimento
+                if(Gdx.input.justTouched()){
+                    println("Movimento 1 escolhido")
+                    val movement = player.getMovementData(enemy, 1)
+                    val baseAccuracy = player.getBaseAccuracy(1)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
+                    movimentoPlayer = 1
+                    textShown = true
+                }
+            }
+            if(Gdx.input.getX().toFloat() > 2*screenWidth/3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no terceiro movimento
+                if(Gdx.input.justTouched()){
+                    println("Movimento 2 escolhido")
+                    val movement = player.getMovementData(enemy, 2)
+                    val baseAccuracy = player.getBaseAccuracy(2)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
+                    movimentoPlayer = 2
+                    textShown = true
+                }
+            }
+            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no quarto movimento
+                if(Gdx.input.justTouched()){
+                    println("Movimento 3 escolhido")
+                    val movement = player.getMovementData(enemy, 3)
+                    val baseAccuracy = player.getBaseAccuracy(3)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
+                    movimentoPlayer = 3
+                    textShown = true
+                }
+            }
+            if(Gdx.input.getX().toFloat() > screenWidth/3 && Gdx.input.getX().toFloat() < 2*screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no quinto movimento
+                if(Gdx.input.justTouched()){
+                    println("Movimento 4 escolhido")
+                    val movement = player.getMovementData(enemy, 4)
+                    val baseAccuracy = player.getBaseAccuracy(4)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
+                    movimentoPlayer = 4
+                    textShown = true
+                }
+            }
+            if(Gdx.input.getX().toFloat() > 2*screenWidth/3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no sexto movimento
+                if(Gdx.input.justTouched()){
+                    println("Movimento 5 escolhido")
+                    val movement = player.getMovementData(enemy, 5)
+                    val baseAccuracy = player.getBaseAccuracy(5)
+                    val success = player.useMovement(movement, baseAccuracy, enemy)
+                    movimentoPlayer = 5
+                    textShown = true
+                }
+            }
+
         }
 
 
@@ -128,7 +218,7 @@ class Battle(var game: Main): KtxScreen{
     fun showText(text: Int){
         game.batch?.draw(boxTexture, screenWidth/2 - boxWidth/2, 0F)
         if(text == 0){
-            game.font18?.draw(game.batch, "Player usa Hacking\n\nHP de player vai a 200",
+            game.font18?.draw(game.batch, "Player usa ${player.skills[movimentoPlayer].name}\n\nHP de player vai a 200",
                 20F, boxHeight-20F,
                 boxWidth-20, -1, true)
         } else if(text == 1){

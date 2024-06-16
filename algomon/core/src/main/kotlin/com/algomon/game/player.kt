@@ -9,47 +9,36 @@ class Player(name: String, hpbase: Int, staminabase: Int, skills: MutableList<Mo
 
 
     fun printMovements(){
+        var i = 0
         for (action in skills){
-            println("${action.id} ${action.name}")
+            println("$i - ${action.name}")
+            i++
         }
     }
 
     fun getMovementData(enemy: Character, choose: Int): List<Int>{
         var movementData: List<Int> = emptyList()
-        for(action in skills){
-            if(action.id == choose){
-                movementData = movementData + action.hpown
-                movementData = movementData + action.staminaown
-                movementData = movementData + action.atkown
-                movementData = movementData + action.defown
-                movementData = movementData + action.dodgeown
-                movementData = movementData + action.speedown
-                movementData = movementData + min(action.hpenemy - (this.atk - enemy.def), 0)
-                movementData = movementData + action.staminaenemy
-                movementData = movementData + action.atkenemy
-                movementData = movementData + action.defenemy
-                movementData = movementData + action.dodgeenemy
-                movementData = movementData + action.speedenemy
-                return movementData
-            }
-        }
-        return emptyList()
+        movementData = movementData + skills[choose].hpown
+        movementData = movementData + skills[choose].staminaown
+        movementData = movementData + skills[choose].atkown
+        movementData = movementData + skills[choose].defown
+        movementData = movementData + skills[choose].dodgeown
+        movementData = movementData + skills[choose].speedown
+        movementData = movementData + min(skills[choose].hpenemy - (this.atk - enemy.def), 0)
+        movementData = movementData + skills[choose].staminaenemy
+        movementData = movementData + skills[choose].atkenemy
+        movementData = movementData + skills[choose].defenemy
+        movementData = movementData + skills[choose].dodgeenemy
+        movementData = movementData + skills[choose].speedenemy
+        return movementData
     }
 
     fun getMovementName(choose: Int): String{
-        for(action in skills){
-            if(action.id == choose)
-                return action.name
-        }
-        return ""
+        return skills[choose].name
     }
 
     fun getBaseAccuracy(choose: Int): Int{
-        for(action in skills){
-            if(action.id == choose)
-                return action.baseaccuracy
-        }
-        return 0
+        return skills[choose].baseaccuracy
     }
 
     fun useMovement(movementData: List<Int>, baseAccuracy: Int, enemy: Character): Int{ //Retorna 1 se o movimento foi bem-sucedido
