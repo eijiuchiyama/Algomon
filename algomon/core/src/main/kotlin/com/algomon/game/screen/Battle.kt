@@ -77,10 +77,12 @@ class Battle(var game: Main): KtxScreen{
                 playerTurn = true
             else
                 playerTurn = false
+            initialize = true
         }
 
         //Se o hp do player é zero, ele perde a batalha e, consequentemente, o jogo
         if(player.hp == 0){
+            initialize = false
             this.dispose()
             if(!game.containsScreen<GameOver>())
                 game.addScreen(GameOver(game))
@@ -89,6 +91,7 @@ class Battle(var game: Main): KtxScreen{
 
         //Se o hp do inimigo é zero, o jogador vence a batalha
         if(enemy.hp == 0){
+            initialize = false
             updatePlayerData(player, enemy)
             countBattle++
             this.dispose()
@@ -105,109 +108,151 @@ class Battle(var game: Main): KtxScreen{
 
         showData()
 
-        if(textShown == true) {
-            showText(0)
-        } else if(options == true){
-            showOptions()
+        if(playerTurn) {
+            if (textShown == true) {
+                showText(0)
+            } else if (options == true) {
+                showOptions()
+            } else {
+                showMovements()
+            }
+
+            if (textShown == true) { //Toca na caixa de texto
+                if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX()
+                        .toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < 120F
+                ) {
+                    if (Gdx.input.justTouched()) {
+                        textShown = false
+                        options = true
+                    }
+                }
+            } else if (options == true) { //Toca nas opções
+                if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX()
+                        .toFloat() < movementButtonWidth && screenHeight - Gdx.input.getY()
+                        .toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight
+                ) { //Toca no botão movements
+                    if (Gdx.input.justTouched()) {
+                        options = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > movementButtonWidth && Gdx.input.getX()
+                        .toFloat() < screenWidth && screenHeight - Gdx.input.getY()
+                        .toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight
+                ) { //Toca no botão run
+                    if (Gdx.input.justTouched()) {
+                        this.dispose()
+                        if (!game.containsScreen<GameOver>())
+                            game.addScreen(GameOver(game))
+                        game.setScreen<GameOver>()
+                    }
+                }
+            } else { //Toca nos movimentos
+                if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX()
+                        .toFloat() < screenWidth / 3 && screenHeight - Gdx.input.getY()
+                        .toFloat() > movementsBoxHeight / 2 &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight
+                ) { //Toca no primeiro movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 0 escolhido")
+                        movimentoPlayer = 0
+                        val movement = player.getMovementData(enemy, 0)
+                        val baseAccuracy = player.getBaseAccuracy(0)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 0
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX()
+                        .toFloat() < 2 * screenWidth / 3 && screenHeight - Gdx.input.getY()
+                        .toFloat() > movementsBoxHeight / 2 &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight
+                ) { //Toca no segundo movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 1 escolhido")
+                        val movement = player.getMovementData(enemy, 1)
+                        val baseAccuracy = player.getBaseAccuracy(1)
+                        println(movement)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 1
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > 2 * screenWidth / 3 && Gdx.input.getX()
+                        .toFloat() < screenWidth && screenHeight - Gdx.input.getY()
+                        .toFloat() > movementsBoxHeight / 2 &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight
+                ) { //Toca no terceiro movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 2 escolhido")
+                        val movement = player.getMovementData(enemy, 2)
+                        val baseAccuracy = player.getBaseAccuracy(2)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 2
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX()
+                        .toFloat() < screenWidth / 3 && screenHeight - Gdx.input.getY()
+                        .toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight / 2
+                ) { //Toca no quarto movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 3 escolhido")
+                        val movement = player.getMovementData(enemy, 3)
+                        val baseAccuracy = player.getBaseAccuracy(3)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 3
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX()
+                        .toFloat() < 2 * screenWidth / 3 && screenHeight - Gdx.input.getY()
+                        .toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight / 2
+                ) { //Toca no quinto movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 4 escolhido")
+                        val movement = player.getMovementData(enemy, 4)
+                        val baseAccuracy = player.getBaseAccuracy(4)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 4
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+                if (Gdx.input.getX().toFloat() > 2 * screenWidth / 3 && Gdx.input.getX()
+                        .toFloat() < screenWidth && screenHeight - Gdx.input.getY()
+                        .toFloat() > 0F &&
+                    screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight / 2
+                ) { //Toca no sexto movimento
+                    if (Gdx.input.justTouched()) {
+                        println("Movimento 5 escolhido")
+                        val movement = player.getMovementData(enemy, 5)
+                        val baseAccuracy = player.getBaseAccuracy(5)
+                        val success = player.useMovement(movement, baseAccuracy, enemy)
+                        movimentoPlayer = 5
+                        textShown = true
+                        playerTurn = false
+                    }
+                }
+            }
+
         } else{
-            showMovements()
+            val random = kotlin.random.Random.nextInt(0, enemy.skills.size)
+            val movementData = enemy.getMovementData(player, random)
+            val movementName = enemy.skills[random].name
+            val baseAccuracy = enemy.skills[random].baseaccuracy
+            enemy.useMovement(movementData, baseAccuracy, player)
+            println(movementData)
+            playerTurn = true
         }
-
-        if(textShown == true){ //Toca na caixa de texto
-            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < 120F){
-                if(Gdx.input.justTouched()){
-                    textShown = false
-                    options = true
-                }
-            }
-        } else if(options == true){ //Toca nas opções
-            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < movementButtonWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão movements
-                if(Gdx.input.justTouched()){
-                    options = false
-                }
-            }
-            if(Gdx.input.getX().toFloat() > movementButtonWidth && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementButtonHeight){ //Toca no botão run
-                if(Gdx.input.justTouched()){
-                    this.dispose()
-                    if(!game.containsScreen<GameOver>())
-                        game.addScreen(GameOver(game))
-                    game.setScreen<GameOver>()
-                }
-            }
-        } else{ //Toca nos movimentos
-            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no primeiro movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 0 escolhido")
-                    movimentoPlayer = 0
-                    val movement = player.getMovementData(enemy, 0)
-                    val baseAccuracy = player.getBaseAccuracy(0)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    textShown = true
-                }
-            }
-            if(Gdx.input.getX().toFloat() > screenWidth/3 && Gdx.input.getX().toFloat() < 2*screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no segundo movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 1 escolhido")
-                    val movement = player.getMovementData(enemy, 1)
-                    val baseAccuracy = player.getBaseAccuracy(1)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    movimentoPlayer = 1
-                    textShown = true
-                }
-            }
-            if(Gdx.input.getX().toFloat() > 2*screenWidth/3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight/2 &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight){ //Toca no terceiro movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 2 escolhido")
-                    val movement = player.getMovementData(enemy, 2)
-                    val baseAccuracy = player.getBaseAccuracy(2)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    movimentoPlayer = 2
-                    textShown = true
-                }
-            }
-            if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no quarto movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 3 escolhido")
-                    val movement = player.getMovementData(enemy, 3)
-                    val baseAccuracy = player.getBaseAccuracy(3)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    movimentoPlayer = 3
-                    textShown = true
-                }
-            }
-            if(Gdx.input.getX().toFloat() > screenWidth/3 && Gdx.input.getX().toFloat() < 2*screenWidth/3 && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no quinto movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 4 escolhido")
-                    val movement = player.getMovementData(enemy, 4)
-                    val baseAccuracy = player.getBaseAccuracy(4)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    movimentoPlayer = 4
-                    textShown = true
-                }
-            }
-            if(Gdx.input.getX().toFloat() > 2*screenWidth/3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
-                screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2){ //Toca no sexto movimento
-                if(Gdx.input.justTouched()){
-                    println("Movimento 5 escolhido")
-                    val movement = player.getMovementData(enemy, 5)
-                    val baseAccuracy = player.getBaseAccuracy(5)
-                    val success = player.useMovement(movement, baseAccuracy, enemy)
-                    movimentoPlayer = 5
-                    textShown = true
-                }
-            }
-
-        }
-
-
 
         game.batch?.end()
 
