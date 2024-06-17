@@ -5,6 +5,7 @@ import com.algomon.game.screen.GameScreen
 import com.algomon.game.screen.StartScreen
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -58,6 +59,12 @@ class Main : KtxGame<KtxScreen>(){
         Gdx.app.logLevel = Application.LOG_DEBUG
         addScreen(StartScreen(this))
         setScreen<StartScreen>()
+    }
+
+    fun setScreenExists(screen: Screen) {
+        currentScreen.hide()
+        currentScreen = screen
+        currentScreen.resize(Gdx.graphics.width, Gdx.graphics.height)
     }
 
     companion object{

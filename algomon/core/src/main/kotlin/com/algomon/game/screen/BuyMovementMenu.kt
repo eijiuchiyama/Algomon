@@ -57,9 +57,11 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
             screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Toca no botão back
             if(Gdx.input.justTouched()){
                 this.dispose()
-                if(!game.containsScreen<GameScreen>())
+                if(!game.containsScreen<GameScreen>()) {
                     game.addScreen(GameScreen(game))
-                game.setScreen<GameScreen>()
+                    game.setScreen<GameScreen>()
+                }
+                else game.setScreenExists(GameScreen(game))
             }
         }
 
