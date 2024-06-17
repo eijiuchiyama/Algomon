@@ -48,6 +48,7 @@ class GameScreen(var game: Main) : KtxScreen {
     private val phWorld = createWorld(gravity = vec2(0f,0f)).apply {
         autoClearForces = false
     }
+    private var loaded: Boolean = false
 
     private val eworld = world{
         injectables {
@@ -86,16 +87,18 @@ class GameScreen(var game: Main) : KtxScreen {
     }
     override fun show() {
         log.debug { "GameScreen gets shown" }
-
-        eworld.systems.forEach { system ->
-            if (system is EventListener){
-                gameStage.addListener(system)
+        if (!loaded) {
+            eworld.systems.forEach { system ->
+                if (system is EventListener) {
+                    gameStage.addListener(system)
+                }
             }
-        }
-        currentMap = TmxMapLoader().load("assets/map/room.tmx")
-        gameStage.fire(MapChangeEvent(currentMap!!))
+            currentMap = TmxMapLoader().load("assets/map/room.tmx")
+            gameStage.fire(MapChangeEvent(currentMap!!))
 
-        PlayerKeyboardInputProcessor(eworld)
+            PlayerKeyboardInputProcessor(eworld)
+        }
+        loaded = true
     }
 
     override fun resize(width: Int, height: Int) {

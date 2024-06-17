@@ -61,12 +61,6 @@ class Main : KtxGame<KtxScreen>(){
         setScreen<StartScreen>()
     }
 
-    fun setScreenExists(screen: Screen) {
-        currentScreen.hide()
-        currentScreen = screen
-        currentScreen.resize(Gdx.graphics.width, Gdx.graphics.height)
-    }
-
     companion object{
         const val UNIT_SCALE = 1 / 16f
     }
