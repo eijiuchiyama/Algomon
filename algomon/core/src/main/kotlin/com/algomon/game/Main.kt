@@ -31,7 +31,7 @@ class Main : KtxGame<KtxScreen>(){
     var fontYouWin: BitmapFont? = null
 
     override fun create(){
-
+/*
         playerData = getPlayerData()
         playerMovements = getPlayerMovements()
         player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
@@ -39,7 +39,7 @@ class Main : KtxGame<KtxScreen>(){
         println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
         player.level = 10
         player.carteira = 1000
-
+*/
         batch = SpriteBatch()
         val generator = FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/pixelOperator/PixelOperator8.ttf"))
         val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
@@ -57,8 +57,8 @@ class Main : KtxGame<KtxScreen>(){
         generator.dispose()
 
         Gdx.app.logLevel = Application.LOG_DEBUG
-        addScreen(StartScreen(this))
-        setScreen<StartScreen>()
+        addScreen(GameScreen(this))
+        setScreen<GameScreen>()
     }
 
     companion object{

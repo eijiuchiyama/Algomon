@@ -3,6 +3,7 @@ package com.algomon.game.system
 import com.algomon.game.Main
 import com.algomon.game.component.AnimationComponent
 import com.algomon.game.component.AnimationModel
+import com.algomon.game.component.AnimationType
 import com.algomon.game.component.Direction
 import com.algomon.game.component.FloatingTextComponent
 import com.algomon.game.component.InteractableComponent
@@ -19,6 +20,7 @@ import com.algomon.game.screen.SpecialBattle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
@@ -29,7 +31,10 @@ import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import ktx.assets.disposeSafely
+import java.util.concurrent.TimeUnit
 
 @AllOf([InteractableComponent::class])
 class InteractableSystem(
@@ -65,8 +70,8 @@ class InteractableSystem(
                     configureEntity(entity){
                         physicCmps.remove(entity)
                     }
-                    /*aniCmp.nextAnimation(AnimationType.open)
-                    aniCmp.playMode = Animation.PlayMode.NORMAL*/
+                    aniCmp.nextAnimation(AnimationType.open)
+                    aniCmp.playMode = Animation.PlayMode.NORMAL
                 }
             }
 
@@ -79,8 +84,8 @@ class InteractableSystem(
                     configureEntity(entity){
                         physicCmps.remove(entity)
                     }
-                    /*aniCmp.nextAnimation(AnimationType.open)
-                    aniCmp.playMode = Animation.PlayMode.NORMAL*/
+                    aniCmp.nextAnimation(AnimationType.open)
+                    aniCmp.playMode = Animation.PlayMode.NORMAL
                 }
                 val currentMap = TmxMapLoader().load("assets/map/map.tmx")
                 stage.fire(MapChangeEvent(currentMap!!))
