@@ -11,6 +11,8 @@ import com.algomon.game.component.PhysicComponent
 import com.algomon.game.event.EntityOpenEvent
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
+import com.algomon.game.screen.BuyMovementMenu
+import com.algomon.game.screen.GameScreen
 import com.algomon.game.screen.SpecialBattle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
@@ -93,8 +95,19 @@ class InteractableSystem(
                 stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Click", physicCmp.body.position, physicCmp.size)
-                gameMain.addScreen(SpecialBattle(gameMain))
+                if(!gameMain.containsScreen<SpecialBattle>())
+                    gameMain.addScreen(SpecialBattle(gameMain))
                 gameMain.setScreen<SpecialBattle>()
+            }
+
+            if (aniCmp.model == AnimationModel.computer2 && direction == Direction.FRONT){
+                interactEntity = null
+                stage.fire(EntityOpenEvent(aniCmp.model))
+                val physicCmp = physicCmps[entity]
+                floatingText("Click", physicCmp.body.position, physicCmp.size)
+                if(!gameMain.containsScreen<BuyMovementMenu>())
+                    gameMain.addScreen(BuyMovementMenu(gameMain))
+                gameMain.setScreen<BuyMovementMenu>()
             }
 
             if (aniCmp.model == AnimationModel.shelf && (direction == Direction.FRONT || direction == Direction.BACK)){

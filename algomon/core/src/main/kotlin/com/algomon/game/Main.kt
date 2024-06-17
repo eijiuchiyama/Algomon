@@ -56,10 +56,8 @@ class Main : KtxGame<KtxScreen>(){
         generator.dispose()
 
         Gdx.app.logLevel = Application.LOG_DEBUG
-        //addScreen(YouWin(this))
-        //addScreen(StartScreen(this))
-        addScreen(BuyMovementMenu(this))
-        setScreen<BuyMovementMenu>()
+        addScreen(StartScreen(this))
+        setScreen<StartScreen>()
     }
 
     companion object{

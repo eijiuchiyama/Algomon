@@ -91,9 +91,9 @@ class SpecialBattle(var game: Main): KtxScreen{
             updatePlayerData(player, enemy)
             countBattle++
             this.dispose()
-            if(!game.containsScreen<IntervalMenu>())
-                game.addScreen(IntervalMenu(game))
-            game.setScreen<IntervalMenu>()
+            if(!game.containsScreen<GameScreen>())
+                game.addScreen(GameScreen(game))
+            game.setScreen<GameScreen>()
         }
 
         game.batch?.begin()
