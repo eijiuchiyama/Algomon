@@ -11,12 +11,11 @@ import com.algomon.game.component.PhysicComponent
 import com.algomon.game.event.EntityOpenEvent
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
-import com.algomon.game.screen.Battle
+import com.algomon.game.screen.SpecialBattle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -26,8 +25,6 @@ import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
-import com.github.quillraven.fleks.Qualifier
-import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 
 @AllOf([InteractableComponent::class])
@@ -96,8 +93,8 @@ class InteractableSystem(
                 stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Click", physicCmp.body.position, physicCmp.size)
-                gameMain.addScreen(Battle(gameMain))
-                gameMain.setScreen<Battle>()
+                gameMain.addScreen(SpecialBattle(gameMain))
+                gameMain.setScreen<SpecialBattle>()
             }
 
             if (aniCmp.model == AnimationModel.shelf && (direction == Direction.FRONT || direction == Direction.BACK)){

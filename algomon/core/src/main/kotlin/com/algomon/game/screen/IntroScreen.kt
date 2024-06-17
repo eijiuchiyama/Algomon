@@ -3,10 +3,7 @@ package com.algomon.game.screen
 import com.algomon.game.Main
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction
 import com.badlogic.gdx.utils.ScreenUtils
-import com.badlogic.gdx.utils.Timer
-import kotlinx.coroutines.delay
 import ktx.app.KtxScreen
 
 class IntroScreen(var game: Main): KtxScreen {
@@ -61,9 +58,9 @@ class IntroScreen(var game: Main): KtxScreen {
                 soundEffect.play()
 
                 this.dispose()
-                if(!game.containsScreen<Battle>())
-                    game.addScreen(Battle(game))
-                game.setScreen<Battle>()
+                if(!game.containsScreen<SpecialBattle>())
+                    game.addScreen(SpecialBattle(game))
+                game.setScreen<SpecialBattle>()
 
             }
         }
@@ -76,9 +73,9 @@ class IntroScreen(var game: Main): KtxScreen {
                     texto++
                 } else{
                     this.dispose()
-                    if(!game.containsScreen<Battle>())
-                        game.addScreen(Battle(game))
-                    game.setScreen<Battle>()
+                    if(!game.containsScreen<SpecialBattle>())
+                        game.addScreen(SpecialBattle(game))
+                    game.setScreen<SpecialBattle>()
                 }
             }
         }

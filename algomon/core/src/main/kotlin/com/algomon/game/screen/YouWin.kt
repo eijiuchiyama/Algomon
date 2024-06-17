@@ -40,7 +40,7 @@ class YouWin(var game: Main): KtxScreen {
         game.batch?.draw(tryAgainTexture, 30F, 30F)
 
         if(Gdx.input.getX().toFloat() in 30F..30F + tryAgainWidth &&
-            screenHeight - Gdx.input.getY().toFloat() in 30F..30F + tryAgainHeight){
+            screenHeight - Gdx.input.getY().toFloat() in 30F..30F + tryAgainHeight){ //Vai para a tela inicial
             if(Gdx.input.justTouched()){
                 soundEffect.play()
 
@@ -53,7 +53,7 @@ class YouWin(var game: Main): KtxScreen {
         }
 
         if(Gdx.input.getX().toFloat() in screenWidth-30-quitWidth..screenWidth-30+tryAgainWidth &&
-            screenHeight - Gdx.input.getY().toFloat() in 30F..30F + screenHeight){
+            screenHeight - Gdx.input.getY().toFloat() in 30F..30F + screenHeight){ //Sai do jogo
             if(Gdx.input.justTouched()){
                 Gdx.app.exit()
             }

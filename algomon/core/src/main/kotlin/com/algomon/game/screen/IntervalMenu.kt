@@ -1,7 +1,6 @@
 package com.algomon.game.screen
 
 import com.algomon.game.Main
-import com.algomon.game.Movement
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
@@ -23,18 +22,22 @@ class IntervalMenu(var game: Main): KtxScreen {
 
         game.batch?.begin()
 
+        game.batch?.draw(trainingTexture, screenWidth/2-buttonWidth/2, screenHeight-buttonHeight-40F)
+        game.batch?.draw(learnMoveTexture, screenWidth/2-buttonWidth/2, screenHeight-2*buttonHeight-80F)
+        game.batch?.draw(nextBattleTexture, screenWidth/2-buttonWidth/2, screenHeight-3*buttonHeight-120F)
+
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-buttonHeight-40F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-40F){ //Treina
             if(Gdx.input.justTouched()){
                 this.dispose()
-                if(!game.containsScreen<Battle>())
-                    game.addScreen(Battle(game))
-                game.setScreen<Battle>()
+                if(!game.containsScreen<CommonBattle>())
+                    game.addScreen(CommonBattle(game))
+                game.setScreen<CommonBattle>()
             }
         }
 
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-2*buttonHeight-80F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-buttonHeight-80F){
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-buttonHeight-80F){ //Aprende movimento
             if(Gdx.input.justTouched()){
                 this.dispose()
                 if(!game.containsScreen<BuyMovementMenu>())
@@ -44,18 +47,14 @@ class IntervalMenu(var game: Main): KtxScreen {
         }
 
         if(Gdx.input.getX().toFloat() > screenWidth/2-buttonWidth/2 && Gdx.input.getX().toFloat() < screenWidth/2-buttonWidth/2+buttonWidth && screenHeight - Gdx.input.getY().toFloat() > screenHeight-3*buttonHeight-120F &&
-            screenHeight - Gdx.input.getY().toFloat() < screenHeight-2*buttonHeight-120F){
+            screenHeight - Gdx.input.getY().toFloat() < screenHeight-2*buttonHeight-120F){ //Vai para a próxima batalha
             if(Gdx.input.justTouched()){
                 this.dispose()
-                if(!game.containsScreen<Battle>())
-                    game.addScreen(Battle(game))
-                game.setScreen<Battle>()
+                if(!game.containsScreen<SpecialBattle>())
+                    game.addScreen(SpecialBattle(game))
+                game.setScreen<SpecialBattle>()
             }
         }
-
-        game.batch?.draw(trainingTexture, screenWidth/2-buttonWidth/2, screenHeight-buttonHeight-40F)
-        game.batch?.draw(learnMoveTexture, screenWidth/2-buttonWidth/2, screenHeight-2*buttonHeight-80F)
-        game.batch?.draw(nextBattleTexture, screenWidth/2-buttonWidth/2, screenHeight-3*buttonHeight-120F)
 
         game.batch?.end()
 
