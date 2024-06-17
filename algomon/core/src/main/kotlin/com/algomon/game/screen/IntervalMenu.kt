@@ -50,9 +50,9 @@ class IntervalMenu(var game: Main): KtxScreen {
             screenHeight - Gdx.input.getY().toFloat() < screenHeight-2*buttonHeight-120F){ //Vai para a próxima batalha
             if(Gdx.input.justTouched()){
                 this.dispose()
-                if(!game.containsScreen<SpecialBattle>())
-                    game.addScreen(SpecialBattle(game))
-                game.setScreen<SpecialBattle>()
+                if(!game.containsScreen<GameScreen>())
+                    game.addScreen(GameScreen(game))
+                game.setScreen<GameScreen>()
             }
         }
 

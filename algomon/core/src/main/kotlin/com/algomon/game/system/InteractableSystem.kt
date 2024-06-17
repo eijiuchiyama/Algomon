@@ -12,7 +12,9 @@ import com.algomon.game.event.EntityOpenEvent
 import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.screen.BuyMovementMenu
+import com.algomon.game.screen.CommonBattle
 import com.algomon.game.screen.GameScreen
+import com.algomon.game.screen.IntervalMenu
 import com.algomon.game.screen.SpecialBattle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
@@ -105,9 +107,9 @@ class InteractableSystem(
                 stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Click", physicCmp.body.position, physicCmp.size)
-                if(!gameMain.containsScreen<BuyMovementMenu>())
-                    gameMain.addScreen(BuyMovementMenu(gameMain))
-                gameMain.setScreen<BuyMovementMenu>()
+                if(!gameMain.containsScreen<CommonBattle>())
+                    gameMain.addScreen(CommonBattle(gameMain))
+                gameMain.setScreen<CommonBattle>()
             }
 
             if (aniCmp.model == AnimationModel.shelf && (direction == Direction.FRONT || direction == Direction.BACK)){
@@ -115,6 +117,9 @@ class InteractableSystem(
                 stage.fire(EntityOpenEvent(aniCmp.model))
                 val physicCmp = physicCmps[entity]
                 floatingText("Shuuaa", physicCmp.body.position, physicCmp.size)
+                if(!gameMain.containsScreen<BuyMovementMenu>())
+                    gameMain.addScreen(BuyMovementMenu(gameMain))
+                gameMain.setScreen<BuyMovementMenu>()
             }
 
             interactEntity = null
