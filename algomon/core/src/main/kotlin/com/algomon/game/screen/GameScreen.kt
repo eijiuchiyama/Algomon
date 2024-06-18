@@ -8,6 +8,7 @@ import com.algomon.game.component.ImageComponent.Companion.ImageComponentListene
 import com.algomon.game.component.PhysicComponent.Companion.PhysicComponentListener
 import com.algomon.game.component.StateComponent.Companion.StateComponentListener
 import com.algomon.game.event.MapChangeEvent
+import com.algomon.game.event.ScreenChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.input.PlayerKeyboardInputProcessor
 import com.algomon.game.system.AiSystem
@@ -38,6 +39,8 @@ import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.log.logger
 import ktx.math.vec2
+import ktx.tiled.property
+import ktx.tiled.propertyOrNull
 
 class GameScreen(var game: Main) : KtxScreen {
 
@@ -97,6 +100,11 @@ class GameScreen(var game: Main) : KtxScreen {
             gameStage.fire(MapChangeEvent(currentMap!!))
 
             PlayerKeyboardInputProcessor(eworld)
+        }
+        else{
+            currentMap?.propertyOrNull<String>("bgm")?.let { path ->
+                gameStage.fire(ScreenChangeEvent(path))
+            }
         }
         loaded = true
     }
