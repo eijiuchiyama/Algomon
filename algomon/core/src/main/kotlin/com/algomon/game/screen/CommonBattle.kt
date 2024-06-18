@@ -9,13 +9,9 @@ import com.algomon.game.getCommonEnemyMovements
 import com.algomon.game.getCommonEnemyName
 import com.algomon.game.getPossibleEnemies
 import com.algomon.game.getRandom
-import com.algomon.game.getSpecialEnemyData
-import com.algomon.game.getSpecialEnemyMovements
-import com.algomon.game.getSpecialEnemyName
 import com.algomon.game.nBattles
 import com.algomon.game.player
 import com.algomon.game.updatePlayerData
-import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils

@@ -44,6 +44,8 @@ class StartScreen(var game: Main) : KtxScreen {
         player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
             playerData[4], playerData[5], 0, 0)
         println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
+        player.level = 10
+        player.carteira = 1000
 
         ortographicCamera.setToOrtho(false, 640F, 480F)
         music.play()
