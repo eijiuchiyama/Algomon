@@ -14,8 +14,6 @@ import com.algomon.game.event.MapChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.screen.BuyMovementMenu
 import com.algomon.game.screen.CommonBattle
-import com.algomon.game.screen.GameScreen
-import com.algomon.game.screen.IntervalMenu
 import com.algomon.game.screen.SpecialBattle
 import com.algomon.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.badlogic.gdx.Gdx
@@ -25,16 +23,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import ktx.assets.disposeSafely
-import java.util.concurrent.TimeUnit
 
 @AllOf([InteractableComponent::class])
 class InteractableSystem(
@@ -87,14 +84,12 @@ class InteractableSystem(
                     aniCmp.nextAnimation(AnimationType.open)
                     aniCmp.playMode = Animation.PlayMode.NORMAL
                 }
-                val currentMap = TmxMapLoader().load("assets/map/map.tmx")
-                stage.fire(MapChangeEvent(currentMap!!))
+                switchMap("assets/map/map.tmx")
             }
 
             if (aniCmp.model == AnimationModel.exit && direction == Direction.FRONT){
                 interactEntity = null
-                val currentMap = TmxMapLoader().load("assets/map/room.tmx")
-                stage.fire(MapChangeEvent(currentMap!!))
+                switchMap("assets/map/room.tmx")
             }
 
             if (aniCmp.model == AnimationModel.computer && direction == Direction.FRONT){
@@ -139,6 +134,20 @@ class InteractableSystem(
                 label = Label(text, floatingTextStyle)
             }
         }
+    }
+
+    fun switchMap(path: String) {
+        val runnable = Runnable {
+            val currentMap = TmxMapLoader().load(path)
+            stage.fire(MapChangeEvent(currentMap!!))
+        }
+        stage.root.color.a = 1f
+        val sequenceAction = SequenceAction().apply {
+            addAction(Actions.fadeOut(0.5f))
+            addAction(Actions.run(runnable))
+            addAction(Actions.fadeIn(0.5f))
+        }
+        stage.root.addAction(sequenceAction)
     }
 
     override fun onDispose() {
