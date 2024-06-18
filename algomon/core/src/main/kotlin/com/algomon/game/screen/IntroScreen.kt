@@ -73,9 +73,9 @@ class IntroScreen(var game: Main): KtxScreen {
                     texto++
                 } else{
                     this.dispose()
-                    if(!game.containsScreen<SpecialBattle>())
-                        game.addScreen(SpecialBattle(game))
-                    game.setScreen<SpecialBattle>()
+                    if(!game.containsScreen<GameScreen>())
+                        game.addScreen(GameScreen(game))
+                    game.setScreen<GameScreen>()
                 }
             }
         }

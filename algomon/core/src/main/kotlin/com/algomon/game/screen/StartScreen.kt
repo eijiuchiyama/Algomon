@@ -2,6 +2,7 @@ package com.algomon.game.screen
 
 import com.algomon.game.Main
 import com.algomon.game.Player
+import com.algomon.game.countBattle
 import com.algomon.game.getPlayerData
 import com.algomon.game.getPlayerMovements
 import com.algomon.game.player
@@ -16,8 +17,6 @@ import ktx.app.KtxScreen
 
 
 class StartScreen(var game: Main) : KtxScreen {
-
-    var ortographicCamera = OrthographicCamera()
 
     private val logoWidth = 300F
     private val logoHeight = 250F
@@ -37,22 +36,17 @@ class StartScreen(var game: Main) : KtxScreen {
     private val music = Gdx.audio.newMusic(Gdx.files.internal(("assets/music/bitBeats1.mp3")))
     private val soundEffect = Gdx.audio.newMusic(Gdx.files.internal("assets/music/buttonSound.mp3"))
 
-    init {
 
+    override fun show() {
+        log.debug { "StartScreen gets shown" }
         playerData = getPlayerData()
         playerMovements = getPlayerMovements()
         player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
             playerData[4], playerData[5], 0, 0)
         println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
-        player.level = 10
+        countBattle = 0
+        player.level = 5
         player.carteira = 1000
-
-        ortographicCamera.setToOrtho(false, 640F, 480F)
-        music.play()
-    }
-
-    override fun show() {
-        log.debug { "StartScreen gets shown" }
 
         super.show()
     }
@@ -63,9 +57,6 @@ class StartScreen(var game: Main) : KtxScreen {
         if(!music.isPlaying){
             music.play()
         }
-
-        ortographicCamera.update()
-        game.batch?.setProjectionMatrix(ortographicCamera.combined)
 
         game.batch?.begin()
 

@@ -158,6 +158,13 @@ class SpecialBattle(var game: Main): KtxScreen{
         if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < 640F && screenHeight - Gdx.input.getY().toFloat() > 0F &&
             screenHeight - Gdx.input.getY().toFloat() < 120F){
             if (Gdx.input.justTouched()){
+                if(text < 6){
+                    if(enemy.stamina + enemy.stamina/10 < enemy.staminabase)
+                        enemy.stamina += enemy.stamina/10
+                    if(player.stamina + player.stamina/10 < player.staminabase)
+                        player.stamina += player.stamina/10
+                }
+
                 if(enemy.hp != 0 && player.hp != 0) {
                     textShown = false
                     options = true
