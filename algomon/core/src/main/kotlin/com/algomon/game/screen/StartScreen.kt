@@ -1,6 +1,12 @@
 package com.algomon.game.screen
 
 import com.algomon.game.Main
+import com.algomon.game.Player
+import com.algomon.game.getPlayerData
+import com.algomon.game.getPlayerMovements
+import com.algomon.game.player
+import com.algomon.game.playerData
+import com.algomon.game.playerMovements
 import com.algomon.game.screen.GameScreen.Companion.log
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -32,6 +38,13 @@ class StartScreen(var game: Main) : KtxScreen {
     private val soundEffect = Gdx.audio.newMusic(Gdx.files.internal("assets/music/buttonSound.mp3"))
 
     init {
+
+        playerData = getPlayerData()
+        playerMovements = getPlayerMovements()
+        player = Player("Player", playerData[0], playerData[1], playerMovements, playerData[2], playerData[3],
+            playerData[4], playerData[5], 0, 0)
+        println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
+
         ortographicCamera.setToOrtho(false, 640F, 480F)
         music.play()
     }

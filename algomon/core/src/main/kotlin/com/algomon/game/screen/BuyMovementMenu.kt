@@ -85,7 +85,7 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
         if(escolhido == true && remove == false)
             showText()
 
-        if(remove == true)
+        if(escolhido == true && remove == true)
             removeMovement()
 
         if(finalText == true){
@@ -120,8 +120,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 x += screenWidth / 3
             }
         }
-        if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth / 3 && screenHeight - Gdx.input.getY()
-                .toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
+        if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth / 3 &&
+            screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 0 escolhido")
                 player.skills.removeAt(0)
@@ -132,8 +132,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 finalText = true
             }
         }
-        if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX().toFloat() < 2 * screenWidth / 3 && screenHeight - Gdx.input.getY()
-                .toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
+        if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX().toFloat() < 2 * screenWidth / 3 &&
+            screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 1 escolhido")
                 player.skills.removeAt(1)
@@ -144,8 +144,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 finalText = true
             }
         }
-        if (Gdx.input.getX().toFloat() > 2*screenWidth / 3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY()
-                .toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
+        if (Gdx.input.getX().toFloat() > 2*screenWidth / 3 && Gdx.input.getX().toFloat() < screenWidth &&
+            screenHeight - Gdx.input.getY().toFloat() > movementsBoxHeight / 2 && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 2 escolhido")
                 player.skills.removeAt(2)
@@ -156,8 +156,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 finalText = true
             }
         }
-        if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth / 3 && screenHeight - Gdx.input.getY()
-                .toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
+        if (Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth / 3 &&
+            screenHeight - Gdx.input.getY().toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 3 escolhido")
                 player.skills.removeAt(3)
@@ -168,8 +168,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 finalText = true
             }
         }
-        if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX().toFloat() < 2*screenWidth / 3 && screenHeight - Gdx.input.getY()
-                .toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
+        if (Gdx.input.getX().toFloat() > screenWidth / 3 && Gdx.input.getX().toFloat() < 2*screenWidth / 3 &&
+            screenHeight - Gdx.input.getY().toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 4 escolhido")
                 player.skills.removeAt(4)
@@ -180,8 +180,8 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
                 finalText = true
             }
         }
-        if (Gdx.input.getX().toFloat() > 2*screenWidth / 3 && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY()
-                .toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
+        if (Gdx.input.getX().toFloat() > 2*screenWidth / 3 && Gdx.input.getX().toFloat() < screenWidth &&
+            screenHeight - Gdx.input.getY().toFloat() > 0F && screenHeight - Gdx.input.getY().toFloat() < movementsBoxHeight/2) {
             if (Gdx.input.justTouched()) {
                 println("Movimento 5 escolhido")
                 player.skills.removeAt(5)
@@ -210,12 +210,14 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
             var movement = getMovement(getPossibleMovementsId(player)[chosenMove])
             player.skills.add(movement)
             player.carteira -= getPossibleMovementsPrice(player)[chosenMove]
+
             if(Gdx.input.getX().toFloat() > 0F && Gdx.input.getX().toFloat() < screenWidth && screenHeight - Gdx.input.getY().toFloat() > 0F &&
                 screenHeight - Gdx.input.getY().toFloat() < boxHeight){
                 if(Gdx.input.justTouched()){
                     escolhido = false
                 }
             }
+
         }
     }
 
