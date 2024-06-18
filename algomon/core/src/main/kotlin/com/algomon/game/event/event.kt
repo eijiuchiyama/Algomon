@@ -12,6 +12,8 @@ fun Stage.fire(event: Event){
 }
 data class MapChangeEvent(val map: TiledMap) : Event()
 
+class ScreenChangeEvent(val path: String) : Event()
+
 class CollisionDespawnEvent(val cell:Cell) : Event()
 
 class EntityOpenEvent(val model: AnimationModel) : Event()

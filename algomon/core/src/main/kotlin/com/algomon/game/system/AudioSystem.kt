@@ -2,6 +2,7 @@ package com.algomon.game.system
 
 import com.algomon.game.event.EntityOpenEvent
 import com.algomon.game.event.MapChangeEvent
+import com.algomon.game.event.ScreenChangeEvent
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
@@ -43,6 +44,21 @@ class AudioSystem : EventListener, IntervalSystem() {
                     music = newMusic
                     newMusic.play()
                 }
+                return true
+            }
+
+            is ScreenChangeEvent -> {
+                log.debug { "Changing music to '${event.path}'" }
+                val newMusic = musicCache.getOrPut(event.path) {
+                    Gdx.audio.newMusic(Gdx.files.internal(event.path)).apply {
+                        isLooping = true
+                    }
+                }
+                if (music != null && newMusic != music) {
+                    music?.stop()
+                }
+                music = newMusic
+                newMusic.play()
                 return true
             }
 
