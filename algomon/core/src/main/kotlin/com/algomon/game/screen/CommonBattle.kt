@@ -66,9 +66,9 @@ class CommonBattle(var game: Main): KtxScreen {
     override fun render(delta: Float) {
         ScreenUtils.clear(0.5F, 0.5F, 0.9F, 1F)
 
-        if(!music.isPlaying) {
+        /*if(!music.isPlaying) {
             music.play()
-        }
+        }*/
 
         //Inicializa os status do jogador no início da batalha
         if(!initialize){
