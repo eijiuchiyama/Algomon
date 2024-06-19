@@ -53,6 +53,16 @@ class CommonBattle(var game: Main): KtxScreen {
 
     private val music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/2dExplorer.mp3"))
 
+    override fun show() {
+        initialize = false
+        textShown = false
+        options = false
+        playerTurn = false
+        movimentoPlayer = 0
+        movimentoEnemy = 0
+        text = 0
+    }
+
     override fun render(delta: Float) {
         ScreenUtils.clear(0.5F, 0.5F, 0.9F, 1F)
 
@@ -381,6 +391,10 @@ class CommonBattle(var game: Main): KtxScreen {
         player.def = player.defbase
         player.dodge = player.dodgebase
         player.speed = player.speedbase
+    }
+
+    override fun dispose() {
+        music.dispose()
     }
 
 }

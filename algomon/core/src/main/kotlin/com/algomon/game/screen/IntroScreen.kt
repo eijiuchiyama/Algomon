@@ -26,11 +26,8 @@ class IntroScreen(var game: Main): KtxScreen {
     private val music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/bitBeats4.mp3"))
     private val soundEffect = Gdx.audio.newSound(Gdx.files.internal("assets/music/buttonSound.mp3"))
 
-    init{
-        music.play()
-    }
-
     override fun show() {
+        texto = 0
         GameScreen.log.debug { "IntroScreen gets shown" }
 
         super.show()

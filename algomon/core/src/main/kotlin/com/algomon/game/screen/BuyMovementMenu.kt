@@ -18,7 +18,6 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
 
     private var escolhido = false
     private var remove = false
-    private val showRemove = false
     private var chosenMove = 0
     private var finalText = false
     private var saldoSuficiente = false
@@ -42,6 +41,15 @@ class BuyMovementMenu(var game: Main):  KtxScreen{
     private val moveBoxTexture = Texture("assets/battle/moveBox.png")
 
     private var i = 0
+
+    override fun show() {
+        escolhido = false
+        remove = false
+        chosenMove = 0
+        finalText = false
+        saldoSuficiente = false
+        i = 0
+    }
 
     override fun render(delta: Float) {
         ScreenUtils.clear(0.9F, 0.5F, 0.5F, 1F)
