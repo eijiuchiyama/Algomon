@@ -108,7 +108,7 @@ class GameScreen(var game: Main) : KtxScreen {
             }
         }
         gameStage.root.color.a = 0f
-        Actions.fadeIn(0.5f)
+        gameStage.root.addAction(Actions.fadeIn(0.5f))
         loaded = true
     }
 
