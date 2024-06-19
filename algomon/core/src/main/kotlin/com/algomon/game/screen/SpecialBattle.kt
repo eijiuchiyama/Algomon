@@ -183,6 +183,7 @@ class SpecialBattle(var game: Main): KtxScreen{
                 if(text == 6){ //Vence a batalha
                     updatePlayerData(player, enemy)
                     countBattle++
+                    player.level++
                     if(countBattle == nBattles){
                         this.dispose()
                         if(!game.containsScreen<YouWin>())
