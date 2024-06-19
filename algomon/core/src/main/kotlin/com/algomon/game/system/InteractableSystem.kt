@@ -11,6 +11,7 @@ import com.algomon.game.component.MoveComponent
 import com.algomon.game.component.PhysicComponent
 import com.algomon.game.event.EntityOpenEvent
 import com.algomon.game.event.MapChangeEvent
+import com.algomon.game.event.ScreenChangeEvent
 import com.algomon.game.event.fire
 import com.algomon.game.screen.BuyMovementMenu
 import com.algomon.game.screen.CommonBattle
@@ -100,6 +101,7 @@ class InteractableSystem(
                 if(!gameMain.containsScreen<SpecialBattle>())
                     gameMain.addScreen(SpecialBattle(gameMain))
                 gameMain.setScreen<SpecialBattle>()
+                stage.fire(ScreenChangeEvent("music/Battle_BGM.mp3"))
             }
 
             if (aniCmp.model == AnimationModel.computer2 && direction == Direction.FRONT){
@@ -110,6 +112,7 @@ class InteractableSystem(
                 if(!gameMain.containsScreen<CommonBattle>())
                     gameMain.addScreen(CommonBattle(gameMain))
                 gameMain.setScreen<CommonBattle>()
+                stage.fire(ScreenChangeEvent("music/Train_BGM.mp3"))
             }
 
             if (aniCmp.model == AnimationModel.shelf && (direction == Direction.FRONT || direction == Direction.BACK)){
@@ -120,6 +123,7 @@ class InteractableSystem(
                 if(!gameMain.containsScreen<BuyMovementMenu>())
                     gameMain.addScreen(BuyMovementMenu(gameMain))
                 gameMain.setScreen<BuyMovementMenu>()
+                stage.fire(ScreenChangeEvent("music/Battle_BGM.mp3"))
             }
 
             interactEntity = null
@@ -145,7 +149,6 @@ class InteractableSystem(
         val sequenceAction = SequenceAction().apply {
             addAction(Actions.fadeOut(0.5f))
             addAction(Actions.run(runnable))
-            addAction(Actions.fadeIn(0.5f))
         }
         stage.root.addAction(sequenceAction)
     }

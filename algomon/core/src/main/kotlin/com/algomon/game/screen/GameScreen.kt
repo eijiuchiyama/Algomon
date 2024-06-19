@@ -32,6 +32,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
@@ -106,6 +107,8 @@ class GameScreen(var game: Main) : KtxScreen {
                 gameStage.fire(ScreenChangeEvent(path))
             }
         }
+        gameStage.root.color.a = 0f
+        Actions.fadeIn(0.5f)
         loaded = true
     }
 
