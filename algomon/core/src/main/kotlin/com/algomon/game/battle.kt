@@ -1,5 +1,7 @@
 package com.algomon.game
 
+import kotlin.math.floor
+
 fun turn(player:Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistir, 1 se a batalha continuar após o turno e 0 se ela acabar
     if (player.speed > enemy.speed) {
         if(player.ChooseMovement(enemy) == 0){
@@ -35,7 +37,7 @@ fun updatePlayerData(player: Player, enemy: Enemy){
     player.atkbase += 1
     player.defbase += 1
     player.speedbase += 1
-    player.carteira += enemy.hp/20
+    player.carteira += floor((enemy.hpbase/20).toDouble()).toInt()
 }
 
 fun battle(player: Player, enemy: Enemy): Int{ //Retorna 2 se o jogador desistiu, 1 se ele venceu e 0 se ele perdeu a batalha

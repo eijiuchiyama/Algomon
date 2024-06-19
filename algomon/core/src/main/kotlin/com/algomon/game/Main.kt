@@ -19,7 +19,7 @@ var playerMovements = mutableListOf<Movement>()
 var player = Player("",0,0, mutableListOf<Movement>(), 0,0,0,0,0,0)
 var enemy = Enemy("", 0, 0, mutableListOf<Movement>(), 0,0,0, 0, 0)
 var countBattle = 0
-var nBattles = 2
+var nBattles = 12
 
 /** [com.badlogic.gdx.ApplicationListener] implementation shared by all platforms. */
 class Main : KtxGame<KtxScreen>(){

@@ -45,8 +45,6 @@ class StartScreen(var game: Main) : KtxScreen {
             playerData[4], playerData[5], 0, 0)
         println("${player.name} ${player.hp} ${player.stamina} ${player.atk} ${player.def} ${player.dodge} ${player.speed}")
         countBattle = 0
-        player.level = 5
-        player.carteira = 1000
 
         super.show()
     }
