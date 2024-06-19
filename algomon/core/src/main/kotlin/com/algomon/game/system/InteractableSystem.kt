@@ -149,6 +149,7 @@ class InteractableSystem(
         val sequenceAction = SequenceAction().apply {
             addAction(Actions.fadeOut(0.5f))
             addAction(Actions.run(runnable))
+            addAction(Actions.fadeIn(0.5f))
         }
         stage.root.addAction(sequenceAction)
     }
